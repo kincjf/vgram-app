@@ -11,6 +11,8 @@ import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 import { SettingsPage } from '../pages/settings/settings';
 import { FunctionalitiesPage } from '../pages/functionalities/functionalities';
 
+import { TestPage } from '../pages/tests/tests';
+
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
@@ -22,9 +24,9 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make WalkthroughPage the root (or first) page
-  rootPage: any = WalkthroughPage;
+  // rootPage: any = WalkthroughPage;
   // rootPage: any = FunctionalitiesPage;
-  // rootPage: any = TabsNavigationPage;
+  rootPage: any = TabsNavigationPage;
   textDir: string = "ltr";
 
   pages: Array<{title: any, icon: string, component: any}>;
@@ -66,7 +68,8 @@ export class MyApp {
           this.translate.get('FORMS'),
           this.translate.get('FUNCTIONALITIES'),
           this.translate.get('LAYOUTS'),
-          this.translate.get('SETTINGS')
+          this.translate.get('SETTINGS'),
+          this.translate.get('TEST')
         ).subscribe(data => {
           this.pages = [
             { title: data[0], icon: 'home', component: TabsNavigationPage },
@@ -76,7 +79,8 @@ export class MyApp {
 
           this.pushPages = [
             { title: data[3], icon: 'grid', component: LayoutsPage },
-            { title: data[4], icon: 'settings', component: SettingsPage }
+            { title: data[4], icon: 'settings', component: SettingsPage },
+            { title: data[5], icon: 'settings', component: TestPage }
           ];
         });
       });

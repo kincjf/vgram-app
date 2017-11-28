@@ -29,6 +29,8 @@ import { TermsOfServicePage } from '../pages/terms-of-service/terms-of-service';
 import { PrivacyPolicyPage } from '../pages/privacy-policy/privacy-policy';
 import { FormValidationsPage } from '../pages/form-validations/form-validations';
 
+import { TestPage } from '../pages/tests/tests';
+
 import { PreloadImage } from '../components/preload-image/preload-image';
 import { BackgroundImage } from '../components/background-image/background-image';
 import { ShowHideContainer } from '../components/show-hide-password/show-hide-container';
@@ -49,6 +51,8 @@ import { FacebookLoginService } from '../pages/facebook-login/facebook-login.ser
 import { GoogleLoginService } from '../pages/google-login/google-login.service';
 import { TwitterLoginService } from '../pages/twitter-login/twitter-login.service';
 import { GoogleMapsService } from '../pages/maps/maps.service';
+
+import { OscAPIv1Service } from '../services/osc.api.v1.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -129,7 +133,9 @@ export function createTranslateLoader(http: Http) {
     ColorRadio,
     CounterInput,
     Rating,
-    GoogleMap
+    GoogleMap,
+
+    TestPage,
   ],
   imports: [
     BrowserModule,
@@ -182,7 +188,9 @@ export function createTranslateLoader(http: Http) {
     TwitterLoginPage,
 		AdsPage,
 		FormValidationsPage,
-		VideoPlaylistPage
+    VideoPlaylistPage,
+    
+    TestPage
   ],
   providers: [
     FeedService,
@@ -213,7 +221,9 @@ export function createTranslateLoader(http: Http) {
 		AppRate,
 		ImagePicker,
 		Crop,
-		EmailComposer
+		EmailComposer,
+    
+    OscAPIv1Service,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
