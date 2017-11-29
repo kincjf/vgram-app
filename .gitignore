@@ -44,3 +44,6 @@ demos/src/**/*.metadata.json
 demos/src/**/*.css.shim.ts
 www
 plugins
+platforms
+
+/typings/index.d.ts
