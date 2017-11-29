@@ -42,6 +42,8 @@ import { FormValidationsPage } from '../pages/form-validations/form-validations'
 import { SearchPage } from '../pages/search/search';
 import { SearchResultPage } from '../pages/search-result/search-result';
 
+import { TestPage } from '../pages/tests/tests';
+
 import { PreloadImage } from '../components/preload-image/preload-image';
 import { BackgroundImage } from '../components/background-image/background-image';
 import { ShowHideContainer } from '../components/show-hide-password/show-hide-container';
