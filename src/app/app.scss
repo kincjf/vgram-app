@@ -25,3 +25,22 @@ $output-bourbon-deprecation-warnings: false;
 // automatically applied to the <body> element in the app.
 @import "../theme/common";
 $app-direction: multi;
+
+app-root{
+    .userImage {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    .boldText {
+        font-weight: 700;
+        font-size: 120%;
+    }
+    .normalText {
+        font-size: 120%;
+    }
+    .comments{
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}

@@ -16,9 +16,8 @@ listing-page {
 
 	.listing-header
 	{
-		.header-logo
-		{
-			width: 34vw;
+		.notiNumber{
+			background-image: uri("../../assets/images/homeHeader/envelope.png")
 		}
 	}
 
@@ -94,6 +93,12 @@ listing-page {
 					flex: 0 0 $categories-horizontal-list-padding;
 			    max-width: $categories-horizontal-list-padding;
 				}
+			}
+
+			.selectedCategory{
+				border-width: 2px;
+				border-style: solid;
+				border-color: yellow;
 			}
 
 			.horizontal-item

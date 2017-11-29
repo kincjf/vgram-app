@@ -12,7 +12,7 @@ export class ListingService {
   getData(): Promise<ListingModel> {
     return this.http.get('./assets/example_data/listing.json')
      .toPromise()
-     .then(response => response.json() as ListingModel)
+     .then(response => response.json())
      .catch(this.handleError);
   }
 

@@ -6,23 +6,52 @@
 
 <ion-content class="notifications-content">
   <ion-item-group>
-    <ion-item-divider class="notifications-divider">{{ 'TODAY' | translate }}</ion-item-divider>
-    <ion-item class="notification-item" *ngFor="let notification of notifications.today">
+    <ion-item class="notification-item" *ngFor="let notification of curNotifications">
       <ion-avatar item-left>
         <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="notification.image"></preload-image>
       </ion-avatar>
-      <h2 class="item-title">{{notification.name}}</h2>
-      <p class="item-description">{{notification.message}}</p>
-      <ion-note class="item-time" item-right>{{notification.date}}</ion-note>
-    </ion-item>
-    <ion-item-divider class="notifications-divider">Yesterday</ion-item-divider>
-    <ion-item class="notification-item" *ngFor="let notification of notifications.yesterday">
-      <ion-avatar item-left>
-        <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="notification.image"></preload-image>
-      </ion-avatar>
-      <h2 class="item-title">{{notification.name}}</h2>
-      <p class="item-description">{{notification.message}}</p>
-      <ion-note class="item-time" item-right>{{notification.date}}</ion-note>
+      <div class="item-body-unread" *ngIf="!notification.isRead">
+        <p class="item-title">
+
+          {{notification.name}}
+          <font style="color: black;" *ngIf="notification.msgType==1">{{'POSTED_NEW_POSTING' | translate}}</font>
+          <font style="color: black;" *ngIf="notification.msgType==2">{{'SENT_1_1_MESSAGE' | translate}}</font>
+          <font style="color: black;" *ngIf="notification.msgType==3">{{'ADDED_ME_AS_FRIEND' | translate}}</font>
+          <font style="color: black;" *ngIf="notification.msgType==4">{{'COMMENTED_ON_MY_POSTING' | translate}}</font>
+
+        </p>
+      </div>
+      <div class="item-body-read" *ngIf="notification.isRead">
+        <p class="item-title">
+
+          {{notification.name}}
+          <font style="color: black;" *ngIf="notification.msgType==1">{{'POSTED_NEW_POSTING' | translate}}</font>
+          <font style="color: black;" *ngIf="notification.msgType==2">{{'SENT_1_1_MESSAGE' | translate}}</font>
+          <font style="color: black;" *ngIf="notification.msgType==3">{{'ADDED_ME_AS_FRIEND' | translate}}</font>
+          <font style="color: black;" *ngIf="notification.msgType==4">{{'COMMENTED_ON_MY_POSTING' | translate}}</font>
+
+        </p>
+      </div>
+      <ion-note class="item-time" item-right>
+        <div>
+          {{notification.date}}
+        </div>
+        <div>
+          <button icon-only ion-button clear small class="del-button">
+            <ion-icon  name='close' color="dark"></ion-icon>      
+          </button>
+        </div>
+      </ion-note>
     </ion-item>
   </ion-item-group>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="infiniteScrollVisible">
+    <ion-infinite-content>
+      <div style="margin: 0 auto;">
+        <p style="text-align: center;">
+          Loading
+        </p>
+      </div>
+    </ion-infinite-content>
+  </ion-infinite-scroll>
 </ion-content>

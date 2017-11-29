@@ -46,6 +46,21 @@ notifications-page {
 				}
 			}
 
+			.item-body-unread
+			{
+				background-color: #DEEBF7;
+			}
+			.item-body-unread p {
+				word-break: break-all;
+				white-space: normal;
+			}
+			.item-body-read
+			{
+			}
+			.item-body-read p {
+				word-break: break-all;
+				white-space: normal;
+			}
 			.item-title
 			{
 				font-size: 1.4rem;
@@ -73,6 +88,12 @@ notifications-page {
 				margin: 0px;
 				padding-left: 8px;
 				@include align-self(flex-start);
+			}
+			.item-time .del-button
+			{
+				border-width: 1px;
+				border-style: solid;
+				border-color: gray;
 			}
 		}
 	}

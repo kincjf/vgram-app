@@ -35,8 +35,8 @@ followers-page {
 				@include element-shadow();
 
 				ion-thumbnail {
-					flex: 0 0 24%;
-			    max-width: 24%;
+					flex: 0 0 15%;
+			    max-width: 15%;
 					margin: 0px;
 					padding: 8px;
 				}
@@ -76,29 +76,49 @@ followers-page {
 					.relation-button
 					{
 						margin: 0px;
-					  padding: 0px 16px;
-					  height: inherit;
+						padding: 0px 16px;
 						@include align-self(stretch);
-					  border-radius: 0px 6px 6px 0px;
-						background-color: $theme-color-2;
-					  width: 24%;
-
-						&.following
-						{
-							background-color: $theme-color-1;
-
-							ion-icon {
-								font-size: 4.2em;
-							}
-						}
-
-						ion-icon {
-							font-size: 2.4em;
-							color: $white;
-						}
+					  	border-radius: 0px 6px 6px 0px;
+						background-color: #3897f0;
+					  	width: 24%;
+					}
+					.remove-button
+					{
+						margin: 0px;
+						
+						  background-color: white;
+						  border-radius:5px;
+						  border-color: #333333;
+						  border-width: 1px;
+					 
+						  .remove-image{
+							  width: 80%;
+							  height: 80%;
+							  
+						  }
 					}
 				}
 			}
+		}
+		.tab-span {
+			font-size: 200%; 
+			flex: 1; text-align: center; 
+			border-radius: 5px; 
+			border-width: 1px; 
+			border-color: #5982a7; 
+			border-style: solid;
+			margin: 5px;
+		}
+		.selected {
+			color: #ae75e7;
+		}
+		.tabs-group{
+			display: flex; 
+			align-items: center;
+			margin: 10px;
+		}
+		.profile-image {
+			border-radius: 50%;
 		}
 	}
 }

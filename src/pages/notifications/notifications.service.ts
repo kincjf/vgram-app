@@ -11,7 +11,7 @@ export class NotificationsService {
   getData(): Promise<NotificationsModel> {
     return this.http.get('./assets/example_data/notifications.json')
      .toPromise()
-     .then(response => response.json() as NotificationsModel)
+     .then(response => response.json())
      .catch(this.handleError);
   }
 

@@ -49,13 +49,15 @@ export class SettingsPage {
     this.languages = this.languageService.getLanguages();
 
     this.settingsForm = new FormGroup({
-      name: new FormControl(),
-      location: new FormControl(),
-      description: new FormControl(),
-      currency: new FormControl(),
-      weather: new FormControl(),
-      notifications: new FormControl(),
-      language: new FormControl()
+      image: new FormControl(),
+      nickname: new FormControl(),
+      phone: new FormControl(),
+      sex: new FormControl(),
+      facebook: new FormControl(),
+      instagram: new FormControl(),
+      blog: new FormControl(),
+      website: new FormControl(),
+      twitter: new FormControl()
     });
   }
 
@@ -68,13 +70,15 @@ export class SettingsPage {
       // patchValue: With patchValue, you can assign values to specific controls in a FormGroup by supplying an object of key/value pairs for just the controls of interest.
       // More info: https://angular.io/docs/ts/latest/guide/reactive-forms.html#!#populate-the-form-model-with-_setvalue_-and-_patchvalue_
       this.settingsForm.patchValue({
-        name: data.user.name,
-        location: data.user.location,
-        description: data.user.about,
-        currency: 'dollar',
-        weather: 'fahrenheit',
-        notifications: true,
-        language: this.languages[0]
+        image: data.user.image,
+        nickname: data.user.nickname,
+        phone: data.user.phone,
+        sex: data.user.sex,
+        facebook: data.user.facebook,
+        instagram: data.user.instagram,
+        blog: data.user.blog,
+        website: data.user.website,
+        twitter: data.user.twitter
       });
 
       this.loading.dismiss();
@@ -145,5 +149,12 @@ export class SettingsPage {
        }
      }
    )
+  }
+
+  onBack(){
+    this.nav.pop();
+  }
+  onSave() {
+    this.nav.pop();
   }
 }

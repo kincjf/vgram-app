@@ -1,8 +1,20 @@
 login-page {
 	.login-content
 	{
+		background-color: white;
 		.alt-options
 		{
+
+			.user-content-segment
+			{
+				@include segment-button-styles($theme-color-2);
+
+				.segment-button
+				{
+					@include segment-text-styles($white-d);
+				}
+			}
+
 			.button
 			{
 				margin: 0px;
@@ -19,17 +31,39 @@ login-page {
 					@include justify-content(flex-start);
 				}
 			}
-
-			.signup-button
-			{
-				font-weight: 500;
-				color: $theme-color-2;
-
-				.button-inner
-				{
-					@include justify-content(flex-end);
-				}
-			}
 		}
+	}
+	.google-action-button{
+		// font-size: 25;
+		display: flex;
+		align-items: center;
+		height: 40px;
+		background-color: #4285f4;
+		border-radius: 5;
+	}
+	.google-action-span {
+		color: white;
+		text-align: center;
+	}
+	.cred-input-item {
+		display: flex;
+		align-items: center;
+		background-color: #f1f1f1;
+	}
+	.cred-icon {
+		min-width: 30px; max-width: 30px;text-align: center;
+	}
+	.cred-input{
+		background-color: white;padding-left: 10px;padding-right: 10px;
+	}
+	.nickname-input-item{
+		background-color: #f1f1f1;
+	}
+	.nickname-input{
+		background-color: white;padding-left: 10px;padding-right: 10px;
+	}
+	.action-button
+	{
+		background-color: #ea5323;
 	}
 }

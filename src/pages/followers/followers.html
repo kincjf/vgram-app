@@ -1,22 +1,49 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{'FOLLOWERS' | translate }}</ion-title>
+    <ion-title>{{'FOLLOWERS' | translate }}{{'/'}}{{'FOLLOWING' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="followers-content">
   <!-- <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar> -->
-  <ion-searchbar placeholder="Search"></ion-searchbar>
-  <ion-list class="followers-list">
-    <ion-item class="list-item" *ngFor="let item of list">
+  
+   <div class="tabs-group">
+    <span class="tab-span">
+      <a (click)="onFollowers()">
+        <font color="selected" *ngIf="selectedTab=='follower'">{{"FOLLOWERS" | translate}}</font>
+        <font color="#afabb3" *ngIf="selectedTab!='follower'">{{"FOLLOWERS" | translate}}</font>
+      </a>
+    </span>
+    <span class="tab-span">
+      <a (click)="onFollowings()">
+        <font color="selected" *ngIf="selectedTab=='following'">{{"FOLLOWING" | translate}}</font>
+        <font color="#afabb3" *ngIf="selectedTab!='following'">{{"FOLLOWING" | translate}}</font>
+      </a>
+    </span>
+  </div>
+
+  <ion-list class="followers-list" *ngIf="selectedTab=='follower'">
+    <ion-item class="list-item" *ngFor="let item of followers">
       <ion-thumbnail item-left>
-        <preload-image [ratio]="{w:1, h:1}" [src]="item.image" alt="item.name" title="item.name"></preload-image>
+        <preload-image [ratio]="{w:1, h:1}" [src]="item.image" alt="item.name" title="item.name" class="profile-image"></preload-image>
       </ion-thumbnail>
       <h2 class="item-title">{{item.name}}</h2>
       <p class="item-description" rows="2">{{item.about}}</p>
-      <button class="relation-button" [ngClass]="{following: !item.inverse_relation}" ion-button clear icon-only item-right>
-        <ion-icon *ngIf="item.inverse_relation" name="person-add"></ion-icon>
-        <ion-icon *ngIf="!item.inverse_relation" name="checkmark"></ion-icon>
+      <button class="relation-button" [ngClass]="{following: !item.inverse_relation}" ion-button item-right>
+        {{'ADD_FRIEND'| translate}}
+      </button>
+    </ion-item>
+  </ion-list>
+
+  <ion-list class="followers-list" *ngIf="selectedTab=='following'">
+    <ion-item class="list-item" *ngFor="let item of followings">
+      <ion-thumbnail item-left>
+        <preload-image [ratio]="{w:1, h:1}" [src]="item.image" alt="item.name" title="item.name" class="profile-image"></preload-image>
+      </ion-thumbnail>
+      <h2 class="item-title">{{item.name}}</h2>
+      <p class="item-description" rows="2">{{item.about}}</p>
+      <button class="remove-button" [ngClass]="{following: !item.inverse_relation}" ion-button item-right>
+        <img src="../../assets/images/settings/cancel.png" class="remove-image"/>
       </button>
     </ion-item>
   </ion-list>

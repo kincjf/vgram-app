@@ -1,0 +1,183 @@
+{
+  "comments":[
+    {
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 6,
+      "likes": false,
+      "isMine": true
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": false,
+      "isMine": true
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 4,
+      "likes": false,
+      "isMine": true
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification5.jpg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification2.png",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification3.jpg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification4.jpeg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification7.jpg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+    ,
+    {
+      "image": "./assets/images/notifications/100x100Notification6.jpg",
+      "name": "Martin",
+      "comment": "Adam liked your photo",
+      "date": "5:03 pm",
+      "likesCount": 10,
+      "likes": true,
+      "isMine": false
+    }
+  ]
+}

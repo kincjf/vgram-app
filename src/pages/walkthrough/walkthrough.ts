@@ -1,16 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Slides } from 'ionic-angular';
-
-import { LoginPage } from '../login/login';
-import { SignupPage } from '../signup/signup';
+import { TabsNavigationPage } from '../tabs-navigation/tabs-navigation';
 
 @Component({
   selector: 'walkthrough-page',
   templateUrl: 'walkthrough.html'
 })
 export class WalkthroughPage {
-
-  lastSlide = false;
 
   @ViewChild('slider') slider: Slides;
 
@@ -23,20 +19,10 @@ export class WalkthroughPage {
     // this.nav.setRoot(TabsNavigationPage);
 
     // Or you can skip to last slide (login/signup slide)
-    this.lastSlide = true;
-    this.slider.slideTo(this.slider.length());
+    this.nav.setRoot( TabsNavigationPage );
   }
 
   onSlideChanged() {
     // If it's the last slide, then hide the 'Skip' button on the header
-    this.lastSlide = this.slider.isEnd();
-  }
-
-  goToLogin() {
-    this.nav.push(LoginPage);
-  }
-
-  goToSignup() {
-    this.nav.push(SignupPage);
   }
 }

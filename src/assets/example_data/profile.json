@@ -1,6 +1,12 @@
 {
     "user": {
         "name": "LeBron James",
+        "nickname": "nickname",
+        "sex": "male",
+        "facebook": "facebook",
+        "instagram": "instagram",
+        "blog": "blog",
+        "twitter": "twitter",
         "location": "Ohio, USA",
         "about": "Philosophy is considered a science but it is difficult to say, when one has to compare with an ordinary science, for example biology, or chemistry.",
         "email": "contact@ionicthemes.com",

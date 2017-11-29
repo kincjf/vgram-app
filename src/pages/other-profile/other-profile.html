@@ -1,0 +1,251 @@
+<ion-header>
+  <ion-navbar>
+    <div style="display: flex; align-items: center;">
+      <ion-title style="flex: 1;"><font style="text-align: center;">{{'PROFILE' | translate}}</font></ion-title>
+
+      <span>
+        <a (click)="onClickMenu()"><img src="../../assets/images/homeHeader/menu.png"/></a>
+      </span>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="profile-content">
+  <div class="user-details">
+    <ion-row class="user-main-data-row">
+      <ion-col no-padding width-33>
+        <preload-image class="user-image" [ratio]="{w:1, h:1}" [(src)]="profile.user.image" alt="profile.user.name" title="profile.user.name"></preload-image>
+      </ion-col>
+      <ion-col no-padding>
+        <ion-row class="social-presence-row">
+          <ion-col width-50 class="social-presence-item">
+            <a (click)="goToFollowList()">
+              <ion-icon name='heart' color="danger" style="font-size: 200%;"></ion-icon>
+              <h2 class="social-presence-value">{{profile.followers.length}}</h2>
+            </a>
+          </ion-col>
+          <ion-col width-50 class="social-presence-item">
+            <a>
+              <ion-icon name='star' color="#333333" style="font-size: 200%;"></ion-icon>
+              <h4 class="social-presence-title">business</h4>
+            </a>
+          </ion-col>
+        </ion-row>
+        <ion-row class="profile-action-row">
+          <ion-col no-padding>
+            <button ion-button block small (click)="addFriend()">
+              {{'ADD_FRIEND' | translate}}
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <div class="social-group">
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/chatting.png" class="social-img" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/telephone.jpg" class="social-img" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/website.png" class="social-img" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/facebook.png" class="social-img" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/instagram.png" class="social-img" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/blog.jpeg" class="social-img" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onChatting()">
+          <img src="../../assets/images/social/twitter.png" class="social-img" />
+        </a>
+      </span>
+    </div>
+
+    <ion-row wrap class="user-bio-row">
+      <ion-col no-padding width-50>
+        <h2 class="user-name">{{profile.user.name}}</h2>
+      </ion-col>
+      <ion-col no-padding width-50>
+        <span class="user-location">{{profile.user.location}}</span>
+      </ion-col>
+      <ion-col no-padding width-100>
+        <p class="user-description">
+          {{profile.user.about}}
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-segment class="user-content-segment" [(ngModel)]="display" (ionChange)="onSegmentChanged($event)">
+      <ion-segment-button value="myphoto" (ionSelect)="onSegmentSelected($event)">
+        {{'MY_PICTURE' | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="notices" (ionSelect)="onSegmentSelected($event)">
+        {{'NOTICES' | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="carephoto" (ionSelect)="onSegmentSelected($event)">
+        {{'Care_PICTURE' | translate}}
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div [ngSwitch]="display" class="user-content">
+    <div *ngSwitchCase="'myphoto'" class="list-view">
+      <div class="list-item" *ngFor="let post of profile.posts">
+        <span class="item-date">{{post.date}}</span>
+        <ion-card>
+          <preload-image [ratio]="{w:1, h:1}" [src]="post.image" title=""></preload-image>
+          <ion-card-content>
+            <p class="item-text">
+              {{post.description}}
+            </p>
+          </ion-card-content>
+          <ion-row no-padding class="actions-row">
+            <ion-col no-padding width-30 text-left>
+              <button class="action-button" ion-button clear small color="danger" icon-left>
+                <ion-icon isActive="{{post.liked}}" name='heart'></ion-icon>
+                  {{post.likes}} {{'LIKES' | translate}}
+              </button>
+            </ion-col>
+            <ion-col no-padding width-45 text-center>
+              <button class="action-button" ion-button clear small color="danger" icon-left>
+                <ion-icon name='chatbubbles'></ion-icon>
+                  {{post.comments}} {{'COMMENTS' | translate}}
+              </button>
+            </ion-col>
+            <ion-col no-padding width-25 text-right>
+              <button class="action-button" ion-button clear small color="danger" icon-left (click)="sharePost(post)">
+                <ion-icon name='share-alt'></ion-icon>
+                {{'SHARE' | translate}}
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </div>
+    </div>
+    <div *ngSwitchCase="'notices'" class="grid-view">
+      
+        <ion-item class="notification-item" *ngFor="let notification of curNotifications">
+          <a (click)="toNotificationPage()">
+            <ion-avatar item-left>
+              <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="notification.image"></preload-image>
+            </ion-avatar>
+          </a>
+          <div class="item-body-unread" *ngIf="!notification.isRead">
+            <p class="item-title">
+      
+              {{notification.name}}
+              <font style="color: black;" *ngIf="notification.msgType==1">{{'POSTED_NEW_POSTING' | translate}}</font>
+              <font style="color: black;" *ngIf="notification.msgType==2">{{'SENT_1_1_MESSAGE' | translate}}</font>
+              <font style="color: black;" *ngIf="notification.msgType==3">{{'ADDED_ME_AS_FRIEND' | translate}}</font>
+              <font style="color: black;" *ngIf="notification.msgType==4">{{'COMMENTED_ON_MY_POSTING' | translate}}</font>
+      
+            </p>
+          </div>
+          <div class="item-body-read" *ngIf="notification.isRead">
+            <p class="item-title">
+      
+              {{notification.name}}
+              <font style="color: black;" *ngIf="notification.msgType==1">{{'POSTED_NEW_POSTING' | translate}}</font>
+              <font style="color: black;" *ngIf="notification.msgType==2">{{'SENT_1_1_MESSAGE' | translate}}</font>
+              <font style="color: black;" *ngIf="notification.msgType==3">{{'ADDED_ME_AS_FRIEND' | translate}}</font>
+              <font style="color: black;" *ngIf="notification.msgType==4">{{'COMMENTED_ON_MY_POSTING' | translate}}</font>
+      
+            </p>
+          </div>
+          <ion-note class="item-time" item-right>
+            <div>
+              {{notification.date}}
+            </div>
+            <div>
+              <button icon-only ion-button clear small class="del-button">
+                <ion-icon name='close' color="dark"></ion-icon>
+              </button>
+            </div>
+          </ion-note>
+        </ion-item>
+
+    </div>
+    <div *ngSwitchCase="'carephoto'" class="grid-view">
+      <ion-item  *ngFor="let post of profile.posts">
+        <ion-row wrap class="grid-row">
+          <preload-image [ratio]="{w:1, h:1}" [src]="post.image" title="ion2FullApp"></preload-image>
+        </ion-row>
+        <ion-row>
+          <ion-col width-75>
+            <a>
+              model
+            </a>
+          </ion-col>
+          <ion-col width-25>
+            <p>{{post1.date}}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p>{{post1.address}}</p>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row no-padding class="actions-row">
+          <ion-col no-padding width-30 text-left>
+            <button class="action-button" ion-button clear small icon-left (click)="likePoast(post)">
+              <ion-icon isActive="{{post.liked}}" name='heart' color="danger" *ngIf="post1.meLikes"></ion-icon>
+              <ion-icon isActive="{{post.liked}}" name='heart' color="dark" *ngIf="!post1.meLikes"></ion-icon>
+              {{post1.likesCount}} {{'LIKES' | translate}}
+            </button>
+          </ion-col>
+          <ion-col no-padding width-45 text-center>
+            <button class="action-button" ion-button clear small icon-left (click)="commentPost(post)">
+              <ion-icon name='chatbubbles' color="danger"></ion-icon>
+              {{post1.commentsCount}} {{'COMMENTS' | translate}}
+            </button>
+          </ion-col>
+          <ion-col no-padding width-25 text-right>
+            <button class="action-button" ion-button clear small icon-left (click)="sharePost(post)">
+              <ion-icon name='share-alt'></ion-icon>
+              {{'SHARE' | translate}}
+            </button>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <p>
+              {{post1.comments[0].name}} {{': '}} {{post1.comments[0].comment}}
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p>
+              {{post1.comments[1].name}} {{': '}} {{post1.comments[1].comment}}
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p>
+              {{post1.comments[2].name}} {{': '}} {{post1.comments[2].comment}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

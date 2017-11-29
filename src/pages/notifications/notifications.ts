@@ -14,6 +14,10 @@ export class NotificationsPage {
   notifications: NotificationsModel = new NotificationsModel();
   loading: any;
 
+  infiniteScrollVisible = true;
+  curNotifications = [];
+  notificationShowCount = 10;
+
   constructor(
     public nav: NavController,
     public notificationsService: NotificationsService,
@@ -27,9 +31,37 @@ export class NotificationsPage {
     this.notificationsService
       .getData()
       .then(data => {
-        this.notifications.today = data.today;
-        this.notifications.yesterday = data.yesterday;
+          this.notifications = data;
           this.loading.dismiss();
+          this.initNotifications();
       });
+  }
+
+  initNotifications(){
+    this.curNotifications = [];
+    for (let i = 0; i < this.notificationShowCount; i++) {
+      if (this.curNotifications.length == this.notifications.notifications.length) {
+        this.infiniteScrollVisible = false;
+        break;
+      }
+      else {
+        this.curNotifications.push(this.notifications.notifications[ this.curNotifications.length ]);
+      }
+    }
+  }
+
+  doInfinite(infiniteScroll: any){
+    setTimeout(() => {
+      for (let i = 0; i < this.notificationShowCount; i++) {
+        if (this.curNotifications.length == this.notifications.notifications.length) {
+          this.infiniteScrollVisible = false;
+          break;
+        }
+        else {
+          this.curNotifications.push(this.notifications.notifications[ this.curNotifications.length ]);
+        }
+      }
+      infiniteScroll.complete();
+    }, 500);
   }
 }

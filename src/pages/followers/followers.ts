@@ -7,11 +7,15 @@ import { UserModel } from '../profile/profile.model';
   templateUrl: 'followers.html'
 })
 export class FollowersPage {
-  list: Array<UserModel> = [];
+  followers: Array<UserModel> = [];
+  followings: Array<UserModel> = [];
+
+  selectedTab = 'follower';
 
   constructor(public menu: MenuController, public navParams: NavParams)
   {
-    this.list = navParams.get('list');
+    this.followers = navParams.get('followers');
+    this.followings = navParams.get('followings');
   }
 
   ionViewDidEnter() {
@@ -22,5 +26,12 @@ export class FollowersPage {
   ionViewWillLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
+  }
+
+  onFollowers(){
+   this.selectedTab = 'follower';
+  }
+  onFollowings(){
+    this.selectedTab = 'following';
   }
 }

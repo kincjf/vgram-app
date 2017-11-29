@@ -1,6 +1,3 @@
-# vgram-app
- VR Media Service App Project For Ionic3
-
 ## Documentation
 https://bit.ly/ion2fullapp-elite-version-documentation
 

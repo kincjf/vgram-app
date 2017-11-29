@@ -5,6 +5,12 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Http } from '@angular/http';
 
+import { Diagnostic } from '@ionic-native/diagnostic';
+
+import { Clipboard } from '@ionic-native/clipboard';
+
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+
 import { ListingPage } from '../pages/listing/listing';
 import { FeedPage } from '../pages/feed/feed';
 import { FollowersPage } from '../pages/followers/followers';
@@ -12,7 +18,10 @@ import { LayoutsPage } from '../pages/layouts/layouts';
 import { FormsPage } from '../pages/forms/forms';
 import { LoginPage } from '../pages/login/login';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { CommentsPage } from '../pages/comments/comments';
 import { ProfilePage } from '../pages/profile/profile';
+import { OtherProfilePage } from '../pages/other-profile/other-profile';
+import { AppSettingPage } from '../pages/app-setting/app-setting';
 import { TabsNavigationPage } from '../pages/tabs-navigation/tabs-navigation';
 import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 import { SettingsPage } from '../pages/settings/settings';
@@ -25,11 +34,13 @@ import { List2Page } from '../pages/list-2/list-2';
 import { GridPage } from '../pages/grid/grid';
 import { FormLayoutPage } from '../pages/form-layout/form-layout';
 import { FiltersPage } from '../pages/filters/filters';
+import { MapTypePage } from '../pages/map-type/map-type';
 import { TermsOfServicePage } from '../pages/terms-of-service/terms-of-service';
 import { PrivacyPolicyPage } from '../pages/privacy-policy/privacy-policy';
 import { FormValidationsPage } from '../pages/form-validations/form-validations';
 
-import { TestPage } from '../pages/tests/tests';
+import { SearchPage } from '../pages/search/search';
+import { SearchResultPage } from '../pages/search-result/search-result';
 
 import { PreloadImage } from '../components/preload-image/preload-image';
 import { BackgroundImage } from '../components/background-image/background-image';
@@ -42,8 +53,11 @@ import { GoogleMap } from '../components/google-map/google-map';
 
 import { FeedService } from '../pages/feed/feed.service';
 import { ListingService } from '../pages/listing/listing.service';
+import { MapTypeService } from '../pages/map-type/map-type.service';
 import { ProfileService } from '../pages/profile/profile.service';
+import { OtherProfileService } from '../pages/other-profile/other-profile.service';
 import { NotificationsService } from '../pages/notifications/notifications.service';
+import { CommentsService } from '../pages/comments/comments.service';
 import { List1Service } from '../pages/list-1/list-1.service';
 import { List2Service } from '../pages/list-2/list-2.service';
 import { ScheduleService } from '../pages/schedule/schedule.service';
@@ -74,6 +88,7 @@ import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
 
 // Functionalities
+import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { FunctionalitiesPage } from '../pages/functionalities/functionalities';
 import { MapsPage } from '../pages/maps/maps';
 import { FacebookLoginPage } from '../pages/facebook-login/facebook-login';
@@ -86,6 +101,7 @@ import { VideoPlayerModule } from '../components/video-player/video-player.modul
 import { ValidatorsModule } from '../components/validators/validators.module';
 
 import { LanguageService } from '../providers/language/language.service';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 export function createTranslateLoader(http: Http) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -102,6 +118,7 @@ export function createTranslateLoader(http: Http) {
     FormsPage,
     LoginPage,
     NotificationsPage,
+    CommentsPage,
     ProfilePage,
     TabsNavigationPage,
     WalkthroughPage,
@@ -134,8 +151,13 @@ export function createTranslateLoader(http: Http) {
     CounterInput,
     Rating,
     GoogleMap,
-
-    TestPage,
+    MapTypePage,
+    SearchPage,
+    SearchResultPage,
+    ChangePasswordPage,
+    AppSettingPage,
+    OtherProfilePage,
+    TestPage
   ],
   imports: [
     BrowserModule,
@@ -166,6 +188,7 @@ export function createTranslateLoader(http: Http) {
     FormsPage,
     LoginPage,
     NotificationsPage,
+    CommentsPage,
     ProfilePage,
     TabsNavigationPage,
     WalkthroughPage,
@@ -189,23 +212,32 @@ export function createTranslateLoader(http: Http) {
 		AdsPage,
 		FormValidationsPage,
     VideoPlaylistPage,
-    
+    MapTypePage,
+    SearchPage,
+    SearchResultPage,
+    ChangePasswordPage,
+    AppSettingPage,
+    OtherProfilePage,
     TestPage
   ],
   providers: [
     FeedService,
     ListingService,
     ProfileService,
+    OtherProfileService,
     NotificationsService,
+    CommentsService,
     List1Service,
     List2Service,
     ScheduleService,
+    MapTypeService,
 
     FacebookLoginService,
     GoogleLoginService,
     TwitterLoginService,
     GoogleMapsService,
 		LanguageService,
+    Clipboard,
 
 	  SplashScreen,
 	  StatusBar,
@@ -222,8 +254,10 @@ export function createTranslateLoader(http: Http) {
 		ImagePicker,
 		Crop,
 		EmailComposer,
-    
+    AuthServiceProvider,
     OscAPIv1Service,
+    Diagnostic,
+    OpenNativeSettings
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
