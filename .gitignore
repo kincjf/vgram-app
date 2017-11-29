@@ -47,3 +47,4 @@ plugins
 platforms
 
 /typings/index.d.ts
+globals

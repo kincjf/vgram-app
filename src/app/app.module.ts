@@ -55,6 +55,11 @@ import { GalleryDetailPage } from '../pages/gallery-detail/gallery-detail';
 
 import { WritingAddPage } from '../pages/writing-add/writing-add';
 
+//for test
+import { TestPage } from '../pages/tests/tests';
+
+
+
 import { PreloadImage } from '../components/preload-image/preload-image';
 import { BackgroundImage } from '../components/background-image/background-image';
 import { ShowHideContainer } from '../components/show-hide-password/show-hide-container';
@@ -80,6 +85,9 @@ import { TwitterLoginService } from '../pages/twitter-login/twitter-login.servic
 import { GoogleMapsService } from '../pages/maps/maps.service';
 import { HelpPage } from '../pages/help/help';
 import { GalleryPage } from '../pages/gallery/gallery';
+// for test
+import { OscAPIv1Service } from '../services/osc.api.v1.service';
+
 
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -99,7 +107,6 @@ import { AppRate } from '@ionic-native/app-rate';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
-
 
 
 // Functionalities
@@ -183,7 +190,9 @@ export function createTranslateLoader(http: Http) {
     HelpPage,
     GalleryPage,
     GalleryDetailPage,
-    WritingAddPage
+    WritingAddPage,
+
+    TestPage
   ],
   imports: [
     BrowserModule,
@@ -255,7 +264,9 @@ export function createTranslateLoader(http: Http) {
     HelpPage,
     GalleryPage,
     GalleryDetailPage,
-    WritingAddPage
+    WritingAddPage,
+
+    TestPage
   ],
   providers: [
     FeedService,
@@ -294,7 +305,9 @@ export function createTranslateLoader(http: Http) {
     AuthServiceProvider,
 
     Diagnostic,
-    OpenNativeSettings
+    OpenNativeSettings,
+
+    OscAPIv1Service
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
