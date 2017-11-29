@@ -15,6 +15,8 @@ import { FunctionalitiesPage } from '../pages/functionalities/functionalities';
 
 import { LoginPage } from '../pages/login/login';
 
+import { TestPage } from '../pages/tests/tests';
+
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { locale } from 'core-js/library/web/timers';
 
@@ -29,9 +31,9 @@ export class MyApp {
   isInitialOpen = true;
 
   // make WalkthroughPage the root (or first) page
-  rootPage: any = WalkthroughPage;
+  // rootPage: any = WalkthroughPage;
   // rootPage: any = FunctionalitiesPage;
-  // rootPage: any = TabsNavigationPage;
+  rootPage: any = TabsNavigationPage;
   textDir: string = "ltr";
 
   pages: Array<{title: any, icon: string, component: any}>;
@@ -99,7 +101,8 @@ export class MyApp {
               { title: 'Forms', icon: 'create', component: undefined },
               { title: data[2], icon: 'code', component: FunctionalitiesPage },
               { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage }
+              { title: data[4], icon: 'settings', component: SettingsPage },
+              { title: 'Tests', icon: 'settings', componetn: TestPage }
             ];
           }
         });
@@ -128,7 +131,8 @@ export class MyApp {
               { title: 'Forms', icon: 'create', component: undefined },
               { title: data[2], icon: 'code', component: FunctionalitiesPage },
               { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage }
+              { title: data[4], icon: 'settings', component: SettingsPage },
+              { title: 'Tests', icon: 'settings', componetn: TestPage }
             ];
           }
         });
