@@ -1,0 +1,19 @@
+<ion-header class="login-header auth-header">
+  <ion-navbar>
+    <ion-title>{{'CHATTING' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="chatting-content">
+
+  <img src="../assets/images/user/unregister.png" class="welcome-image" />
+  <div class="welcome-text">
+    {{'START_CHATTING_WITH_FRIENDS' | translate}}
+  </div>
+  <a (click)="onCheckFriends()">
+    <div class="check-friend">
+      {{'CHECK_MY_FRIENDS' | translate}}
+    </div>
+  </a>
+  <img class="chatting-image" src="../../assets/images/listing/200x200basquet.png"/>
+</ion-content>

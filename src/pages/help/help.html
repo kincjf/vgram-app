@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'HELP' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="help-content">
+
+  <ion-slides pager loop="true">
+    <ion-slide *ngFor="let slide of images">
+      <img src="{{slide}}" class="slide-image"/>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

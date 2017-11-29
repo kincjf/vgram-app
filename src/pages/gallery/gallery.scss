@@ -1,0 +1,61 @@
+gallery-page {
+
+	.all-text{
+		color: #1d436f; font-size: 120%;
+	}
+
+	.get-photo{
+		background-color: #289688;
+		border-radius: 2px;
+		font-size: 120%;
+		padding: 5px;
+		.text {
+			color: white;
+		}
+	}
+
+
+	.gallery-content{
+		width: 100%;
+		height: 100%;
+		.gallery-item{
+			width: 50%;
+			height: 15%;
+			padding: 2px;
+			.check-box{
+				position: absolute;
+				left: 5px;
+				top: 5px;
+
+			}
+		}
+	}
+
+
+	.footer{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.segment-buttons{
+			margin-left: 10%;
+			margin-right: 10%;
+			border-radius: 4px;
+			border: solid 1px #47749d;
+			.selected{
+				background-color: #5b9bd5;
+				.selected-font{
+					color: white;
+					font-size: 120%;
+				}
+			}
+			.unselected{
+				background-color: #bed7ee;
+				.unselected-font{
+					color: white;
+					font-size: 120%;
+				}
+			}
+		}
+	}
+}

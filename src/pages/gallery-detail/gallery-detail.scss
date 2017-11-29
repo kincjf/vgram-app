@@ -1,0 +1,25 @@
+gallery-detail-page {
+	.gallery-detail-content {
+		.back-btn{
+			position: absolute;
+			top: 10px;
+		}
+		.main-image{
+			width: 100%;
+			height: 100%;
+		}
+
+		.footer{
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			height: 50px;
+			background-color: hsla(106, 0%, 37%, 0.3);
+			display: flex;
+			align-items: center;
+			.action-btn{
+				margin: 5px;
+			}
+		}
+	}	
+}

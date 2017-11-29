@@ -1,0 +1,37 @@
+imageedit-page {
+	.image-edit-content
+	{
+		.buttons{
+			margin-top: 3%;
+			display: flex;
+			align-items: center;
+
+			justify-content: center;
+			
+			.cancelBtn{
+				color: white;
+				border-radius: 5px;
+				background-color: #c02942;
+				font-size: 110%;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			.applyBtn{
+				color: white;
+				border-radius: 5px;
+				background-color: #3499db;
+				font-size: 110%;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+		}
+	}
+}

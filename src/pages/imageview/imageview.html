@@ -1,0 +1,80 @@
+<!--
+  Generated template for the SearchResultPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar hideBackButton color="light">
+    <div style="display: flex; align-items: center; background-color:white;">
+      <span>
+        <a (click)="onBack()">
+          <img src="../../assets/images/homeHeader/back.png" />
+        </a>
+      </span>
+      <ion-segment style="flex: 1; margin: 10px;" [(ngModel)]="selectedTab" class="segment-buttons">
+        <ion-segment-button value="vr" class="selected" *ngIf="selectedTab=='vr'" (ionSelect)="selectVR()">
+          <font class="selected-font">VR</font>
+        </ion-segment-button>
+        <ion-segment-button value="vr" class="unselected" *ngIf="selectedTab!='vr'" (ionSelect)="selectVR()">
+          <font class="unselected-font">VR</font>
+        </ion-segment-button>
+        <ion-segment-button value="photo" class="selected" *ngIf="selectedTab=='photo'" (ionSelect)="selectPhoto()">
+          <font class="selected-font">PHOTO</font>
+        </ion-segment-button>
+        <ion-segment-button value="photo" class="unselected" *ngIf="selectedTab!='photo'" (ionSelect)="selectPhoto()">
+          <font class="unselected-font">PHOTO</font>
+        </ion-segment-button>
+      </ion-segment>
+      <span>
+        <a (click)="onNotificationPage()">
+          <img src="../../assets/images/homeHeader/chat.png" />
+        </a>
+      </span>
+      <span>
+        <a (click)="onClickMenu()">
+          <img src="../../assets/images/homeHeader/menu.png" />
+        </a>
+      </span>
+    </div>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="main-content">
+  <div *ngIf="selectedTab=='vr'" style="width:100%;height:100%;">
+    <div id="pano" style="width:100%;height:100%;">
+    </div>
+  </div>
+
+  <div *ngIf="selectedTab=='photo'"  class="slide-view">
+    <ion-slides pager loop="true">
+      <ion-slide *ngFor="let slide of post.images">
+        <img src="{{slide}}" class="slide-image"/>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-item class="footer-item">
+    <div class="footer-image" item-left>
+      <img class="user-image" src="{{profileImage}}" />
+    </div>
+    <div class="footer-content">
+      <a (click)="showDetail()"><p class="item-title">
+        {{profileName}}
+      </p></a>
+    </div>
+    <ion-note class="item-time" item-right>
+      <div>
+        <button icon-only ion-button clear small class="del-button">
+          <ion-icon name='heart' color="dark"></ion-icon>
+        </button>
+      </div>
+    </ion-note>
+  </ion-item>
+</ion-footer>

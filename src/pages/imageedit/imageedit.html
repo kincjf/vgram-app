@@ -1,0 +1,34 @@
+<ion-content class="image-edit-content">
+
+  <preload-image [ratio]="{w:1, h:1}" [src]="image"></preload-image>
+
+  <ion-item>
+    <ion-label><ion-icon small name="sunny"></ion-icon>{{'BRIGHTNESS' | translate}}</ion-label>
+    <ion-range min="-100" max="100" [(ngModel)]="brightness" color="secondary" ionChange="refreshImage()">
+      <ion-label range-left>-1</ion-label>
+      <ion-label range-right>1</ion-label>
+    </ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-label><ion-icon small name="contrast"></ion-icon>{{'SHARPNESS' | translate}}</ion-label>
+    <ion-range min="-100" max="100" [(ngModel)]="sharpness" color="secondary"ionChange="refreshImage()">
+      <ion-label range-left>-1</ion-label>
+      <ion-label range-right>1</ion-label>
+    </ion-range>
+  </ion-item>
+
+  <div class="buttons">
+    <a (click)="onCancel()">
+      <div class="cancelBtn">
+        {{'CANCEL' | translate}}
+      </div>
+    </a>
+    <a (click)="onApply()">
+      <div class="applyBtn">
+        {{'APPLY' | translate}}
+      </div>
+    </a>
+  </div>
+
+</ion-content>

@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar hideBackButton color="light">
+    <div style="display: flex; align-items: center;" *ngIf="!m_bSelect">
+      <span style="font-size: 150%; margin: 5px;">
+        <a (click)="onBack()">
+          <img src="../../assets/images/homeheader/white-back.png" width="30px" height="30px"/>
+        </a>
+      </span>
+
+      <div style="flex: 1; font-size: 150%; color: #5f5f5f; text-align: center;">
+        {{'VR_PHOTO_MANAGEMENT' | translate}}
+      </div>
+
+      <span style="font-size: 150%; margin: 5px;">
+        <a (click)="onDownload()">
+          <ion-icon name="cloud-download" color="#5f5f5f"></ion-icon>
+        </a>
+      </span>
+
+      <span style="font-size: 150%; margin: 5px;">
+        <a (click)="onTrash()">
+          <ion-icon name="trash" color="#5f5f5f"></ion-icon>
+        </a>
+      </span>
+    </div>
+
+    <div style="display: flex; align-items: center;" *ngIf="m_bSelect">
+      <span style="font-size: 150%; margin: 5px;">
+        <a (click)="onSelectAll()">
+          <img *ngIf="!m_bAllSelected" src="../../assets/images/gallery/uncheckbox1.png" width="20px" height="20px"/>
+          <img *ngIf="m_bAllSelected" src="../../assets/images/gallery/checkbox1.png"  width="20px" height="20px"/>
+          <font class="all-text">{{'ALL' | translate}}</font>
+        </a>
+      </span>
+    
+      <div style="flex: 1; font-size: 150%; color: #5f5f5f; text-align: center;">
+        {{selectedCount}}{{'_PHOTOS_SELECTED' | translate}}
+      </div>
+    
+      <span class="get-photo">
+        <a (click)="onTrash()">
+          <font class="text">{{'GET_PHOTOS' | translate}}</font>
+        </a>
+      </span>
+    </div>
+    
+  </ion-navbar>
+</ion-header>
+
+
+<!-- "ALL": "전체",
+  "_PHOTOS_SELECTED": "개 사진 선택",
+  "GET_PHOTOS": "가져오기",
+  "VR_CAMERA": "VR 카메라",
+  "MY_DEVICE": "내 기기" -->
+
+<ion-content class="gallery-content">
+
+  <ion-row>
+    <ion-col width-50 class="gallery-item" *ngFor="let image of images">
+      <a (click)="onImageDetial(image)"><img src="{{image.image}}"/></a>
+      <div *ngIf="m_bSelect" class="check-box">
+        <a (click)="onSelectImage(image)">
+          <img *ngIf="image.selected" src="../../assets/images/gallery/checkbox.png"  width="30px" height="30px"/>
+          <img *ngIf="!image.selected" src="../../assets/images/gallery/uncheckbox.png"  width="30px" height="30px"/>
+        </a>
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+
+<ion-footer class="footer">
+  <ion-segment [(ngModel)]="selectedTab" class="segment-buttons">
+    <ion-segment-button value="vr" class="selected" *ngIf="selectedTab=='vr'" (ionSelect)="selectVR()">
+      <font class="selected-font">{{'VR_CAMERA'  | translate }}</font>
+    </ion-segment-button>
+    <ion-segment-button value="vr" class="unselected" *ngIf="selectedTab!='vr'" (ionSelect)="selectVR()">
+      <font class="unselected-font">{{'VR_CAMERA'  | translate }}</font>
+    </ion-segment-button>
+    <ion-segment-button value="mine" class="selected" *ngIf="selectedTab=='mine'" (ionSelect)="selectMachine()">
+      <font class="selected-font">{{'MY_DEVICE'  | translate }}</font>
+    </ion-segment-button>
+    <ion-segment-button value="mine" class="unselected" *ngIf="selectedTab!='mine'" (ionSelect)="selectMachine()">
+      <font class="unselected-font">{{'MY_DEVICE'  | translate }}</font>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>

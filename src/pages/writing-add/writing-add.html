@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'WRITING' | translate }} - {{ 'ADDITIONAL_INFO' | translate }}</ion-title>
+    <ion-buttons end>
+      <button class="finish-btn">
+        {{ 'FINISH' | translate }}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="main-content">
+
+  <div #map id="map"></div>
+
+  <ion-row class="search-group">
+    <ion-col class="one-button">
+      <div class="button-content">
+        <ion-icon name="search"></ion-icon>
+         {{ 'ADDRESS_SEARCH' | translate }}
+      </div>
+    </ion-col>
+    <ion-col class="one-button">
+      <div class="button-content">
+        <ion-icon name="wifi"></ion-icon>
+         {{ 'CURRENT_LOCATION' | translate }}
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <ion-item>
+    <ion-label item-left>{{ 'STREET_ADDRESS' | translate }}</ion-label>
+    <ion-input type="text" [(ngModel)]="streetAddress"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label item-left>{{ 'DETAIL_ADDRESS' | translate }}</ion-label>
+    <ion-input type="text" [(ngModel)]="detailAddress"></ion-input>
+  </ion-item>
+
+  <ion-label class="comment">
+     {{ 'INPUT_DETAIL_ADDRESS' | translate }}
+  </ion-label>
+
+  <ion-item>
+    <ion-label item-left>{{ 'PUBLIC_PRIVATE' | translate }}</ion-label>
+    <ion-select [(ngModel)]="public_or_private">
+      <ion-option value="public">{{ 'PUBLIC' | translate }}</ion-option>
+      <ion-option value="private">{{ 'PRIVATE' | translate }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-label class="comment1">{{ 'CATEGORY' | translate }}</ion-label>
+  <ion-item>
+    <ion-select [(ngModel)]="category">
+      <ion-option value="public">{{ 'PUBLIC' | translate }}</ion-option>
+      <ion-option value="private">{{ 'PRIVATE' | translate }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-label class="comment1">{{ 'TITLE' | translate }}</ion-label>
+  <ion-input type="text" [(ngModel)]="title" class="input1"></ion-input>
+
+  <ion-label class="comment1">{{ 'DETAILS' | translate }}</ion-label>
+  <ion-textarea type="text" [(ngModel)]="content" class="input1"></ion-textarea>
+</ion-content>

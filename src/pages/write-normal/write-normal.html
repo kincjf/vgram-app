@@ -1,0 +1,40 @@
+
+<ion-header>
+  <ion-navbar>
+    <div style="display: flex; align-items: center;">
+      <ion-title style="flex: 1;"><font style="text-align: center;">{{'WRITING' | translate}} - {{'NORMAL_PHOTO' | translate}} {{'ADD' | translate}}</font></ion-title>
+      <span>
+        <a (click)="onClickNext()"><span class="next-btn">{{'NEXT' | translate}}</span></a>
+      </span>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="write-content">
+
+  <a (click)="addVRPicture()">
+    <div class="add-vr-action">
+      {{'ADD_NORMAL_PICTURE' | translate}}
+    </div>
+  </a>
+
+  <div class="images-content">
+    <ion-row>
+      <ion-col width-50 class="one-image-container" *ngFor="let image of images">
+        <preload-image [ratio]="{w:1, h:1}" [src]="image"></preload-image>
+        <div class="buttons">
+          <a (click)="editImage(image)"><div class="action-button">{{'EDIT' | translate}}</div></a>
+          <a (click)="removeImage(image)"><div class="action-button">{{'REMOVE' | translate}}</div></a>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="rules-content">
+    <p>
+      - VR images are mostly 2:1
+    </p>
+    <p>
+      - At least one VR image is required
+    </p>
+  </div>
+</ion-content>

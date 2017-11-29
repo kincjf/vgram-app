@@ -1,0 +1,44 @@
+<ion-header class="chatting-header">
+  <ion-navbar>
+    <ion-title>{{'CHATTING' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="chatting-content">
+
+  <ion-row class="select-group" no-lines>
+
+    <ion-col style="flex: 1;">
+      <ion-select [(ngModel)]="room">
+        <ion-option value="default">In Room</ion-option>
+        <ion-option value="f">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select>
+    </ion-col>
+
+    <ion-col style="flex: 1;">
+      <ion-select [(ngModel)]="invite">
+        <ion-option value="default">Invite</ion-option>
+        <ion-option value="f">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select>
+    </ion-col>
+
+  </ion-row >
+
+  <div class="chat-content">
+    <div *ngFor="let message of messages">
+      <span class="my-message">
+      {{message.message}}
+      </span>
+    </div>
+  </div>
+  
+</ion-content>
+
+<ion-footer class="chatting-footer">
+  <ion-input type="text" [(ngModel)]="message" class="message-input"></ion-input>
+  <button icon-only ion-button clear class="send-button">
+    <ion-icon name='send' color="dark"></ion-icon>
+  </button>
+</ion-footer>

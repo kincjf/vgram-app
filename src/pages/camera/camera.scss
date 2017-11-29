@@ -1,0 +1,24 @@
+camera-page {
+	.camera-content
+	{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.one-action-container{
+			width: 60%;
+			border-radius: 20px;
+			border: solid 5px #1d436f;
+			margin-left: 20%;
+			font-size: 200%;
+			padding: 10px;
+			text-align: center;
+
+			margin-top: 5%;
+
+			.action-icon{
+				font-size: 300%;
+			}
+		}
+	}
+}

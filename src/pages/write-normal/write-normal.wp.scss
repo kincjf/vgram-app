@@ -1,0 +1,10 @@
+ion-app.wp {
+	write-normal-page {
+		.user-content-segment
+		{
+			@include justify-content(center);
+
+			@include segment-button-wp-styles();
+		}
+	}
+}

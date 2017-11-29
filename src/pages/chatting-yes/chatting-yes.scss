@@ -1,0 +1,47 @@
+chatting-yes-page {
+	.chatting-header{
+
+	}
+	.chatting-content
+	{
+		margin-left: 10px;
+		margin-right: 10px;
+
+		.select-group{
+			display: flex;
+			align-items: center;
+		}
+
+		.chat-content{
+			overflow:auto;
+			height: 90%;
+			display: inline;
+
+			.my-message{
+				font-size: 300%;
+				background-color: #d9edf7;
+				margin: 5px;
+				border-radius: 5px;
+				padding: 5px;
+			}
+			.other-message{
+				font-size: 300%;
+				background-color: #d9edf7;
+				margin: 5px;
+				border-radius: 5px;
+				padding: 5px;
+			}
+		}
+	}
+	.chatting-footer{
+		display: flex;
+		align-items: center;
+		.message-input{
+			flex: 1;
+		}
+		.send-button{
+
+		}
+	}
+	
+}

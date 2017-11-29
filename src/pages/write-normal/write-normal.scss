@@ -1,0 +1,46 @@
+write-normal-page {
+	.next-btn{
+		border: solid 1px #407fa3; border-radius: 5px; color: white; font-size: 120%;
+		background-color: #5b9bd5;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	.write-content
+	{
+		.add-vr-action{
+			margin: 2%;
+			margin-top: 5%;
+			border: solid #4d7da8 1px;
+			border-radius: 5px;
+			background-color: #5b9bd5;
+			color: white;
+			width: 96%;
+			text-align: center;
+			font-size: 140%;
+		}
+		.images-content{
+			.one-image-container{
+				.buttons{
+					margin: 1%;
+					margin-left: 10%;
+					margin-right: 10%;
+					display: flex;
+					justify-content: space-between;
+					.action-button{
+						border: solid #4d7da8 1px;
+						border-radius: 5px;
+						background-color: #5b9bd5;
+						color: white;
+						
+					}
+				}
+			}
+		}
+		.rules-content{
+			margin: 3%;
+			font-size: 120%;
+		}
+	}
+}

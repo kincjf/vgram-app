@@ -1,0 +1,36 @@
+<ion-header class="chatting-header">
+  <ion-navbar>
+    <ion-title>{{'VR_CAMERA_MANAGEMENT' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="camera-content">
+
+  <a (click)="toVRSetting()">
+    <div class="one-action-container">
+      <ion-icon name="camera" color="#929292" class="action-icon"></ion-icon>
+      <div>
+        {{'CONNECT_TO_VR_CAMERA' | translate}}
+      </div>
+    </div>
+  </a>
+
+  <a (click)="toGallery()">
+    <div class="one-action-container">
+      <ion-icon name="photos" color="#929292" class="action-icon"></ion-icon>
+      <div>
+        {{'GALLERY' | translate}}
+      </div>
+    </div>
+  </a>
+
+  <a (click)="toHelp()">
+    <div class="one-action-container">
+      <ion-icon name="help-circle" color="#929292" class="action-icon"></ion-icon>
+      <div>
+        {{'HELP' | translate}}
+      </div>
+    </div>
+  </a>
+
+</ion-content>
