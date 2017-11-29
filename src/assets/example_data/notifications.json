@@ -1,0 +1,99 @@
+{
+  "notifications":  [
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 1,
+      "date": "5:03 pm",
+      "isRead": true
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 2,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 4,
+      "date": "5:03 pm",
+      "isRead": true
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 3,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 2,
+      "date": "5:03 pm",
+      "isRead": true
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 4,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 1,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 3,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 3,
+      "date": "5:03 pm",
+      "isRead": true
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 3,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 3,
+      "date": "5:03 pm",
+      "isRead": false
+    }
+    ,
+    {
+      "name": "Martin",
+      "image": "./assets/images/notifications/100x100Notification1.jpeg",
+      "msgType": 3,
+      "date": "5:03 pm",
+      "isRead": true
+    }
+  ]
+}

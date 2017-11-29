@@ -1,0 +1,28 @@
+<ion-menu [content]="content" [swipeEnabled]="false">
+  <ion-content class="menu-content">
+    <ion-list class="menu-list">
+      <div>
+        <img *ngIf="authService.authenticated()" src="../assets/images/user/register.png" class="userImage" />
+        <img *ngIf="!authService.authenticated()" src="../assets/images/user/unregister.png" class="userImage" />
+      </div>
+      <button ion-item detail-none *ngFor="let page of pages" (click)="pushPage(page)">
+        <ion-icon *ngIf="page.icon" name="{{page.icon}}" item-left></ion-icon>
+        {{page.title}}
+      </button>
+      <div *ngIf="!authService.authenticated()" class="comments">
+        <br>
+        <p class="boldText">
+          {{'<'}}{{'UPGRADE_LATER' | translate}}{{'>'}}
+        </p>
+        <p class="normalText">
+          {{'-'}}{{'EXC_AUTH_LIST' | translate}}
+        </p>
+        <p class="normalText">
+          {{'-'}}{{'CHANNEL_CATEGORY_LIST' | translate}}
+        </p>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>

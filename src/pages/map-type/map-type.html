@@ -1,0 +1,40 @@
+<ion-header class="listing-header">
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <div style="display: flex;
+		align-items: center;">
+      <span style="flex: 1;">
+        <ion-searchbar [showCancelButton]="shouldShowCancel" [(ngModel)]="searchText"></ion-searchbar>
+      </span>
+       
+      <span>
+        <a><img src="../../assets/images/homeHeader/target.png"/></a>
+      </span>
+      
+      <span *ngIf="authService.authenticated()">
+        <a (click)="onNotificationPage()"><img src="../../assets/images/homeHeader/envelope.png"/></a>
+      </span>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="listing-content">
+  <ion-scroll scrollX="true" class="horizontal-categories">
+    <ion-row class="categories-row">
+      <ion-col width-30 class="horizontal-item"  *ngFor="let category of categories">
+        <preload-image [ratio]="{w:1, h:1}" [src]="category.image" title="popular.title" *ngIf="selectedCategory == category.title" class="selectedCategory"></preload-image>
+        <a (click)="onCategory(category)"><preload-image [ratio]="{w:1, h:1}" [src]="category.image" title="popular.title" *ngIf="selectedCategory != category.title"></preload-image></a>
+      </ion-col>
+    </ion-row>
+  </ion-scroll>
+
+  <div #map id="map"></div>
+
+  <button class="list-button" ion-button small (click)="toList()" icon-left>
+    <ion-icon name='list' color="white"></ion-icon>
+     {{'LIST' | translate}}
+  </button>
+
+</ion-content>

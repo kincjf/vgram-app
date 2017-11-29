@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <div style="display: flex; align-items: center;">
+      <span>
+        <a (click)="onBack()">
+          <img src="../../assets/images/settings/cancel.png" />
+        </a>
+      </span>
+      <span style="flex: 1; text-align: center; color: white;">
+        {{'SETTINGS' | translate}}
+      </span>
+      <span>
+        <a (click)="onSave()">
+          <img src="../../assets/images/settings/save.png" />
+        </a>
+      </span>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<!-- 
+   "DEFAULT_LANGUAGE": "기본 언어", "SHARE_MY_GPS_INFO": "내 위치정보 이용", "RECEIVING_IMPO_SMS": "중요정보 메시지 알림", "ALERT_DISTANCE": "알림
+  거리 범위", "FONT_SIZE": "폰트 크기" -->
+  <ion-item class="setting-item">
+    <ion-label>{{'DEFAULT_LANGUAGE' | translate}}</ion-label>
+    <ion-select [(ngModel)]="defulatLanguage">
+      <ion-option value="en">English</ion-option>
+      <ion-option value="ko">Korean</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item class="setting-item">
+    <ion-label>{{'SHARE_MY_GPS_INFO' | translate}}</ion-label>
+    <ion-toggle [(ngModel)]="sharePosition"></ion-toggle>
+  </ion-item>
+
+  <ion-item class="setting-item">
+    <ion-label>{{'RECEIVING_IMPO_SMS' | translate}}</ion-label>
+    <ion-toggle [(ngModel)]="receiveImpSMS"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>{{'ALERT_DISTANCE' | translate}}</ion-label>
+    <ion-range min="0" max="200" [(ngModel)]="alertDistance" color="secondary">
+      <ion-label range-left>1m</ion-label>
+      <ion-label range-right>200m</ion-label>
+    </ion-range>
+  </ion-item>
+
+  <ion-item class="setting-item">
+    <ion-label>{{'FONT_SIZE' | translate}}</ion-label>
+    <ion-select [(ngModel)]="fontSize">
+      <ion-option value="small">Small</ion-option>
+      <ion-option value="medium">medium</ion-option>
+      <ion-option value="big">big</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-content>

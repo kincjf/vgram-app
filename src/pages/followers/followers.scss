@@ -1,0 +1,124 @@
+$followers-description-font-size: 12px;
+
+followers-page {
+	.followers-content
+	{
+		background-color: color($colors, background, base);
+
+		ion-searchbar {
+			background: transparent;
+			padding: 10px;
+			border: none;
+
+			.searchbar-input
+			{
+				border-radius: 1.5rem;
+				color: $theme-color-2;
+				background-color: $white-c;
+			}
+
+			.searchbar-search-icon {
+			  @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $theme-color-2);
+			}
+		}
+
+		.followers-list
+		{
+			margin: 10px;
+
+			.list-item
+			{
+				margin: 6px 0px;
+				border-radius: 6px;
+				border: none;
+				padding: 0px;
+				@include element-shadow();
+
+				ion-thumbnail {
+					flex: 0 0 15%;
+			    max-width: 15%;
+					margin: 0px;
+					padding: 8px;
+				}
+
+				.item-inner
+				{
+					border: none;
+					padding: 0px;
+
+					.input-wrapper
+					{
+						padding: 8px;
+					}
+
+					ion-label {
+						margin: 0px;
+						@include align-self(flex-start);
+
+						.item-title
+						{
+							font-size: 1.4rem;
+							font-weight: 500;
+							letter-spacing: 0.2px;
+							color: $theme-color-3;
+							margin-bottom: 6px;
+						}
+
+						.item-description
+						{
+							letter-spacing: 0.2px;
+							word-break: break-word;
+							color: $white-d;
+							@include multi-line-ellipsis($followers-description-font-size);
+						}
+					}
+
+					.relation-button
+					{
+						margin: 0px;
+						padding: 0px 16px;
+						@include align-self(stretch);
+					  	border-radius: 0px 6px 6px 0px;
+						background-color: #3897f0;
+					  	width: 24%;
+					}
+					.remove-button
+					{
+						margin: 0px;
+						
+						  background-color: white;
+						  border-radius:5px;
+						  border-color: #333333;
+						  border-width: 1px;
+					 
+						  .remove-image{
+							  width: 80%;
+							  height: 80%;
+							  
+						  }
+					}
+				}
+			}
+		}
+		.tab-span {
+			font-size: 200%; 
+			flex: 1; text-align: center; 
+			border-radius: 5px; 
+			border-width: 1px; 
+			border-color: #5982a7; 
+			border-style: solid;
+			margin: 5px;
+		}
+		.selected {
+			color: #ae75e7;
+		}
+		.tabs-group{
+			display: flex; 
+			align-items: center;
+			margin: 10px;
+		}
+		.profile-image {
+			border-radius: 50%;
+		}
+	}
+}
