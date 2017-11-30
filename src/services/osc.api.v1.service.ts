@@ -240,6 +240,9 @@ class LG360DeviceService extends OscAPIv1Service {
   }
 }
 
+/**
+ * refered osc api docs(postman)
+ */
 @Injectable()
 export class OscAPIService {
   private OscAPIv1: OscAPIv1Service;
@@ -255,7 +258,7 @@ export class OscAPIService {
   }
 
   private checkDevice(): void {
-    // check 
+    // check
     // switch () { return }
     if (true) {
       this.OscAPIv1 = new OscAPIv1Service(this.http);
@@ -267,6 +270,11 @@ export class OscAPIService {
     }
   }
 
+
+  /**
+   * /osc/info
+   * @returns {Promise<any>}
+   */
   getInfo(): Promise<any> {
     if (this.Mode == 1) {
       return this.OscAPIv1.getInfo();
@@ -275,6 +283,10 @@ export class OscAPIService {
     return Promise.reject({ model: 'None' });
   }
 
+  /**
+   * /osc/state
+   * @returns {Promise<any>}
+   */
   getStatus(): Promise<any> {
     if (this.Mode == 1) {
       return this.OscAPIv1.getStatus();
@@ -283,6 +295,10 @@ export class OscAPIService {
     return Promise.reject('error');
   }
 
+  /**
+   * session -> takePicture -> convert -> ImageData
+   * @returns {Promise<binary(image/jpeg or image/png)>}
+   */
   getTakePicture(): Promise<any> {
     if (this.Mode == 1) {
       return this.OscAPIv1.startSession().then(data => {
@@ -299,6 +315,9 @@ export class OscAPIService {
     return Promise.reject('error');
   }
 
+  /**
+   * @returns {Promise<binary(image/jpeg or image/png)>}
+   */
   getPicture(URI: String): Promise<any> {
     if (this.Mode == 1) {
       return this.OscAPIv1.getImage(URI);
@@ -307,6 +326,10 @@ export class OscAPIService {
     return Promise.reject('error');
   }
 
+  /**
+   *
+   * @returns {Promise<object>}
+   */
   getListImages(): Promise<any> {
 
     if (this.Mode == 1) {
