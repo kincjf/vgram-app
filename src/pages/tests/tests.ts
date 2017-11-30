@@ -14,7 +14,14 @@ export class TestPage {
   }
 
   getMockServerOscInfo() {
-    this.OscAPIv1Service.getInfo("/mock-server/v1")
+    let originUrl =
+    if (window.cordova) {
+     originUrl
+    } else {
+
+    }
+
+    this.OscAPIv1Service.getInfo("http://192.168.2.28")
       .then(data => {
         console.log(data);
       });
