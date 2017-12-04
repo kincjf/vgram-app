@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MenuController, SegmentButton, App, NavParams, LoadingController } from 'ionic-angular';
+import { File } from '@ionic-native/file';
 
-import { OscAPIv1Service } from "../../services/osc.api.v1.service";
+import { OscAPIService } from "../../services/osc.api.v1.service";
 
 @Component({
   selector: 'tests',
@@ -9,28 +9,17 @@ import { OscAPIv1Service } from "../../services/osc.api.v1.service";
 })
 export class TestPage {
   constructor(
-    public OscAPIv1Service: OscAPIv1Service,
+    public OscAPIService: OscAPIService,
+    private file: File
   ) {
   }
 
-  getMockServerOscInfo() {
-    let originUrl =
-    if (window.cordova) {
-     originUrl
-    } else {
-
-    }
-
-    this.OscAPIv1Service.getInfo("http://192.168.2.28")
+  getOscInfo() {
+    this.OscAPIService.getPicture("14")
       .then(data => {
         console.log(data);
-      });
-  }
-
-  getLG360CamOscInfo() {
-    this.OscAPIv1Service.getInfo("/lg360cam/v1")
-      .then(data => {
-        console.log(data);
+        // var name = "test";
+        // this.file.writeFile(this.file.dataDirectory, name, data);
       });
   }
 }

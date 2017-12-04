@@ -86,7 +86,7 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
 import { HelpPage } from '../pages/help/help';
 import { GalleryPage } from '../pages/gallery/gallery';
 // for test
-import { OscAPIv1Service } from '../services/osc.api.v1.service';
+import { OscAPIService } from '../services/osc.api.v1.service';
 
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -107,6 +107,7 @@ import { AppRate } from '@ionic-native/app-rate';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { File } from '@ionic-native/file';
 
 
 // Functionalities
@@ -303,11 +304,12 @@ export function createTranslateLoader(http: Http) {
 		Crop,
 		EmailComposer,
     AuthServiceProvider,
+    File,
 
     Diagnostic,
     OpenNativeSettings,
 
-    OscAPIv1Service
+    OscAPIService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
