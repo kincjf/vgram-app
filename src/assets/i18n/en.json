@@ -211,5 +211,6 @@
   "TITLE": "Title",
   "DETAILS": "Details",
   "FINISH": "Finish",
-  "PUBLIC_PRIVATE": "Public or Private"
+  "PUBLIC_PRIVATE": "Public or Private",
+  "TEST": "test"
 }
