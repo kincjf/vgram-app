@@ -1,6 +1,3 @@
-## Setting
-- VR Camera Mock Server URL `http://210.122.38.113/osc/info`
-
 ## Documentation
 https://bit.ly/ion2fullapp-elite-version-documentation
 

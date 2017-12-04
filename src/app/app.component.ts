@@ -17,9 +17,6 @@ import { ChattingNoPage } from '../pages/chatting-no/chatting-no';
 import { ChattingYesPage } from '../pages/chatting-yes/chatting-yes';
 import { LoginPage } from '../pages/login/login';
 
-// for test
-import { TestPage } from '../pages/tests/tests';
-
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { locale } from 'core-js/library/web/timers';
 
@@ -88,8 +85,7 @@ export class MyApp {
           this.translate.get('EVENT_BLOG'),
           this.translate.get('FREQ_QUESTIONS'),
           this.translate.get('CUSTOMER_CENTER'),
-          this.translate.get('LOGIN_SIGNUP'),
-          this.translate.get('TEST')
+          this.translate.get('LOGIN_SIGNUP')
         ).subscribe(data => {
           if (this.authService.authenticated()) {
             const chatting_first = localStorage.getItem('chatting_first');
@@ -98,8 +94,7 @@ export class MyApp {
               { title: data[1], icon: 'create', component: (chatting_first == undefined ? ChattingNoPage : ChattingYesPage) },
               { title: data[2], icon: 'code', component: FunctionalitiesPage },
               { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage },
-              { title: data[6], icon: 'settings', component: TestPage }
+              { title: data[4], icon: 'settings', component: SettingsPage }
             ];
           } else {
             this.pages = [
@@ -107,8 +102,7 @@ export class MyApp {
               { title: 'Forms', icon: 'create', component: undefined },
               { title: data[2], icon: 'code', component: FunctionalitiesPage },
               { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage },
-              { title: data[6], icon: 'settings', component: TestPage }
+              { title: data[4], icon: 'settings', component: SettingsPage }
             ];
           }
         });
@@ -141,7 +135,7 @@ export class MyApp {
             ];
           }
         });
-
+      
     });
 
     events.subscribe('chatting_first', () => {

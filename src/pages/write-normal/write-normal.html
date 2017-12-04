@@ -1,30 +1,31 @@
 
 <ion-header>
   <ion-navbar>
-    <div style="display: flex; align-items: center;">
       <ion-title style="flex: 1;"><font style="text-align: center;">{{'WRITING' | translate}} - {{'NORMAL_PHOTO' | translate}} {{'ADD' | translate}}</font></ion-title>
-      <span>
-        <a (click)="onClickNext()"><span class="next-btn">{{'NEXT' | translate}}</span></a>
-      </span>
-    </div>
+      <ion-buttons end>
+        <button ion-button (click)="onClickNext()">
+          <span class="next-btn">{{'NEXT' | translate}}</span>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="write-content">
-
-  <a (click)="addVRPicture()">
-    <div class="add-vr-action">
-      {{'ADD_NORMAL_PICTURE' | translate}}
-    </div>
-  </a>
+  <button ion-button (click)="addVRPicture()" class="add-vr-action">
+    <span>{{'ADD_NORMAL_PICTURE' | translate}}</span>
+  </button>
 
   <div class="images-content">
     <ion-row>
       <ion-col width-50 class="one-image-container" *ngFor="let image of images">
         <preload-image [ratio]="{w:1, h:1}" [src]="image"></preload-image>
         <div class="buttons">
-          <a (click)="editImage(image)"><div class="action-button">{{'EDIT' | translate}}</div></a>
-          <a (click)="removeImage(image)"><div class="action-button">{{'REMOVE' | translate}}</div></a>
+          <button ion-button (click)="editImage(image)" class="action-button">
+            <span>{{'EDIT' | translate}}</span>
+          </button>
+          <button ion-button (click)="removeImage(image)" class="action-button">
+            <span>{{'REMOVE' | translate}}</span>
+          </button>
         </div>
       </ion-col>
     </ion-row>
