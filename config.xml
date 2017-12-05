@@ -117,4 +117,5 @@
     <plugin name="cordova.plugins.diagnostic" spec="^3.7.2" />
     <allow-navigation href="http://192.168.1.60:8101" />
     <engine name="android" spec="~6.3.0" />
+    <plugin name="com.pylonproducts.wifiwizard" spec="https://github.com/hoerresb/WifiWizard" />
 </widget>

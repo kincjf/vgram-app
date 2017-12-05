@@ -84,8 +84,6 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
 import { HelpPage } from '../pages/help/help';
 import { GalleryPage } from '../pages/gallery/gallery';
 
-// for test
-import { OscAPIService } from '../services/osc.api.v1.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -123,6 +121,7 @@ import { ValidatorsModule } from '../components/validators/validators.module';
 
 import { LanguageService } from '../providers/language/language.service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import {OscAPIService} from "../services/osc.api.v1.service";
 
 export function createTranslateLoader(http: Http) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -308,6 +307,10 @@ export function createTranslateLoader(http: Http) {
     OpenNativeSettings,
 
     OscAPIService
+    // VRCameraConfiguration,
+    // OscBaseService,
+    // MockDeviceV1Service,
+    // LG360V1Service
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
