@@ -4,13 +4,15 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { HelpPage } from '../help/help';
 import { GalleryPage } from '../gallery/gallery';
+import {VRCameraViewPage} from "../vrcamera-view/vrcamera-view";
+
 
 @Component({
   selector: 'camera-page',
   templateUrl: 'camera.html'
 })
 export class CameraPage {
-  
+
   loading: any;
 
   message: any;
@@ -26,7 +28,7 @@ export class CameraPage {
   }
 
   toVRSetting(){
-
+    this.app.getRootNav().push(VRCameraViewPage);
   }
 
   toGallery() {

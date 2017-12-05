@@ -55,6 +55,8 @@ import { GalleryDetailPage } from '../pages/gallery-detail/gallery-detail';
 
 import { WritingAddPage } from '../pages/writing-add/writing-add';
 
+import { VRCameraViewPage } from '../pages/vrcamera-view/vrcamera-view';
+
 //for test
 import { TestPage } from '../pages/tests/tests';
 
@@ -189,6 +191,7 @@ export function createTranslateLoader(http: Http) {
     GalleryPage,
     GalleryDetailPage,
     WritingAddPage,
+    VRCameraViewPage,
 
     TestPage
   ],
@@ -263,6 +266,7 @@ export function createTranslateLoader(http: Http) {
     GalleryPage,
     GalleryDetailPage,
     WritingAddPage,
+    VRCameraViewPage,
 
     TestPage
   ],

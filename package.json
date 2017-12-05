@@ -75,6 +75,8 @@
         "cordova-plugin-x-socialsharing": "^5.2.1",
         "cordova-promise-polyfill": "0.0.2",
         "cordova.plugins.diagnostic": "^3.7.2",
+        "d.js": "^0.7.5",
+        "dot": "^1.1.2",
         "es6-promise-plugin": "^4.1.0",
         "google-libphonenumber": "2.0.15",
         "ionic-angular": "3.6.0",
@@ -85,13 +87,16 @@
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
         "text-mask-addons": "3.5.1",
+        "three": "^0.88.0",
         "twitter-connect-plugin": "^0.6.0",
+        "uevent": "^1.0.0",
         "videogular2": "^5.2.9",
         "wifiwizard": "git+https://github.com/hoerresb/WifiWizard.git",
         "zone.js": "0.8.12"
     },
     "devDependencies": {
         "@ionic/app-scripts": "^2.1.4",
+        "@types/three": "^0.84.34",
         "ionic": "3.19.0",
         "typescript": "^2.4.0"
     },
