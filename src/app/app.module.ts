@@ -107,6 +107,9 @@ import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
 
+import { Hotspot } from '@ionic-native/hotspot';
+
+
 
 // Functionalities
 import { ChangePasswordPage } from '../pages/change-password/change-password';
@@ -123,10 +126,10 @@ import { ValidatorsModule } from '../components/validators/validators.module';
 
 import { LanguageService } from '../providers/language/language.service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import {OscAPIService} from "../services/osc.api.v1.service";
+import { OscAPIService } from "../services/osc/osc.api.service";
 
 export function createTranslateLoader(http: Http) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 
@@ -161,9 +164,9 @@ export function createTranslateLoader(http: Http) {
     GoogleLoginPage,
     ContactCardPage,
     TwitterLoginPage,
-		AdsPage,
-		FormValidationsPage,
-		VideoPlaylistPage,
+    AdsPage,
+    FormValidationsPage,
+    VideoPlaylistPage,
 
     PreloadImage,
     BackgroundImage,
@@ -199,20 +202,20 @@ export function createTranslateLoader(http: Http) {
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp, {
-			modalEnter: 'modal-slide-in',
-			modalLeave: 'modal-slide-out',
-			pageTransition: 'ios-transition',
-			swipeBackEnabled: false
-		}),
-		TranslateModule.forRoot({
-    loader: {
-				provide: TranslateLoader,
-				useFactory: (createTranslateLoader),
-				deps: [Http]
-			}
-		}),
-		VideoPlayerModule,
-		ValidatorsModule
+      modalEnter: 'modal-slide-in',
+      modalLeave: 'modal-slide-out',
+      pageTransition: 'ios-transition',
+      swipeBackEnabled: false
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+      }
+    }),
+    VideoPlayerModule,
+    ValidatorsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -245,8 +248,8 @@ export function createTranslateLoader(http: Http) {
     GoogleLoginPage,
     ContactCardPage,
     TwitterLoginPage,
-		AdsPage,
-		FormValidationsPage,
+    AdsPage,
+    FormValidationsPage,
     VideoPlaylistPage,
     MapTypePage,
     SearchPage,
@@ -286,11 +289,11 @@ export function createTranslateLoader(http: Http) {
     GoogleLoginService,
     TwitterLoginService,
     GoogleMapsService,
-		LanguageService,
+    LanguageService,
     Clipboard,
 
-	  SplashScreen,
-	  StatusBar,
+    SplashScreen,
+    StatusBar,
     SocialSharing,
     NativeStorage,
     InAppBrowser,
@@ -299,13 +302,14 @@ export function createTranslateLoader(http: Http) {
     Keyboard,
     Geolocation,
     TwitterConnect,
-		AdMobFree,
-		AppRate,
-		ImagePicker,
-		Crop,
-		EmailComposer,
+    AdMobFree,
+    AppRate,
+    ImagePicker,
+    Crop,
+    EmailComposer,
     AuthServiceProvider,
     File,
+    // Hotspot,
 
     Diagnostic,
     OpenNativeSettings,
@@ -316,6 +320,6 @@ export function createTranslateLoader(http: Http) {
     // MockDeviceV1Service,
     // LG360V1Service
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

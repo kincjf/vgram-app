@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { File } from '@ionic-native/file';
 
-import { OscAPIService } from "../../services/osc.api.v1.service";
+import { OscAPIService } from "../../services/osc/osc.api.service";
 
 @Component({
   selector: 'tests',
@@ -9,7 +9,7 @@ import { OscAPIService } from "../../services/osc.api.v1.service";
 })
 export class TestPage {
   constructor(
-    public OscAPIService: OscAPIService,
+    private OscAPIService: OscAPIService,
     private file: File
   ) {
   }
