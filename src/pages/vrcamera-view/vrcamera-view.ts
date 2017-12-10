@@ -1,4 +1,4 @@
-import {Component, Renderer2, OnInit, Inject, ViewChild, ElementRef} from '@angular/core';
+import { Component, Renderer2, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { IonicPage, NavController, NavParams, ActionSheetController, Platform, AlertController, ToastController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -6,6 +6,8 @@ import { Clipboard } from '@ionic-native/clipboard';
 import { ImageViewDetailPage } from '../imageviewdetail/imageview-detail';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+
+import { OscAPIService } from "../../services/osc/osc.api.service";
 
 import * as photoSphereViewer from '../../assets/photo-sphere-viewer/photo-sphere-viewer.min.js';
 /**
@@ -45,11 +47,18 @@ export class VRCameraViewPage {
     public clipboard: Clipboard,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+
+    private OscAPIService: OscAPIService) {
     this.post = navParams.get('item');
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    // if (this.selectedTab == "vr")
+    //   this.selectVR();
+  }
+
+  ngAfterViewInit() {
     if (this.selectedTab == "vr")
       this.selectVR();
   }
@@ -58,38 +67,41 @@ export class VRCameraViewPage {
     console.log('ionViewDidLoad ImageViewPage');
   }
 
-  onBack(){
+  onBack() {
     console.log('----back----');
     this.navCtrl.pop();
   }
 
-  selectPhoto(){
+  selectPhoto() {
     console.log('--photo--');
     this.selectedTab = "photo";
   }
 
-  selectVR(){
+  selectVR() {
     console.log('--photo--');
     this.selectedTab = "vr";
 
-    setTimeout(() => {
+    this.OscAPIService.getTakePictureFileUri().then(path => {
       this.photoSphereView = photoSphereViewer({
         container: this.panoDiv.nativeElement,
-        panorama: 'http://photo-sphere-viewer.js.org/assets/Bryce-Canyon-National-Park-Mark-Doliner.jpg'
+        panorama: path,
       });
-    }, 100);
+    });
   }
 
-  showDetail(){
+  showDetail() {
     console.log('--capture VR Camera---');
+    this.OscAPIService.getTakePictureFileUri().then(path => {
+      console.log(path);
+      this.photoSphereView.setPanorama(path);
+    });
+  }
+
+  onNotificationPage() {
 
   }
 
-  onNotificationPage(){
-
-  }
-
-  onClickMenu(){
+  onClickMenu() {
     Observable.forkJoin(
       this.translate.get('COPY_URL_LINK'),
       this.translate.get('SHARE'),
@@ -146,7 +158,7 @@ export class VRCameraViewPage {
             role: 'destructive',
             icon: !this.platform.is('ios') ? 'redo' : null,
             handler: () => {
-                let confirm = this.alertCtrl.create({
+              let confirm = this.alertCtrl.create({
                 title: "ALERT",
                 message: data[5],
                 buttons: [

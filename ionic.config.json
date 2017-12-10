@@ -4,15 +4,5 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  },
-  "proxies": [
-    {
-      "path": "/mock-server/v1/osc/info",
-      "proxyUrl": "http://192.168.2.28/osc/info"
-    },
-    {
-      "path": "/lg360cam/v1/osc/info",
-      "proxyUrl": "http://192.168.43.1/osc/info"
-    }
-  ]
+  }
 }
