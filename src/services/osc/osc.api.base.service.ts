@@ -9,11 +9,11 @@ import 'rxjs/add/operator/toPromise';
 export class OscAPIv1Service implements AbstractApiv1 {
 
   protected options: RequestOptions;
-  protected Host: String;
+  Host: String;
 
   constructor(
     public http: Http,
-    Host = "http://210.122.38.113"
+    Host: string
   ) {
     this.Host = Host;
   }
@@ -30,14 +30,14 @@ export class OscAPIv1Service implements AbstractApiv1 {
       .catch(this.handleError);
   }
 
-  getStatus(): Promise<any> {
+  getState(): Promise<any> {
     const headers = new Headers();
     headers.append('X-Content-Type-Options', 'nosniff');
     headers.append('Content-Type', 'application/json; charset=utf-8');
     headers.append('X-XSRF-Protected', '1');
     this.options = new RequestOptions({ headers: headers });
 
-    return this.http.get(this.Host + '/osc/status', this.options)
+    return this.http.get(this.Host + '/osc/state', this.options)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -231,7 +231,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
 
   getImageFileUri(ID: String): Promise<String> {
     return this.getCommandsStatus(ID).then(data => {
-      if (data.state == "done") return Promise.resolve([this.Host, data.results.fileUri].join(''));
+      if (data.state == "done") return Promise.resolve(data.results.fileUri);
       else if (data.state == "error") return Promise.reject("error"); // 수정해야함
 
       return (new Promise(resolve => setTimeout(resolve, 200))).then(() => {

@@ -15,7 +15,7 @@ export class TestPage {
   }
 
   getOscInfo() {
-    this.OscAPIService.getPicture("14")
+    this.OscAPIService.getImage("14")
       .then(data => {
         console.log(data);
         // var name = "test";
