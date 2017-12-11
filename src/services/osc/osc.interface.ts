@@ -9,7 +9,7 @@ export interface AbstractApi {
    * /osc/state
    * @returns {Promise<any>}
    */
-  getStatus(): Promise<any>,
+  getState(): Promise<any>,
 
   getCommandsStatus(id: string): Promise<any>,
 

@@ -10,7 +10,8 @@
     <div style="display: flex; align-items: center; background-color:white;">
       <span>
         <a (click)="onBack()">
-          <img src="../../assets/images/homeHeader/back.png" />
+          <!-- <img src="../../assets/images/homeHeader/back.png" /> -->
+          <ion-icon name='arrow-back' style="font-size: 400%; color: #333333;"></ion-icon>
         </a>
       </span>
       <ion-segment style="flex: 1; margin: 10px;" [(ngModel)]="selectedTab" class="segment-buttons">
@@ -29,12 +30,14 @@
       </ion-segment>
       <span>
         <a (click)="onNotificationPage()">
-          <img src="../../assets/images/homeHeader/chat.png" />
+          <!-- <img src="../../assets/images/homeHeader/chat.png" /> -->
+          <ion-icon name='chatboxes' style="font-size: 400%; color: #333333;"></ion-icon>
         </a>
       </span>
-      <span>
+      <span style="width: 50px;text-align: center;">
         <a (click)="onClickMenu()">
-          <img src="../../assets/images/homeHeader/menu.png" />
+          <!-- <img src="../../assets/images/homeHeader/menu.png"/> -->
+          <ion-icon name='more' style="font-size: 400%; margin: 0 auto; color: #333333;"></ion-icon>
         </a>
       </span>
     </div>

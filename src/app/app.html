@@ -9,18 +9,6 @@
         <ion-icon *ngIf="page.icon" name="{{page.icon}}" item-left></ion-icon>
         {{page.title}}
       </button>
-      <div *ngIf="!authService.authenticated()" class="comments">
-        <br>
-        <p class="boldText">
-          {{'<'}}{{'UPGRADE_LATER' | translate}}{{'>'}}
-        </p>
-        <p class="normalText">
-          {{'-'}}{{'EXC_AUTH_LIST' | translate}}
-        </p>
-        <p class="normalText">
-          {{'-'}}{{'CHANNEL_CATEGORY_LIST' | translate}}
-        </p>
-      </div>
     </ion-list>
   </ion-content>
 </ion-menu>

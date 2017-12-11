@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, RequestOptions } from '@angular/http';
 // import { Hotspot, HotspotNetworkConfig } from '@ionic-native/hotspot';
+import {Log, Level} from 'ng2-logger'
 
 import { OscAPIv1Service } from './osc.api.base.service';
 import { OscInfo } from './osc.dto';
 
 import { LG360APIv1Service } from './devices/osc.lg360.service';
 import { Gear360APIv1Service } from './devices/osc.gear360.service';
-
-import { Log, Level } from 'ng2-logger'
+import { MockAPIv1Service } from './devices/osc.mock.service';
 
 import 'rxjs/add/operator/toPromise';
 import * as _ from 'lodash';
@@ -17,21 +17,25 @@ import * as _ from 'lodash';
 declare let networkinterface: any;
 
 const mockIP = "210.122.38.113";
+
+const log = Log.create('osc.api.service');
+
 /**
  * refered osc api docs(postman)
  */
 @Injectable()
 export class OscAPIService {
-  private OscAPIv1: OscAPIv1Service;
+  OscAPIv1: OscAPIv1Service;
   // private OscAPIv2: OscAPIv2Service;
+  info: OscInfo;
 
-  private version: number;
+  private apiVersion: number;    // osc api version
   private file: File;
 
   constructor(
     public http: Http,
   ) {
-    this.version = 0;
+    this.apiVersion = 0;
     this.checkDevice();
   }
 
@@ -41,47 +45,62 @@ export class OscAPIService {
     if (typeof networkinterface !== 'undefined') {
       ip = await new Promise<String>((resolve, reject) => {
         networkinterface.getWiFiIPAddress((ip) => resolve(ip), (err) => {
-          alert('wifi not connected');
-          alert('Please connect the VR camera supported by the app to WiFi.\nProducts: LG 360, Gear 360');
+          log.error('No wifi connection found.');
+          alert('Wifi not connected.\n' +
+            'Make sure you have a wifi connection with your VR camera');
 
           return resolve(mockIP);
           // this.version = -1; return reject(err);
         });
       });
 
-      // get device ip
-      if (ip != mockIP) gateway = ip.split('.', 3).join('.') + '.1';
-
-      console.log(gateway);
+      // get device ip, 타 VR 카메라 연결시 gateway ip가 .1이 아닐 수 있음
+      if (ip != mockIP) {
+        gateway = ip.split('.', 3).join('.') + '.1';
+      }
     } else {
-      ip = mockIP;
+      ip = gateway = mockIP;
     }
+
+    console.log(gateway);
 
     // if (true) { // 기기를 연결할 경우 주석하면됨.
     //   gateway = mockIP;
     //   console.log('enter test mode.');
     // }
 
-    let info: OscInfo = await getDeviceInfo(this.http, gateway);
+    this.info = await getDeviceInfo(this.http, gateway);
 
-
-    switch (info.model) {
+    switch (this.info.model) {
       case 'LG-R105':
-        this.version = 1;
+        this.apiVersion = 1;
         this.OscAPIv1 = new LG360APIv1Service(this.http);
+        log.info("connected with LG 360 Cam(api v1)");
         break;
       case 'GEAR 360':
-        this.version = 1;
+        this.apiVersion = 1;
         this.OscAPIv1 = new Gear360APIv1Service(this.http);
-      case 'Error':
-        this.version = -1;
-        alert('Please connect the VR camera supported by the app to WiFi.\nProducts: LG 360, Gear 360');
+        log.info("connected with Gear 360 2016(api v1)");
         break;
-      // test case
       case 'iSTAR Pulsar':
+        // mock server
+        this.apiVersion = 1;
+        this.info.mocked = true;
+        this.OscAPIv1 = new MockAPIv1Service(this.http);
+
+        log.info('Connects to the OSC Mock server (api v1).\n' +
+          'Please connect the VR camera supported by the app to WiFi.\n' +
+          'Available Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
+        break;
+      case 'Error':
       default:
-        this.version = 1;
-        this.OscAPIv1 = new OscAPIv1Service(this.http);
+        this.apiVersion = -1;
+
+        log.error('No VR Camera connection found.');
+        alert('No VR Camera connection found. \n' +
+          'Please connect the VR camera supported by the app to WiFi.\n' +
+          'Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
+        break;
     }
   }
 
@@ -90,7 +109,7 @@ export class OscAPIService {
    * @returns {Promise<any>}
    */
   getInfo(): Promise<any> {
-    if (this.version == 1) {
+    if (this.apiVersion == 1) {
       return this.OscAPIv1.getInfo();
     }
 
@@ -101,9 +120,9 @@ export class OscAPIService {
    * /osc/state
    * @returns {Promise<any>}
    */
-  getStatus(): Promise<any> {
-    if (this.version == 1) {
-      return this.OscAPIv1.getStatus();
+  getState(): Promise<any> {
+    if (this.apiVersion == 1) {
+      return this.OscAPIv1.getState();
     }
 
     return Promise.reject('error');
@@ -114,7 +133,7 @@ export class OscAPIService {
    * @returns {Promise<binary(image/jpeg or image/png)>}
    */
   getTakePicture(): Promise<any> {
-    if (this.version == 1) {
+    if (this.apiVersion == 1) {
       return this.OscAPIv1.startSession().then(data => {
         var sessionId = data.results.sessionId;
 
@@ -132,8 +151,8 @@ export class OscAPIService {
   /**
    * @returns {Promise<binary(image/jpeg or image/png)>}
    */
-  getPicture(URI: String): Promise<any> {
-    if (this.version == 1) {
+  getImage(URI: String): Promise<any> {
+    if (this.apiVersion == 1) {
       return this.OscAPIv1.getImage(URI);
     }
 
@@ -145,8 +164,7 @@ export class OscAPIService {
    * @returns {Promise<object>}
    */
   getListImages(): Promise<any> {
-
-    if (this.version == 1) {
+    if (this.apiVersion == 1) {
       return this.OscAPIv1.listImages();
     }
 
@@ -154,13 +172,13 @@ export class OscAPIService {
   }
 
   async getTakePictureFileUri(): Promise<any> {
-    if (this.version == 0) { // 초기화 되지 않았는데 사용하려고 하니까 에러가 남. 그래서 딜레이를 걸어줌
+    if (this.apiVersion == 0) { // 초기화 되지 않았는데 사용하려고 하니까 에러가 남. 그래서 딜레이를 걸어줌
       await (new Promise(resolve => setTimeout(resolve, 200)));
 
       return await this.getTakePictureFileUri();
     }
 
-    if (this.version == 1) {
+    if (this.apiVersion == 1) {
       let session = await this.OscAPIv1.startSession();
 
       // return this.OscAPIv1.startSession().then(data => {

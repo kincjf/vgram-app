@@ -3,10 +3,16 @@
     <div style="display: flex; align-items: center;">
       <ion-title style="flex: 1;"><font style="text-align: center;">{{'PROFILE' | translate}}</font></ion-title>
       <span *ngIf="authService.authenticated()">
-        <a (click)="onNotificationPage()"><img src="../../assets/images/homeHeader/envelope.png"/></a>
+        <a (click)="onNotificationPage()">
+          <!-- <img src="../../assets/images/homeHeader/envelope.png"/> -->
+          <ion-icon name='mail' style="font-size: 300%; color: #333333;"></ion-icon>
+        </a>
       </span>
-      <span>
-        <a (click)="onClickMenu()"><img src="../../assets/images/homeHeader/menu.png"/></a>
+      <span style="width: 50px;text-align: center;">
+        <a (click)="onClickMenu()">
+          <!-- <img src="../../assets/images/homeHeader/menu.png"/> -->
+          <ion-icon name='more' style="font-size: 300%; margin: 0 auto; color: #333333;"></ion-icon>
+        </a>
       </span>
     </div>
   </ion-navbar>

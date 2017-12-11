@@ -55,11 +55,6 @@ import { GalleryDetailPage } from '../pages/gallery-detail/gallery-detail';
 
 import { WritingAddPage } from '../pages/writing-add/writing-add';
 
-import { VRCameraViewPage } from '../pages/vrcamera-view/vrcamera-view';
-
-//for test
-import { TestPage } from '../pages/tests/tests';
-
 import { PreloadImage } from '../components/preload-image/preload-image';
 import { BackgroundImage } from '../components/background-image/background-image';
 import { ShowHideContainer } from '../components/show-hide-password/show-hide-container';
@@ -86,7 +81,6 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
 import { HelpPage } from '../pages/help/help';
 import { GalleryPage } from '../pages/gallery/gallery';
 
-
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
@@ -105,9 +99,6 @@ import { AppRate } from '@ionic-native/app-rate';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
-import { File } from '@ionic-native/file';
-
-import { Hotspot } from '@ionic-native/hotspot';
 
 
 
@@ -126,10 +117,9 @@ import { ValidatorsModule } from '../components/validators/validators.module';
 
 import { LanguageService } from '../providers/language/language.service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { OscAPIService } from "../services/osc/osc.api.service";
 
 export function createTranslateLoader(http: Http) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 
@@ -164,9 +154,9 @@ export function createTranslateLoader(http: Http) {
     GoogleLoginPage,
     ContactCardPage,
     TwitterLoginPage,
-    AdsPage,
-    FormValidationsPage,
-    VideoPlaylistPage,
+		AdsPage,
+		FormValidationsPage,
+		VideoPlaylistPage,
 
     PreloadImage,
     BackgroundImage,
@@ -193,29 +183,26 @@ export function createTranslateLoader(http: Http) {
     HelpPage,
     GalleryPage,
     GalleryDetailPage,
-    WritingAddPage,
-    VRCameraViewPage,
-
-    TestPage
+    WritingAddPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp, {
-      modalEnter: 'modal-slide-in',
-      modalLeave: 'modal-slide-out',
-      pageTransition: 'ios-transition',
-      swipeBackEnabled: false
-    }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [Http]
-      }
-    }),
-    VideoPlayerModule,
-    ValidatorsModule
+			modalEnter: 'modal-slide-in',
+			modalLeave: 'modal-slide-out',
+			pageTransition: 'ios-transition',
+			swipeBackEnabled: false
+		}),
+		TranslateModule.forRoot({
+    loader: {
+				provide: TranslateLoader,
+				useFactory: (createTranslateLoader),
+				deps: [Http]
+			}
+		}),
+		VideoPlayerModule,
+		ValidatorsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -248,8 +235,8 @@ export function createTranslateLoader(http: Http) {
     GoogleLoginPage,
     ContactCardPage,
     TwitterLoginPage,
-    AdsPage,
-    FormValidationsPage,
+		AdsPage,
+		FormValidationsPage,
     VideoPlaylistPage,
     MapTypePage,
     SearchPage,
@@ -268,10 +255,7 @@ export function createTranslateLoader(http: Http) {
     HelpPage,
     GalleryPage,
     GalleryDetailPage,
-    WritingAddPage,
-    VRCameraViewPage,
-
-    TestPage
+    WritingAddPage
   ],
   providers: [
     FeedService,
@@ -289,11 +273,11 @@ export function createTranslateLoader(http: Http) {
     GoogleLoginService,
     TwitterLoginService,
     GoogleMapsService,
-    LanguageService,
+		LanguageService,
     Clipboard,
 
-    SplashScreen,
-    StatusBar,
+	  SplashScreen,
+	  StatusBar,
     SocialSharing,
     NativeStorage,
     InAppBrowser,
@@ -302,24 +286,16 @@ export function createTranslateLoader(http: Http) {
     Keyboard,
     Geolocation,
     TwitterConnect,
-    AdMobFree,
-    AppRate,
-    ImagePicker,
-    Crop,
-    EmailComposer,
+		AdMobFree,
+		AppRate,
+		ImagePicker,
+		Crop,
+		EmailComposer,
     AuthServiceProvider,
-    File,
-    // Hotspot,
 
     Diagnostic,
-    OpenNativeSettings,
-
-    OscAPIService
-    // VRCameraConfiguration,
-    // OscBaseService,
-    // MockDeviceV1Service,
-    // LG360V1Service
+    OpenNativeSettings
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class AppModule { }
+export class AppModule {}

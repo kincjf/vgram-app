@@ -211,6 +211,5 @@
   "TITLE": "제목",
   "DETAILS": "내용",
   "FINISH": "완료",
-  "PUBLIC_PRIVATE": "공개여부",
-  "TEST": "테스트"
+  "PUBLIC_PRIVATE": "공개여부"
 }

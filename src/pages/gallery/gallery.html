@@ -3,7 +3,8 @@
     <div style="display: flex; align-items: center;" *ngIf="!m_bSelect">
       <span style="font-size: 150%; margin: 5px;">
         <a (click)="onBack()">
-          <img src="../../assets/images/homeheader/white-back.png" width="30px" height="30px"/>
+          <!-- <img src="../../assets/images/homeheader/white-back.png" width="30px" height="30px"/> -->
+          <ion-icon name='arrow-back' style="color: #333333;"></ion-icon>
         </a>
       </span>
 
@@ -13,13 +14,13 @@
 
       <span style="font-size: 150%; margin: 5px;">
         <a (click)="onDownload()">
-          <ion-icon name="cloud-download" color="#5f5f5f"></ion-icon>
+          <ion-icon name="cloud-download" style="color: #333333;"></ion-icon>
         </a>
       </span>
 
       <span style="font-size: 150%; margin: 5px;">
         <a (click)="onTrash()">
-          <ion-icon name="trash" color="#5f5f5f"></ion-icon>
+          <ion-icon name="trash" style="color: #333333;"></ion-icon>
         </a>
       </span>
     </div>

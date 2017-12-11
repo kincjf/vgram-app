@@ -6,6 +6,7 @@ import { Clipboard } from '@ionic-native/clipboard';
 import { ImageViewDetailPage } from '../imageviewdetail/imageview-detail';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import {Log, Level} from 'ng2-logger'
 
 import { OscAPIService } from "../../services/osc/osc.api.service";
 
@@ -17,6 +18,8 @@ import * as photoSphereViewer from '../../assets/photo-sphere-viewer/photo-spher
  * on Ionic pages and navigation.
  */
 
+const log = Log.create('vrcamera-view');
+
 @IonicPage()
 @Component({
   selector: 'page-imageview',
@@ -25,6 +28,7 @@ import * as photoSphereViewer from '../../assets/photo-sphere-viewer/photo-spher
 export class VRCameraViewPage {
 
   selectedTab = "vr"; // vr, photo
+  initVRImage = "../../assets/images/init-vrimage.jpg";
 
   profileImage = "../../assets/images/notifications/100x100Notification1.jpeg";
   profileName = "Capture Camera";
@@ -81,20 +85,29 @@ export class VRCameraViewPage {
     console.log('--photo--');
     this.selectedTab = "vr";
 
-    this.OscAPIService.getTakePictureFileUri().then(path => {
-      this.photoSphereView = photoSphereViewer({
-        container: this.panoDiv.nativeElement,
-        panorama: path,
-      });
+    this.photoSphereView = photoSphereViewer({
+      container: this.panoDiv.nativeElement,
+      panorama: this.initVRImage,
     });
   }
 
   showDetail() {
-    console.log('--capture VR Camera---');
-    this.OscAPIService.getTakePictureFileUri().then(path => {
-      console.log(path);
-      this.photoSphereView.setPanorama(path);
+    // 개발 편의를 위해서 vr camera의 url만 활용함
+    // default setting: after taken photo, downloading image and render
+    let result = this.OscAPIService.getTakePictureFileUri();
+    let imageUrl;
+
+    result.then(path => {
+      if (this.OscAPIService.info.mocked) {
+        imageUrl = [this.OscAPIService.OscAPIv1.Host, "osc/photos", path + "-full.jpg"].join("/");
+      } else {
+        imageUrl = [this.OscAPIService.OscAPIv1.Host, path].join("");
+      }
+
+      this.photoSphereView.setPanorama(imageUrl);
     });
+
+    log.info('--capture VR Camera---');
   }
 
   onNotificationPage() {

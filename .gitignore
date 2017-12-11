@@ -6,6 +6,8 @@
 *.tmp.*
 log.txt
 *.sublime-project
+*.bak
+
 *.sublime-workspace
 
 .idea/
@@ -48,5 +50,4 @@ platforms
 
 /typings/index.d.ts
 globals
-/package-lock.json
 /package-lock.json

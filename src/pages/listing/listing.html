@@ -10,11 +10,16 @@
       </span>
        
       <span>
-        <a><img src="../../assets/images/homeHeader/target.png"/></a>
+        <a>
+          <ion-icon name='locate' style="font-size: 300%; color: #333333; margin-right: 5px;"></ion-icon>
+        </a>
       </span>
       
       <span *ngIf="authService.authenticated()">
-        <a (click)="onNotificationPage()"><img src="../../assets/images/homeHeader/envelope.png"/></a>
+        <a (click)="onNotificationPage()">
+          <!-- <img src="../../assets/images/homeHeader/envelope.png"/> -->
+          <ion-icon name='mail' style="font-size: 300%; color: #333333;"></ion-icon>
+        </a>
       </span>
     </div>
   </ion-navbar>
