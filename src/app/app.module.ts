@@ -55,6 +55,11 @@ import { GalleryDetailPage } from '../pages/gallery-detail/gallery-detail';
 
 import { WritingAddPage } from '../pages/writing-add/writing-add';
 
+import { VRCameraViewPage } from '../pages/vrcamera-view/vrcamera-view';
+
+//for test
+import { TestPage } from '../pages/tests/tests';
+
 import { PreloadImage } from '../components/preload-image/preload-image';
 import { BackgroundImage } from '../components/background-image/background-image';
 import { ShowHideContainer } from '../components/show-hide-password/show-hide-container';
@@ -81,6 +86,7 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
 import { HelpPage } from '../pages/help/help';
 import { GalleryPage } from '../pages/gallery/gallery';
 
+
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
@@ -99,6 +105,9 @@ import { AppRate } from '@ionic-native/app-rate';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { File } from '@ionic-native/file';
+
+import { Hotspot } from '@ionic-native/hotspot';
 
 
 
@@ -117,9 +126,10 @@ import { ValidatorsModule } from '../components/validators/validators.module';
 
 import { LanguageService } from '../providers/language/language.service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { OscAPIService } from "../services/osc/osc.api.service";
 
 export function createTranslateLoader(http: Http) {
-	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 
@@ -183,7 +193,10 @@ export function createTranslateLoader(http: Http) {
     HelpPage,
     GalleryPage,
     GalleryDetailPage,
-    WritingAddPage
+    WritingAddPage,
+    VRCameraViewPage,
+
+    TestPage
   ],
   imports: [
     BrowserModule,
@@ -255,7 +268,10 @@ export function createTranslateLoader(http: Http) {
     HelpPage,
     GalleryPage,
     GalleryDetailPage,
-    WritingAddPage
+    WritingAddPage,
+    VRCameraViewPage,
+
+    TestPage
   ],
   providers: [
     FeedService,
@@ -292,10 +308,18 @@ export function createTranslateLoader(http: Http) {
 		Crop,
 		EmailComposer,
     AuthServiceProvider,
+    File,
+    // Hotspot,
 
     Diagnostic,
-    OpenNativeSettings
+    OpenNativeSettings,
+
+    OscAPIService
+    // VRCameraConfiguration,
+    // OscBaseService,
+    // MockDeviceV1Service,
+    // LG360V1Service
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }
