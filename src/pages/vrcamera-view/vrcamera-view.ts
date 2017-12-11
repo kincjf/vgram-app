@@ -27,7 +27,7 @@ export class VRCameraViewPage {
   selectedTab = "vr"; // vr, photo
 
   profileImage = "../../assets/images/notifications/100x100Notification1.jpeg";
-  profileName = "Test Title";
+  profileName = "Capture Camera";
 
   post: any;
   clipboardToast: any;

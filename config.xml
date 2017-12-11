@@ -26,6 +26,7 @@
     <preference name="fullscreen" value="true" />
     <preference name="TwitterConsumerKey" value="lxYOizP79U8rU9lVT0nLQax8h" />
     <preference name="TwitterConsumerSecret" value="y4ngeuCuwjp5tIziYMdkyWCarz0lZ0HGoDpXuq8qVIYemzABdl" />
+    <preference name="loadUrlTimeoutValue" value="600000" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
