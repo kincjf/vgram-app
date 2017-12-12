@@ -58,6 +58,8 @@ export class OscAPIService {
       // get device ip, 타 VR 카메라 연결시 gateway ip가 .1이 아닐 수 있음
       if (ip != mockIP) {
         gateway = ip.split('.', 3).join('.') + '.1';
+      } else {
+        gateway = ip;
       }
     } else {
       ip = gateway = mockIP;
