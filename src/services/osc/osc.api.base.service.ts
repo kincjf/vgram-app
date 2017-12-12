@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
+import { File } from '@ionic-native/file';
 
 import { AbstractApiv1 } from './osc.interface';
 
@@ -9,11 +10,12 @@ import 'rxjs/add/operator/toPromise';
 export class OscAPIv1Service implements AbstractApiv1 {
 
   protected options: RequestOptions;
-  Host: String;
+  protected Host: String;
 
   constructor(
-    public http: Http,
-    Host: string
+    protected http: Http,
+    protected file: File,
+    Host,
   ) {
     this.Host = Host;
   }
@@ -159,10 +161,9 @@ export class OscAPIv1Service implements AbstractApiv1 {
 
   getImage(fileUri: String, maxSize = 400): Promise<any> {
     const headers = new Headers();
-    headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'image/jpeg');
     headers.append('X-XSRF-Protected', '1');
-    this.options = new RequestOptions({ headers: headers });
+    this.options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
 
     const body = JSON.stringify({ name: "camera.getImage", parameters: { fileUri: fileUri, maxSize: maxSize } });
 
@@ -229,14 +230,35 @@ export class OscAPIv1Service implements AbstractApiv1 {
     });
   }
 
-  getImageFileUri(ID: String): Promise<String> {
-    return this.getCommandsStatus(ID).then(data => {
-      if (data.state == "done") return Promise.resolve(data.results.fileUri);
-      else if (data.state == "error") return Promise.reject("error"); // 수정해야함
+  async getImageFileUri(ID: String): Promise<String> {
+    let result = await this.getCommandsStatus(ID);
 
-      return (new Promise(resolve => setTimeout(resolve, 200))).then(() => {
+    switch (result.state) {
+      case 'done':
+        break;
+      case 'inProgress':
+        await new Promise(resolve => setTimeout(resolve, 200));
         return this.getImageFileUri(ID);
-      });
+      case 'error':
+        console.log('state error');
+      default:
+        return Promise.reject("state error");
+    }
+
+    return this.getImage(result.results.fileUri).then(data => {
+      const dirName = "VRThumb";
+      const fileName = "vrThumb.jpg";
+      const dirPath = [this.file.cacheDirectory, dirName].join('');
+      const filePath = [dirPath, fileName].join('/');
+
+      return this.file.createDir(this.file.cacheDirectory, dirName, true).then(() => {
+        return this.file.createFile(dirPath, fileName, true).then(() => {
+          return this.file.writeExistingFile(dirPath, fileName, data._body).then(() => filePath).catch(err => err);
+        }).catch(err => err);
+      }).catch(err => err);
+    }).catch(err => {
+      console.log(err);
+      return err;
     });
   }
 

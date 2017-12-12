@@ -6,9 +6,11 @@ import { Clipboard } from '@ionic-native/clipboard';
 import { ImageViewDetailPage } from '../imageviewdetail/imageview-detail';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import {Log, Level} from 'ng2-logger'
+import { Log, Level } from 'ng2-logger'
 
 import { OscAPIService } from "../../services/osc/osc.api.service";
+
+import { File } from '@ionic-native/file';
 
 import * as photoSphereViewer from '../../assets/photo-sphere-viewer/photo-sphere-viewer.min.js';
 /**
@@ -28,7 +30,7 @@ const log = Log.create('vrcamera-view');
 export class VRCameraViewPage {
 
   selectedTab = "vr"; // vr, photo
-  initVRImage = "../../assets/images/init-vrimage.jpg";
+  initVRImage = "./assets/images/init-vrimage.jpg";
 
   profileImage = "../../assets/images/notifications/100x100Notification1.jpeg";
   profileName = "Capture Camera";
@@ -53,6 +55,8 @@ export class VRCameraViewPage {
     public alertCtrl: AlertController,
     public navParams: NavParams,
 
+    private file: File,
+
     private OscAPIService: OscAPIService) {
     this.post = navParams.get('item');
   }
@@ -65,6 +69,11 @@ export class VRCameraViewPage {
   ngAfterViewInit() {
     if (this.selectedTab == "vr")
       this.selectVR();
+
+    this.photoSphereView = photoSphereViewer({
+      container: this.panoDiv.nativeElement,
+      panorama: this.initVRImage,
+    });
   }
 
   ionViewDidLoad() {
@@ -85,29 +94,41 @@ export class VRCameraViewPage {
     console.log('--photo--');
     this.selectedTab = "vr";
 
-    this.photoSphereView = photoSphereViewer({
-      container: this.panoDiv.nativeElement,
-      panorama: this.initVRImage,
+
+    this.OscAPIService.getTakePictureFileUri().then(path => {
+      // this.file.readAsDataURL(this.file.cacheDirectory + "VRThumb", "vrThumb.jpg").then(data => {
+        if (!this.photoSphereView) {
+          // this.photoSphereView.destroy();
+          this.photoSphereView = photoSphereViewer({
+            container: this.panoDiv.nativeElement,
+            panorama: path,
+            // panorama: data,
+          });
+        } else {
+          this.photoSphereView.setPanorama(path);
+        }
+      // }).catch(err => err);
     });
   }
 
   showDetail() {
-    // 개발 편의를 위해서 vr camera의 url만 활용함
-    // default setting: after taken photo, downloading image and render
-    let result = this.OscAPIService.getTakePictureFileUri();
-    let imageUrl;
-
-    result.then(path => {
-      if (this.OscAPIService.info.mocked) {
-        imageUrl = [this.OscAPIService.OscAPIv1.Host, "osc/photos", path + "-full.jpg"].join("/");
-      } else {
-        imageUrl = [this.OscAPIService.OscAPIv1.Host, path].join("");
-      }
-
-      this.photoSphereView.setPanorama(imageUrl);
+    console.log('--capture VR Camera---');
+    
+    
+    this.OscAPIService.getTakePictureFileUri().then(path => {
+      // this.file.readAsDataURL(this.file.cacheDirectory + "VRThumb", "vrThumb.jpg").then(data => {
+        if (!this.photoSphereView) {
+          // this.photoSphereView.destroy();
+          this.photoSphereView = photoSphereViewer({
+            container: this.panoDiv.nativeElement,
+            panorama: path,
+            // panorama: data,
+          });
+        } else {
+          this.photoSphereView.setPanorama(path);
+        }
+      // }).catch(err => err);
     });
-
-    log.info('--capture VR Camera---');
   }
 
   onNotificationPage() {

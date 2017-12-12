@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { File } from '@ionic-native/file';
 // import { Hotspot, HotspotNetworkConfig } from '@ionic-native/hotspot';
-import {Log, Level} from 'ng2-logger'
+import { Log, Level } from 'ng2-logger';
 
 import { OscAPIv1Service } from './osc.api.base.service';
 import { OscInfo } from './osc.dto';
@@ -25,15 +26,15 @@ const log = Log.create('osc.api.service');
  */
 @Injectable()
 export class OscAPIService {
-  OscAPIv1: OscAPIv1Service;
+  private oscAPIv1: OscAPIv1Service;
   // private OscAPIv2: OscAPIv2Service;
-  info: OscInfo;
 
+  private info: OscInfo;
   private apiVersion: number;    // osc api version
-  private file: File;
 
   constructor(
-    public http: Http,
+    protected http: Http,
+    protected file: File,
   ) {
     this.apiVersion = 0;
     this.checkDevice();
@@ -74,19 +75,19 @@ export class OscAPIService {
     switch (this.info.model) {
       case 'LG-R105':
         this.apiVersion = 1;
-        this.OscAPIv1 = new LG360APIv1Service(this.http);
+        this.oscAPIv1 = new LG360APIv1Service(this.http, this.file);
         log.info("connected with LG 360 Cam(api v1)");
         break;
       case 'GEAR 360':
         this.apiVersion = 1;
-        this.OscAPIv1 = new Gear360APIv1Service(this.http);
+        this.oscAPIv1 = new Gear360APIv1Service(this.http, this.file);
         log.info("connected with Gear 360 2016(api v1)");
         break;
       case 'iSTAR Pulsar':
         // mock server
         this.apiVersion = 1;
         this.info.mocked = true;
-        this.OscAPIv1 = new MockAPIv1Service(this.http);
+        this.oscAPIv1 = new MockAPIv1Service(this.http, this.file);
 
         log.info('Connects to the OSC Mock server (api v1).\n' +
           'Please connect the VR camera supported by the app to WiFi.\n' +
@@ -110,7 +111,7 @@ export class OscAPIService {
    */
   getInfo(): Promise<any> {
     if (this.apiVersion == 1) {
-      return this.OscAPIv1.getInfo();
+      return this.oscAPIv1.getInfo();
     }
 
     return Promise.reject({ Model: 'None' });
@@ -122,7 +123,7 @@ export class OscAPIService {
    */
   getState(): Promise<any> {
     if (this.apiVersion == 1) {
-      return this.OscAPIv1.getState();
+      return this.oscAPIv1.getState();
     }
 
     return Promise.reject('error');
@@ -134,13 +135,13 @@ export class OscAPIService {
    */
   getTakePicture(): Promise<any> {
     if (this.apiVersion == 1) {
-      return this.OscAPIv1.startSession().then(data => {
+      return this.oscAPIv1.startSession().then(data => {
         var sessionId = data.results.sessionId;
 
-        return this.OscAPIv1.takePicture(sessionId).then(data => {
+        return this.oscAPIv1.takePicture(sessionId).then(data => {
           var id = data.id;
 
-          return this.OscAPIv1.getConvertedImage(id);
+          return this.oscAPIv1.getConvertedImage(id);
         });
       });
     }
@@ -153,7 +154,7 @@ export class OscAPIService {
    */
   getImage(URI: String): Promise<any> {
     if (this.apiVersion == 1) {
-      return this.OscAPIv1.getImage(URI);
+      return this.oscAPIv1.getImage(URI);
     }
 
     return Promise.reject('error');
@@ -165,39 +166,32 @@ export class OscAPIService {
    */
   getListImages(): Promise<any> {
     if (this.apiVersion == 1) {
-      return this.OscAPIv1.listImages();
+      return this.oscAPIv1.listImages();
     }
 
     return Promise.reject('error');
   }
 
-  async getTakePictureFileUri(): Promise<any> {
+  async getTakePictureFileUri(): Promise<String> {
     if (this.apiVersion == 0) { // 초기화 되지 않았는데 사용하려고 하니까 에러가 남. 그래서 딜레이를 걸어줌
-      await (new Promise(resolve => setTimeout(resolve, 200)));
+      await new Promise(resolve => setTimeout(resolve, 200));
 
       return await this.getTakePictureFileUri();
     }
 
     if (this.apiVersion == 1) {
-      let session = await this.OscAPIv1.startSession();
-
-      // return this.OscAPIv1.startSession().then(data => {
-      // var sessionId = data.results.sessionId;
+      let session = await this.oscAPIv1.startSession();
       var sessionId = session.results.sessionId;
 
-      // return this.OscAPIv1.takePicture(sessionId).then(data => {
-      let data = await this.OscAPIv1.takePicture(sessionId);
+      console.log(sessionId);
+      let data = await this.oscAPIv1.takePicture(sessionId);
       var id = data.id;
 
-      // return this.OscAPIv1.getConvertedImage(id);
-      return await this.OscAPIv1.getImageFileUri(id);
-      // });
-      // });
+      console.log(id);
+      return await this.oscAPIv1.getImageFileUri(id);
     }
 
-    // return Promise.reject('error');
     return 'error';
-
   }
 }
 
