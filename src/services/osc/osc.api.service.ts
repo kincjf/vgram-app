@@ -97,12 +97,21 @@ export class OscAPIService {
         break;
       case 'Error':
       default:
-        this.apiVersion = -1;
 
-        log.error('No VR Camera connection found.');
-        alert('No VR Camera connection found. \n' +
-          'Please connect the VR camera supported by the app to WiFi.\n' +
-          'Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
+        this.apiVersion = 1;
+        this.info.mocked = true;
+        this.oscAPIv1 = new MockAPIv1Service(this.http, this.file);
+
+        log.info('Connects to the OSC Mock server (api v1).\n' +
+        'Please connect the VR camera supported by the app to WiFi.\n' +
+        'Available Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
+
+        // this.apiVersion = -1;
+
+        // log.error('No VR Camera connection found.');
+        // alert('No VR Camera connection found. \n' +
+        //   'Please connect the VR camera supported by the app to WiFi.\n' +
+        //   'Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
         break;
     }
   }
