@@ -20,7 +20,8 @@ import { NotificationsPage } from '../notifications/notifications';
 import { SearchPage } from '../search/search';
 
 import { ImageViewPage } from '../imageview/imageview';
-
+import {PostapiProvider} from "../../providers/postapi/postapi";
+ 
 
 @Component({
   selector: 'listing-page',
@@ -29,6 +30,7 @@ import { ImageViewPage } from '../imageview/imageview';
 export class ListingPage {
   listing: ListingModel = new ListingModel();
   loading: any;
+
 
   searchText = '';
 
@@ -40,6 +42,14 @@ export class ListingPage {
 
   shareActionSheet: any;
   clipboardToast: any;
+
+
+  thumnail_slidersimages:any;
+
+  page:any=1;
+  totalpage:  any = 6;
+  show : boolean = true;
+
 
   constructor(
     public app: App,
@@ -53,6 +63,7 @@ export class ListingPage {
     public platform: Platform,
     private clipboard: Clipboard,
     public socialSharing: SocialSharing,
+    public listpostapi:PostapiProvider,
     public toastCtrl: ToastController
   ) {
     this.loading = this.loadingCtrl.create();
@@ -136,7 +147,26 @@ export class ListingPage {
 
 
   ionViewDidLoad() {
+
+    
     this.loading.present();
+
+    this.listpostapi.getPost(this.page).subscribe(
+    data => {
+
+   this.posts = data;
+  //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
+   console.log(this.posts);
+    // console.log(this.thumnail_slidersimages);
+    },
+    error => 
+    {
+     console.log(error.JSON)
+    },
+    () => console.log('finished')
+  )
+
+
     this.listingService
       .getData()
       .then(data => {
@@ -144,7 +174,8 @@ export class ListingPage {
         this.listing.banner_title = data.banner_title;
         this.listing.populars = data.populars;
         this.listing.categories = data.categories;
-        this.listing.posts = data.posts;
+        
+        // this.listing.posts = data.posts;
         this.loading.dismiss();
 
         this.initPosts();
@@ -164,29 +195,55 @@ export class ListingPage {
 
   initPosts(){
     this.posts = [];
-    for (let i = 0; i < 5; i++) {
-      if (this.posts.length == this.listing.posts.length) {
-        this.infiniteScrollVisible = false;
-        break;
-      } else {
-        this.posts.push(this.listing.posts[ this.posts.length ]);
-      }
-    }
+    // for (let i = 0; i < 5; i++) {
+    //   if (this.posts.length == this.listing.posts.length) {
+    //     this.infiniteScrollVisible = false;
+    //     break;
+    //   } else {
+    //     this.posts.push(this.listing.posts[ this.posts.length ]);
+    //   }
+    // }
+
+  
+
+
+    
   }
 
   doPostsInfinite(infiniteScroll: any){
+     this.page = this.page+1;
+  
     setTimeout(() => {
-      for (let i = 0; i < 5; i++) {
-        if (this.posts.length == this.listing.posts.length) {
-          this.infiniteScrollVisible = false;
-          break;
-        }
-        else {
-          this.posts.push(this.listing.posts[ this.posts.length ]);
-        }
-      }
+      // for (let i = 0; i < 5; i++) {
+
+  if(this.page == this.totalpage){
+  this.infiniteScrollVisible = false;
+  }
+    else{    
+  this.listpostapi.getPost( this.page).subscribe(
+    data => {
+
+   for(let i=0; i<data.length; i++) {
+             this.posts.push(data[i]);
+           }
+  
+  //  this.posts = this.posts.push(data);
+  //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
+   console.log(this.posts);
+    // console.log(this.thumnail_slidersimages);
+    },
+    error => 
+    {
+     console.log(error.JSON)
+    },
+    () => console.log('finished')
+  )
+    }
+      // }
       infiniteScroll.complete();
     }, 500);
+
+   
   }
 
   likePoast(post){

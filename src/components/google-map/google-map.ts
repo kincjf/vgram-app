@@ -2,6 +2,9 @@ import { Component, Input, ElementRef, OnInit, EventEmitter } from '@angular/cor
 
 import { isPresent } from 'ionic-angular/util/util';
 
+import {} from '@types/googlemaps';
+declare var google: any;
+
 @Component({
   selector: 'google-map',
   template: ''

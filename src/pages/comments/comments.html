@@ -8,27 +8,28 @@
   <ion-item-group>
     <ion-item class="comment-item" *ngFor="let comment of curComments">
       <ion-avatar item-left>
-        <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="comment.image" (click)="goToProfile(comment)"></preload-image>
+        <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="comment.user.profile_image_path" (click)="goToProfile(comment)"></preload-image>
       </ion-avatar>
-      <h2 class="item-title">{{comment.name}}</h2>
-      <p class="item-description">{{comment.comment}}</p>
+      <h2 class="item-title">{{comment.user.nickname}}</h2>
+      <p class="item-description">{{comment.content | slice:0:5}}</p>
         <div>
           <button class="action-button" ion-button clear small (click)="replyComment(comment)">
             {{'REPLY' | translate}}
           </button>
-          <button *ngIf="comment.isMine" class="action-button" ion-button clear small (click)="deleteComment(comment)">
+          <button  class="action-button" ion-button clear small (click)="deleteComment(comment)">
             {{'DELETE' | translate}}
           </button>
+          <!--*ngIf="comment.isMine"-->
         </div>
       <ion-note class="item-time" item-right>
         <div>
-        {{comment.date}}
+        {{comment.createdAt | slice:11:16}}
         </div>
         <div>
         <button class="action-button" ion-button clear small  icon-left (click)="likeComment(comment)">
-          <ion-icon  name='heart' color="danger" *ngIf="comment.likes"></ion-icon>
-          <ion-icon  name='heart' color="dark" *ngIf="!comment.likes"></ion-icon>
-          {{comment.likesCount}}
+          <ion-icon  name='heart' color="danger" *ngIf="comment.like"></ion-icon>
+          <ion-icon  name='heart' color="dark" *ngIf="!comment.like"></ion-icon>
+          {{comment.like}}
         </button>
         </div>
       </ion-note>

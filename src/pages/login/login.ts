@@ -66,6 +66,7 @@ export class LoginPage {
       //we don't have the user data so we will ask him to log in
       this.googleLoginService.doGoogleLogin()
       .then((res) => {
+        console.log(res);
         this.loading.dismiss();
         this.nav.setRoot(this.main_page.component);
       }, (err) => {
