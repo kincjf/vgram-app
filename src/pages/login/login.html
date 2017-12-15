@@ -8,11 +8,12 @@
 
   <img src="assets/images/user/unregister.png" class="userImage" />
 
-  <ion-segment class="user-content-segment" [(ngModel)]="display" (ionChange)="onSegmentChanged($event)">
-    <ion-segment-button value="login" (ionSelect)="onSegmentSelected($event)">
-      Log In
-    </ion-segment-button>
-    <ion-segment-button value="signup" (ionSelect)="onSegmentSelected($event)">
+ 
+  <!--<ion-segment class="user-content-segment" [(ngModel)]="display" (ionChange)="onSegmentChanged($event)">-->
+    <!--<ion-segment-button value="login">
+      Log In & Sign Up with Auth
+    </ion-segment-button>-->
+    <!--<ion-segment-button value="signup" (ionSelect)="onSegmentSelected($event)">
       Sign Up
     </ion-segment-button>
   </ion-segment>
@@ -87,12 +88,14 @@
         
       </form>
     </div>
-  </div>
+  </div>-->
 </ion-content>
 
-<ion-footer>
-  <button *ngIf="displayTab == 'login'" ion-button block class="action-button" type="submit" (click)="doLogin()">{{'LOG_IN' | translate}}</button>
 
-  <button *ngIf="displayTab == 'signup'" ion-button block class="action-button" type="submit">{{'SIGN_UP' | translate}}</button>
+
+<ion-footer>
+  <button  ion-button block class="action-button" type="submit" (click)="doLogin()">{{'LOG_IN' | translate}}</button>
+
+  <!--<button *ngIf="displayTab == 'signup'" ion-button block class="action-button" type="submit">{{'SIGN_UP' | translate}}</button>-->
 
 </ion-footer>

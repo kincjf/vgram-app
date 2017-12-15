@@ -22,6 +22,8 @@ import { TestPage } from '../pages/tests/tests';
 
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { locale } from 'core-js/library/web/timers';
+// Import Auth0Cordova
+import Auth0Cordova from '@auth0/cordova';
 
 @Component({
   selector: 'app-root',
@@ -67,6 +69,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.splashScreen.hide();
       this.statusBar.styleDefault();
+
+       (<any>window).handleOpenURL = (url) => {
+        Auth0Cordova.onRedirectUri(url);
+      };
     });
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) =>

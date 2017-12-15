@@ -19,6 +19,7 @@
     "@angular/http": "4.1.3",
     "@angular/platform-browser": "4.1.3",
     "@angular/platform-browser-dynamic": "4.1.3",
+    "@auth0/cordova": "^0.2.0",
     "@ionic-native/admob-free": "4.3.0",
     "@ionic-native/app-rate": "4.3.0",
     "@ionic-native/clipboard": "4.3.0",
@@ -47,6 +48,7 @@
     "@types/googlemaps": "^3.25.38",
     "@types/lodash": "^4.14.87",
     "angular2-text-mask": "8.0.1",
+    "auth0-js": "^8.12.1",
     "bourbon": "4.2.7",
     "com.pylonproducts.wifiwizard": "https://github.com/hoerresb/WifiWizard",
     "com.synconset.imagepicker": "https://github.com/Telerik-Verified-Plugins/ImagePicker.git",
@@ -60,6 +62,7 @@
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-crop": "^0.3.1",
+    "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-dialogs": "^1.3.4",
     "cordova-plugin-email-composer": "^0.8.11",
@@ -72,6 +75,7 @@
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-nativestorage": "^2.2.2",
     "cordova-plugin-networkinterface": "^1.2.0",
+    "cordova-plugin-safariviewcontroller": "^1.5.2",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.3.0",
     "cordova-plugin-telerik-imagepicker": "git+https://github.com/Telerik-Verified-Plugins/ImagePicker.git",
@@ -145,11 +149,18 @@
       "cordova-plugin-file": {},
       "com.pylonproducts.wifiwizard": {},
       "cordova-plugin-hotspot": {},
-      "cordova-plugin-networkinterface": {}
+      "cordova-plugin-networkinterface": {},
+      "cordova-plugin-safariviewcontroller": {},
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "com.startapplabs.ion2FullApp.elite",
+        "ANDROID_SCHEME": "com.startapplabs.ion2FullApp.elite",
+        "ANDROID_HOST": "wowjoy-dev.auth0.com",
+        "ANDROID_PATHPREFIX": "/cordova/com.startapplabs.ion2FullApp.elite/callback"
+      }
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

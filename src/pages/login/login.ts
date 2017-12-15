@@ -45,70 +45,76 @@ export class LoginPage {
     });
   }
 
-  doLogin(){
-    this.authService.login();
-    this.events.publish('authenticate');
-    this.menu.close();
-    this.app.getRootNav().setRoot(TabsNavigationPage);
-  }
+  // doLogin(){
+  //   this.authService.login();
+  //   this.events.publish('authenticate');
+  //   this.menu.close();
+  //   this.app.getRootNav().setRoot(TabsNavigationPage);
+  // }
 
-  doGoogleLogin() {
-    console.log('---google login---');
-    this.loading = this.loadingCtrl.create();
+  // doGoogleLogin() {
+  //   console.log('---google login---');
+  //   this.loading = this.loadingCtrl.create();
 
-    // Here we will check if the user is already logged in because we don't want to ask users to log in each time they open the app
+  //   // Here we will check if the user is already logged in because we don't want to ask users to log in each time they open the app
 
-    this.googleLoginService.trySilentLogin()
-    .then((data) => {
-       // user is previously logged with Google and we have his data we will let him access the app
-      this.nav.setRoot(this.main_page.component);
-    }, (error) => {
-      //we don't have the user data so we will ask him to log in
-      this.googleLoginService.doGoogleLogin()
-      .then((res) => {
-        console.log(res);
-        this.loading.dismiss();
-        this.nav.setRoot(this.main_page.component);
-      }, (err) => {
-        console.log("Google Login error", err);
-      });
-    });
-  }
+  //   this.googleLoginService.trySilentLogin()
+  //   .then((data) => {
+  //     console.log(data);
+  //      // user is previously logged with Google and we have his data we will let him access the app
+  //     this.nav.setRoot(this.main_page.component);
+  //   }, (error) => {
+  //     //we don't have the user data so we will ask him to log in
+  //     this.googleLoginService.doGoogleLogin()
+  //     .then((res) => {
+  //       console.log(res);
+  //       this.loading.dismiss();
+  //       this.nav.setRoot(this.main_page.component);
+  //     }, (err) => {
+  //       console.log("Google Login error", err);
+  //     });
+  //   });
+  // }
 
-  goToSignup() {
-    this.nav.push(SignupPage);
-  }
+  // goToSignup() {
+  //   this.nav.push(SignupPage);
+  // }
 
-  doGoogleSignup() {
-    this.loading = this.loadingCtrl.create();
+  // doGoogleSignup() {
+  //   this.loading = this.loadingCtrl.create();
 
-    // Here we will check if the user is already logged in because we don't want to ask users to log in each time they open the app
-    let env = this;
+  //   // Here we will check if the user is already logged in because we don't want to ask users to log in each time they open the app
+  //   let env = this;
 
-    this.googleLoginService.trySilentLogin()
-    .then(function(data) {
-       // user is previously logged with Google and we have his data we will let him access the app
+  //   this.googleLoginService.trySilentLogin()
+  //   .then(function(data) {
+  //      // user is previously logged with Google and we have his data we will let him access the app
       
-    }, function(error){
-      //we don't have the user data so we will ask him to log in
-      env.googleLoginService.doGoogleLogin()
-      .then(function(res){
-        env.loading.dismiss();
-        env.nav.setRoot(env.main_page.component);
-      }, function(err){
-        console.log("Google Login error", err);
-        env.loading.dismiss();
-      });
-    });
-  }
+  //   }, function(error){
+  //     //we don't have the user data so we will ask him to log in
+  //     env.googleLoginService.doGoogleLogin()
+  //     .then(function(res){
+  //       env.loading.dismiss();
+  //       env.nav.setRoot(env.main_page.component);
+  //     }, function(err){
+  //       console.log("Google Login error", err);
+  //       env.loading.dismiss();
+  //     });
+  //   });
+  // }
 
-  goToForgotPassword() {
-    this.nav.push(ForgotPasswordPage);
-  }
+  // goToForgotPassword() {
+  //   this.nav.push(ForgotPasswordPage);
+  // }
 
-  onSegmentSelected(segmentButton: SegmentButton) {
-    // console.log('Segment selected', segmentButton.value);
-    this.displayTab = segmentButton.value;
-  }
+  // onSegmentSelected(segmentButton: SegmentButton) {
+  //   // console.log('Segment selected', segmentButton.value);
+  //   this.displayTab = segmentButton.value;
+  // }
 
+
+doLogin(){
+
+  this.authService.login();
+}
 }
