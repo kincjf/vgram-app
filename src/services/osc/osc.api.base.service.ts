@@ -12,12 +12,20 @@ export class OscAPIv1Service implements AbstractApiv1 {
   protected options: RequestOptions;
   protected Host: String;
 
+  protected supportOptions: any;
+
   constructor(
     protected http: Http,
     protected file: File,
     Host,
   ) {
     this.Host = Host;
+    this.supportOptions = {};
+    this.getAllOptions().then(result => {
+      this.supportOptions.hdrSupport = result.hdrSupport;
+      this.supportOptions.exposureDelaySupport = result.exposureDelaySupport;
+      this.supportOptions.whiteBalanceSupport = result.whiteBalanceSupport;
+    });
   }
 
   getInfo(): Promise<any> {
@@ -129,7 +137,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
       .catch(this.handleError);
   }
 
-  listImages(entryCount = 50, maxSize = 100, continuationToken = "", includeThumb = true): Promise<any> {
+  listImages(entryCount = 50, maxSize = 100, includeThumb = false): Promise<any> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
@@ -159,7 +167,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
       .catch(this.handleError);
   }
 
-  getImage(fileUri: String, maxSize = 400): Promise<any> {
+  getImage(fileUri: String, maxSize = null): Promise<any> {
     const headers = new Headers();
     headers.append('Content-Type', 'image/jpeg');
     headers.append('X-XSRF-Protected', '1');
@@ -195,7 +203,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
     headers.append('X-XSRF-Protected', '1');
     this.options = new RequestOptions({ headers: headers });
 
-    const body = JSON.stringify({ name: "camera.setOptions", parameters: { sessionId: sessionId, options: { Options } } });
+    const body = JSON.stringify({ name: "camera.setOptions", parameters: { sessionId: sessionId, options: Options } });
 
     return this.http.post(this.Host + '/osc/commands/execute', body, this.options)
       .toPromise()
@@ -247,7 +255,27 @@ export class OscAPIv1Service implements AbstractApiv1 {
 
     return this.getImage(result.results.fileUri).then(data => {
       const dirName = "VRThumb";
-      const fileName = "vrThumb.jpg";
+      const fileName = [new Date().toISOString().replace(/[\-\.:T]/g, ''), 'jpg'].join('.');
+      const dirPath = [this.file.dataDirectory, dirName].join('');
+      const filePath = [dirPath, fileName].join('/');
+
+      return this.file.createDir(this.file.dataDirectory, dirName, true).then(() => {
+        return this.file.createFile(dirPath, fileName, true).then(() => {
+          return this.file.writeExistingFile(dirPath, fileName, data._body).then(() => {
+            return this.delete(result.results.fileUri).then(() => filePath).catch(err => err);
+          }).catch(err => err);
+        }).catch(err => err);
+      }).catch(err => err);
+    }).catch(err => {
+      console.log(err);
+      return err;
+    });
+  }
+
+  async getThumbImagePath(URI: String): Promise<String> {
+    return this.getImage(URI, 400).then(data => {
+      const dirName = "VRThumb";
+      const fileName = [new Date().toISOString().replace(/[\-\.:T]/g, ''), 'jpg'].join('.');
       const dirPath = [this.file.cacheDirectory, dirName].join('');
       const filePath = [dirPath, fileName].join('/');
 
@@ -260,6 +288,82 @@ export class OscAPIv1Service implements AbstractApiv1 {
       console.log(err);
       return err;
     });
+  }
+
+  async downloadImage(URI: String): Promise<String> {
+    return this.getImage(URI).then(data => {
+      const dirName = "VRThumb";
+      const fileName = [new Date().toISOString().replace(/[\-\.:T]/g, ''), 'jpg'].join('.');
+      const dirPath = [this.file.dataDirectory, dirName].join('');
+      const filePath = [dirPath, fileName].join('/');
+
+      return this.file.createDir(this.file.dataDirectory, dirName, true).then(() => {
+        return this.file.createFile(dirPath, fileName, true).then(() => {
+          return this.file.writeExistingFile(dirPath, fileName, data._body).then(() => {
+            return this.delete(URI).then(() => filePath).catch(err => err);
+          }).catch(err => err);
+        }).catch(err => err);
+      }).catch(err => err);
+    }).catch(err => {
+      console.log(err);
+      return err;
+    });
+  }
+
+  getAllOptions(): Promise<any> {
+    return this.startSession().then(sessionId => {
+      return this.getOptions(sessionId.results.sessionId, [
+        'hdr',
+        'hdrSupport',
+        'exposureDelay',
+        'exposureDelaySupport',
+        'whiteBalance',
+        'whiteBalanceSupport',
+        'fileFormat',
+        'fileFormatSupport',
+      ])
+        .then(result => Promise.resolve(result.results.options))
+        .catch(err => Promise.reject(err));
+    });
+  }
+
+  setHDR(mode: boolean): Promise<any> {
+    if (this.supportOptions.hdrSupport == true) {
+      return this.startSession().then(sessionId => {
+        return this.setOptions(sessionId.results.sessionId, { hdr: mode })
+          .then(result => Promise.resolve(result))
+          .catch(err => Promise.reject(err));
+      });
+    } else {
+      // return Promise.reject('not support');
+      return Promise.resolve('not support');
+    }
+  }
+
+  setExposureDelay(time: Number): Promise<any> {
+    if (this.supportOptions.exposureDelaySupport.find((e) => e == time)) {
+      return this.startSession().then(sessionId => {
+        return this.setOptions(sessionId.results.sessionId, { exposureDelay: time })
+          .then(result => Promise.resolve(result))
+          .catch(err => Promise.reject(err));
+      });
+    } else {
+      // return Promise.reject('not support');
+      return Promise.resolve('not support');
+    }
+  }
+
+  setWhiteBalance(option: String): Promise<any> {
+    if (this.supportOptions.whiteBalanceSupport.find((e) => e == option)) {
+      return this.startSession().then(sessionId => {
+        return this.setOptions(sessionId.results.sessionId, { whiteBalance: option })
+          .then(result => Promise.resolve(result))
+          .catch(err => Promise.reject(err));
+      });
+    } else {
+      // return Promise.reject('not support');
+      return Promise.resolve('not support');
+    }
   }
 
   protected handleError(error: any): Promise<any> {

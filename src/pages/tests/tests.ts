@@ -14,12 +14,50 @@ export class TestPage {
   ) {
   }
 
-  getOscInfo() {
-    this.OscAPIService.getImage("14")
+  test1() {
+    this.OscAPIService.getAllOptions()
       .then(data => {
         console.log(data);
-        // var name = "test";
-        // this.file.writeFile(this.file.dataDirectory, name, data);
+      });
+  }
+  test2() {
+    this.OscAPIService.enableHDR()
+      .then(data => {
+        console.log(data);
+      });
+  }
+  test3() {
+    this.OscAPIService.disableHDR()
+      .then(data => {
+        console.log(data);
+      });
+  }
+
+  test4() {
+    this.OscAPIService.setExposureDelay(1)
+      .then(data => {
+        console.log(data);
+      });
+  }
+
+  test5() {
+    this.OscAPIService.setExposureDelay(5)
+      .then(data => {
+        console.log(data);
+      });
+  }
+
+  test6() {
+    this.OscAPIService.setExposureDelay(10)
+      .then(data => {
+        console.log(data);
+      });
+  }
+
+  test7() {
+    this.OscAPIService.getListImages()
+      .then(data => {
+        console.log(data);
       });
   }
 }

@@ -115,7 +115,7 @@ export class VRCameraViewPage {
     console.log('--capture VR Camera---');
     
     
-    this.OscAPIService.getTakePictureFileUri().then(path => {
+    this.OscAPIService.getThumbImagePath("99").then(path => {
       // this.file.readAsDataURL(this.file.cacheDirectory + "VRThumb", "vrThumb.jpg").then(data => {
         if (!this.photoSphereView) {
           // this.photoSphereView.destroy();

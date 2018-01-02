@@ -36,6 +36,7 @@
     "@ionic-native/in-app-browser": "4.3.0",
     "@ionic-native/keyboard": "4.3.0",
     "@ionic-native/native-storage": "4.3.0",
+    "@ionic-native/network": "^4.5.2",
     "@ionic-native/open-native-settings": "^4.4.2",
     "@ionic-native/social-sharing": "4.3.0",
     "@ionic-native/splash-screen": "4.3.0",
@@ -74,6 +75,7 @@
     "cordova-plugin-hotspot": "^1.2.9",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-nativestorage": "^2.2.2",
+    "cordova-plugin-network-information": "^2.0.1",
     "cordova-plugin-networkinterface": "^1.2.0",
     "cordova-plugin-safariviewcontroller": "^1.5.2",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -156,7 +158,8 @@
         "ANDROID_SCHEME": "com.startapplabs.ion2FullApp.elite",
         "ANDROID_HOST": "wowjoy-dev.auth0.com",
         "ANDROID_PATHPREFIX": "/cordova/com.startapplabs.ion2FullApp.elite/callback"
-      }
+      },
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "ios",

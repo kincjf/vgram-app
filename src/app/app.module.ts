@@ -106,6 +106,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { File } from '@ionic-native/file';
+import { Network } from '@ionic-native/network';
 
 import { Hotspot } from '@ionic-native/hotspot';
 
@@ -310,6 +311,7 @@ export function createTranslateLoader(http: Http) {
 		EmailComposer,
     AuthServiceProvider,
     File,
+    Network,
     // Hotspot,
 
     Diagnostic,

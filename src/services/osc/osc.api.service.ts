@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { File } from '@ionic-native/file';
+import { Network } from '@ionic-native/network';
 // import { Hotspot, HotspotNetworkConfig } from '@ionic-native/hotspot';
 import { Log, Level } from 'ng2-logger';
 
@@ -35,9 +36,19 @@ export class OscAPIService {
   constructor(
     protected http: Http,
     protected file: File,
+    protected network: Network,
   ) {
     this.apiVersion = 0;
     this.checkDevice();
+
+    this.network.onConnect().subscribe(() => {
+      this.apiVersion = 0;
+      this.checkDevice();
+    });
+
+    this.network.onDisconnect().subscribe(() => {
+      this.apiVersion = -1;
+    });
   }
 
   private async checkDevice(): Promise<void> {
@@ -103,8 +114,8 @@ export class OscAPIService {
         this.oscAPIv1 = new MockAPIv1Service(this.http, this.file);
 
         log.info('Connects to the OSC Mock server (api v1).\n' +
-        'Please connect the VR camera supported by the app to WiFi.\n' +
-        'Available Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
+          'Please connect the VR camera supported by the app to WiFi.\n' +
+          'Available Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
 
         // this.apiVersion = -1;
 
@@ -194,15 +205,69 @@ export class OscAPIService {
       let session = await this.oscAPIv1.startSession();
       var sessionId = session.results.sessionId;
 
-      console.log(sessionId);
       let data = await this.oscAPIv1.takePicture(sessionId);
       var id = data.id;
 
-      console.log(id);
       return await this.oscAPIv1.getImageFileUri(id);
     }
 
     return 'error';
+  }
+
+  getThumbImagePath(URI: String): Promise<String> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.getThumbImagePath(URI);
+    }
+  }
+
+  downloadImage(URI: String): Promise<String> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.downloadImage(URI);
+    }
+  }
+
+  async getDeviceInfo(): Promise<any> {
+    switch (this.apiVersion) {
+      case 0:
+        return { model: 'Wait' }
+      case 1:
+        return this.oscAPIv1.getInfo();
+      // case 2:
+      // return this.oscAPIv2.getInfo();
+      case -1:
+      default:
+        return { model: 'Error' }
+    }
+  }
+
+  getAllOptions(): Promise<any> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.getAllOptions();
+    }
+  }
+
+  enableHDR(): Promise<any> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.setHDR(true);
+    }
+  }
+
+  disableHDR(): Promise<any> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.setHDR(false);
+    }
+  }
+
+  setExposureDelay(delay: Number): Promise<any> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.setExposureDelay(delay);
+    }
+  }
+
+  setWhiteBalance(option: String): Promise<any> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.setWhiteBalance(option);
+    }
   }
 }
 
