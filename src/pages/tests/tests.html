@@ -1,50 +1,30 @@
 <ion-content>
+  <div><h2>VR 카메라 연결 관리 – 사진 가져오기/삭제</h2></div>
   <div>
     <ion-row>
       <ion-col>
-        <button (click)='test1();'>getOptions</button>
+        <button (click)='getImageList();'>Get all image lists in VR Camera - Recalling a list of photos on a VR camera (if called, brings up the next list, Use the variable end to determine if it is the end of the list.)</button>
       </ion-col>
     </ion-row>
   </div>
   <div>
     <ion-row>
       <ion-col>
-        <button (click)='test2();'>setHdrTrue</button>
+        <button (click)='downloadImage();'>Download image - Download last image in list</button>
       </ion-col>
     </ion-row>
   </div>
   <div>
     <ion-row>
       <ion-col>
-        <button (click)='test3();'>setHdrFalse</button>
+        <button (click)='getThumbnail();'>Get thumbnail - Get last thumbnail in list</button>
       </ion-col>
     </ion-row>
   </div>
   <div>
     <ion-row>
       <ion-col>
-        <button (click)='test4();'>setDelay1</button>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div>
-    <ion-row>
-      <ion-col>
-        <button (click)='test5();'>setDelay5</button>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div>
-    <ion-row>
-      <ion-col>
-        <button (click)='test6();'>setDelay10</button>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div>
-    <ion-row>
-      <ion-col>
-        <button (click)='test7();'>getListImages</button>
+        <button (click)='deleteImage();'>Delete Image - Delete last image in list</button>
       </ion-col>
     </ion-row>
   </div>

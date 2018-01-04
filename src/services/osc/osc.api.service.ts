@@ -226,6 +226,12 @@ export class OscAPIService {
     }
   }
 
+  delete(URI: String): Promise<String> {
+    if (this.apiVersion == 1) {
+      return this.oscAPIv1.delete(URI);
+    }
+  }
+
   async getDeviceInfo(): Promise<any> {
     switch (this.apiVersion) {
       case 0:

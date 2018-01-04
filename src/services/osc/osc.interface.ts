@@ -31,7 +31,7 @@ export interface AbstractApiv1 extends AbstractApi {
    *
    * @returns {Promise<object>}
    */
-  listImages(entryCount: number, maxSize: number, includeThumb: boolean): Promise<any>,
+  listImages(entryCount: number, maxSize: number, continuationToken: string, includeThumb: boolean): Promise<any>,
 
   /**
    * @returns {Promise<binary(image/jpeg or image/png)>}

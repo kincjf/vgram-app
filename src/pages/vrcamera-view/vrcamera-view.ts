@@ -94,7 +94,7 @@ export class VRCameraViewPage {
     console.log('--photo--');
     this.selectedTab = "vr";
 
-
+    // 카메라 촬영 예제
     this.OscAPIService.getTakePictureFileUri().then(path => {
       // this.file.readAsDataURL(this.file.cacheDirectory + "VRThumb", "vrThumb.jpg").then(data => {
         if (!this.photoSphereView) {

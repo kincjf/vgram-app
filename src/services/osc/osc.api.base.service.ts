@@ -11,6 +11,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
 
   protected options: RequestOptions;
   protected Host: String;
+  protected continuationToken: String;
 
   protected supportOptions: any;
 
@@ -21,6 +22,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
   ) {
     this.Host = Host;
     this.supportOptions = {};
+    this.continuationToken = "";
     this.getAllOptions().then(result => {
       this.supportOptions.hdrSupport = result.hdrSupport;
       this.supportOptions.exposureDelaySupport = result.exposureDelaySupport;
@@ -137,19 +139,24 @@ export class OscAPIv1Service implements AbstractApiv1 {
       .catch(this.handleError);
   }
 
-  listImages(entryCount = 50, maxSize = 100, includeThumb = false): Promise<any> {
+  listImages(entryCount = 50, maxSize = 100, continuationToken = "", includeThumb = false): Promise<any> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
     headers.append('X-XSRF-Protected', '1');
     this.options = new RequestOptions({ headers: headers });
 
-    const body = JSON.stringify({ name: "camera.listImages", parameters: { entryCount: entryCount, maxSize: maxSize, includeThumb: includeThumb } });
+    const body = JSON.stringify({ name: "camera.listImages", parameters: { entryCount: entryCount, maxSize: maxSize, continuationToken: continuationToken != "" ? continuationToken : this.continuationToken, includeThumb: includeThumb } });
 
     return this.http.post(this.Host + '/osc/commands/execute', body, this.options)
       .toPromise()
-      .then(response => response.json())
-      .catch(this.handleError);
+      .then(response => {
+        let result = response.json().results;
+        this.continuationToken = result.continuationToken;
+        result.end = result.continuationToken ? false : true;
+        
+        return result;
+      }).catch(this.handleError);
   }
 
   delete(fileUri: String): Promise<any> {
@@ -167,7 +174,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
       .catch(this.handleError);
   }
 
-  getImage(fileUri: String, maxSize = null): Promise<any> {
+  getImage(fileUri: String, maxSize = 99999): Promise<any> {
     const headers = new Headers();
     headers.append('Content-Type', 'image/jpeg');
     headers.append('X-XSRF-Protected', '1');

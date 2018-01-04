@@ -14,50 +14,63 @@ export class TestPage {
   ) {
   }
 
-  test1() {
-    this.OscAPIService.getAllOptions()
-      .then(data => {
-        console.log(data);
-      });
-  }
-  test2() {
-    this.OscAPIService.enableHDR()
-      .then(data => {
-        console.log(data);
-      });
-  }
-  test3() {
-    this.OscAPIService.disableHDR()
-      .then(data => {
-        console.log(data);
-      });
-  }
-
-  test4() {
-    this.OscAPIService.setExposureDelay(1)
-      .then(data => {
-        console.log(data);
-      });
-  }
-
-  test5() {
-    this.OscAPIService.setExposureDelay(5)
-      .then(data => {
-        console.log(data);
-      });
-  }
-
-  test6() {
-    this.OscAPIService.setExposureDelay(10)
-      .then(data => {
-        console.log(data);
-      });
-  }
-
-  test7() {
+  getImageList() {
     this.OscAPIService.getListImages()
       .then(data => {
         console.log(data);
+
+        if (data.end) { 
+          console.log('end of list');
+        } else {
+          console.log('continue list..');
+        }
+      });
+  }
+
+  downloadImage() {
+    this.OscAPIService.getListImages()
+      .then(data => {
+        if (data.entries.length != 0) { // exist entries
+          this.OscAPIService.downloadImage(data.entries[0].uri)
+            .then(path => {
+              // downloaded image path(local path)
+              // -> The path to the image stored on the device is returned using donwloadImage.
+              console.log('image path', path);
+            });
+        } else {
+          console.log('do not exist');
+        }
+      });
+  }
+
+  getThumbnail() {
+    this.OscAPIService.getListImages()
+      .then(data => {
+        if (data.entries.length != 0) { // exist entries
+          this.OscAPIService.getThumbImagePath(data.entries[0].uri)
+            .then(path => {
+              // downloaded image path(local path)
+              // -> The path to the thumbnail stored on the cache device is returned using getThumbImagePath.
+              console.log('image path', path);
+            });
+        } else {
+          console.log('do not exist');
+        }
+      });
+  }
+
+  deleteImage() {
+    this.OscAPIService.getListImages()
+      .then(data => {
+        if (data.entries.length != 0) { // exist entries
+          this.OscAPIService.delete(data.entries[0].uri)
+            .then(path => {
+              // delete image in VR Camera
+              console.log('delete image', data.entries[0].uri);
+            });
+        } else {
+          console.log('do not exist');
+        }
       });
   }
 }
