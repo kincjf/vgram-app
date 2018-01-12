@@ -7,6 +7,9 @@ import { GalleryDetailPage } from '../gallery-detail/gallery-detail';
 
 import { OscAPIService } from "../../services/osc/osc.api.service";
 import { OscInfo } from '../../services/osc/osc.dto';
+import { Observable } from 'videogular2/node_modules/rxjs/Observable';
+
+const dirName = "VRThumb";
 
 @Component({
   selector: 'gallery-page',
@@ -22,7 +25,10 @@ export class GalleryPage {
 
   images = [];
 
-  test = [];
+  private imageObserver;
+  private image = Observable.create(observer => {
+    this.imageObserver = observer;
+  });
 
   constructor(
     public nav: NavController,
@@ -34,18 +40,23 @@ export class GalleryPage {
 
     private OscAPIService: OscAPIService,
   ) {
+
   }
 
   ionViewDidLoad() {
-    const dirName = "VRThumb";
-
-    this.file.listDir(this.file.dataDirectory, dirName).then(function (list) {
-      for (var i in list) {
-        console.log(list[i].nativeURL);
-        console.log(typeof(this.images));
-        // this.images.push({ image: list[i].nativeURL });
-      }
+    this.image.subscribe(item => {
+      this.images.push(item);
     });
+
+    this.getLists();
+  }
+
+  async getLists(): Promise<any> {
+    let lists = await this.file.listDir(this.file.dataDirectory, dirName);
+
+    for (var i in lists) {
+      this.imageObserver.next({ image: lists[i].nativeURL });
+    }
   }
 
   onBack() {
