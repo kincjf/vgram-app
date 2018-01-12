@@ -20,8 +20,8 @@ import { NotificationsPage } from '../notifications/notifications';
 import { SearchPage } from '../search/search';
 
 import { ImageViewPage } from '../imageview/imageview';
-import {PostapiProvider} from "../../providers/postapi/postapi";
- 
+import { PostapiProvider } from "../../providers/postapi/postapi";
+
 
 @Component({
   selector: 'listing-page',
@@ -44,11 +44,11 @@ export class ListingPage {
   clipboardToast: any;
 
 
-  thumnail_slidersimages:any;
+  thumnail_slidersimages: any;
 
-  page:any=1;
-  totalpage:  any = 6;
-  show : boolean = true;
+  page: any = 1;
+  totalpage: any = 6;
+  show: boolean = true;
 
 
   constructor(
@@ -63,108 +63,104 @@ export class ListingPage {
     public platform: Platform,
     private clipboard: Clipboard,
     public socialSharing: SocialSharing,
-    public listpostapi:PostapiProvider,
+    public listpostapi: PostapiProvider,
     public toastCtrl: ToastController
   ) {
     this.loading = this.loadingCtrl.create();
 
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) =>
-      {
-        if(event.lang == 'ar')
-        {
-          platform.setDir('rtl', true);
-          platform.setDir('ltr', false);
-        }
-        else
-        {
-          platform.setDir('ltr', true);
-          platform.setDir('rtl', false);
-        }
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      if (event.lang == 'ar') {
+        platform.setDir('rtl', true);
+        platform.setDir('ltr', false);
+      }
+      else {
+        platform.setDir('ltr', true);
+        platform.setDir('rtl', false);
+      }
 
-        Observable.forkJoin(
-          this.translate.get('SHARE'),
-          this.translate.get('COPY_LINK'),
-          this.translate.get('REPORT'),
-          this.translate.get('LINK_POST_COPY_CLIPBOARD')
-        ).subscribe(data => {
+      Observable.forkJoin(
+        this.translate.get('SHARE'),
+        this.translate.get('COPY_LINK'),
+        this.translate.get('REPORT'),
+        this.translate.get('LINK_POST_COPY_CLIPBOARD')
+      ).subscribe(data => {
 
-          this.clipboardToast = this.toastCtrl.create({
-            message: data[3],
-            duration: 3000,
-            position: 'bottom'
-          });
-          
-           this.shareActionSheet = this.actionsheetCtrl.create({
-            title: 'Select an action',
-            buttons: [
-              {
-                text: data[0],
-                role: 'destructive',
-                icon: !this.platform.is('ios') ? 'share' : null,
-                handler: () => {
+        this.clipboardToast = this.toastCtrl.create({
+          message: data[3],
+          duration: 3000,
+          position: 'bottom'
+        });
 
-                  this.socialSharing.share(this.postToShare.comments[0].comment, this.postToShare.date, this.postToShare.images[0])
+        this.shareActionSheet = this.actionsheetCtrl.create({
+          title: 'Select an action',
+          buttons: [
+            {
+              text: data[0],
+              role: 'destructive',
+              icon: !this.platform.is('ios') ? 'share' : null,
+              handler: () => {
+
+                this.socialSharing.share(this.postToShare.comments[0].comment, this.postToShare.date, this.postToShare.images[0])
                   .then(() => {
                     console.log('Success!');
                   })
                   .catch(() => {
-                      console.log('Error');
+                    console.log('Error');
                   });
-                }
-              },
-              {
-                text: data[1],
-                role: 'destructive',
-                icon: !this.platform.is('ios') ? 'link' : null,
-                handler: () => {
-                  this.clipboard.copy(this.postToShare.images[0]);
-
-                  this.clipboard.paste().then(
-                    (resolve: string) => {
-                        this.clipboardToast.present();
-                      },
-                      (reject: string) => {
-                        
-                      }
-                    );
-                }
-              },
-              {
-                text: data[2],
-                role: 'destructive',
-                icon: !this.platform.is('ios') ? 'paper' : null,
-                handler: () => {
-                  
-                }
               }
-            ]
-          });
+            },
+            {
+              text: data[1],
+              role: 'destructive',
+              icon: !this.platform.is('ios') ? 'link' : null,
+              handler: () => {
+                this.clipboard.copy(this.postToShare.images[0]);
 
+                this.clipboard.paste().then(
+                  (resolve: string) => {
+                    this.clipboardToast.present();
+                  },
+                  (reject: string) => {
+
+                  }
+                );
+              }
+            },
+            {
+              text: data[2],
+              role: 'destructive',
+              icon: !this.platform.is('ios') ? 'paper' : null,
+              handler: () => {
+
+              }
+            }
+          ]
         });
+
       });
+    });
 
   }
 
 
   ionViewDidLoad() {
 
-    
+
     this.loading.present();
 
     this.listpostapi.getPost(this.page).subscribe(
-    data => {
+      data => {
 
-   this.posts = data;
-  //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
-   console.log(this.posts);
-    // console.log(this.thumnail_slidersimages);
-    },
-    error => 
-    {
-     console.log(error.JSON)
-    },
-    () => console.log('finished')
-  )
+        this.posts = data;
+        //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
+        console.log(this.posts);
+        // console.log(this.thumnail_slidersimages);
+      },
+      error => {
+        console.log(error.JSON)
+      },
+      () => console.log('finished')
+    )
 
 
     this.listingService
@@ -174,7 +170,7 @@ export class ListingPage {
         this.listing.banner_title = data.banner_title;
         this.listing.populars = data.populars;
         this.listing.categories = data.categories;
-        
+
         // this.listing.posts = data.posts;
         this.loading.dismiss();
 
@@ -193,7 +189,7 @@ export class ListingPage {
   }
 
 
-  initPosts(){
+  initPosts() {
     this.posts = [];
     // for (let i = 0; i < 5; i++) {
     //   if (this.posts.length == this.listing.posts.length) {
@@ -204,74 +200,73 @@ export class ListingPage {
     //   }
     // }
 
-  
 
 
-    
+
+
   }
 
-  doPostsInfinite(infiniteScroll: any){
-     this.page = this.page+1;
-  
+  doPostsInfinite(infiniteScroll: any) {
+    this.page = this.page + 1;
+
     setTimeout(() => {
       // for (let i = 0; i < 5; i++) {
 
-  if(this.page == this.totalpage){
-  this.infiniteScrollVisible = false;
-  }
-    else{    
-  this.listpostapi.getPost( this.page).subscribe(
-    data => {
+      if (this.page == this.totalpage) {
+        this.infiniteScrollVisible = false;
+      }
+      else {
+        this.listpostapi.getPost(this.page).subscribe(
+          data => {
 
-   for(let i=0; i<data.length; i++) {
-             this.posts.push(data[i]);
-           }
-  
-  //  this.posts = this.posts.push(data);
-  //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
-   console.log(this.posts);
-    // console.log(this.thumnail_slidersimages);
-    },
-    error => 
-    {
-     console.log(error.JSON)
-    },
-    () => console.log('finished')
-  )
-    }
+            for (let i = 0; i < data.length; i++) {
+              this.posts.push(data[i]);
+            }
+
+            //  this.posts = this.posts.push(data);
+            //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
+            console.log(this.posts);
+            // console.log(this.thumnail_slidersimages);
+          },
+          error => {
+            console.log(error.JSON)
+          },
+          () => console.log('finished')
+        )
+      }
       // }
       infiniteScroll.complete();
     }, 500);
 
-   
+
   }
 
-  likePoast(post){
+  likePoast(post) {
     post.meLikes = !post.meLikes;
   }
-  commentPost(post){
+  commentPost(post) {
     console.log('---Post Comment---');
     this.menu.close();
     this.app.getRootNav().push(CommentsPage, {
       post
     });
   }
-  sharePost(post){
+  sharePost(post) {
     this.postToShare = post;
     this.shareActionSheet.present();
   }
-  onNotificationPage(){
+  onNotificationPage() {
     this.menu.close();
     this.app.getRootNav().push(NotificationsPage);
   }
 
-  onSearchbarFocus(){
+  onSearchbarFocus() {
     console.log('---focus---');
     this.menu.close();
     this.app.getRootNav().push(SearchPage);
   }
 
-  toImageView(item){
+  toImageView(item) {
     this.menu.close();
     this.app.getRootNav().push(ImageViewPage, { item });
   }

@@ -9,24 +9,24 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class PostapiProvider {
-  baseUrl:any = "http://api.vgram.kr/api/";
+  baseUrl: any = "http://api.vgram.kr/api/";
 
   constructor(public http: Http) {
     console.log('Hello PostapiProvider Provider');
   }
-  
 
 
 
-  getPost(index){
 
-    return this.http.get(this.baseUrl+'post/list/'+index).map( res => res.json())
+  getPost(index) {
+
+    return this.http.get(this.baseUrl + 'post/list/' + index).map(res => res.json())
 
   }
 
-   getComment(index){
+  getComment(index) {
 
-    return this.http.get(this.baseUrl+'post/'+index+"/comment/").map( res => res.json())
+    return this.http.get(this.baseUrl + 'post/' + index + "/comment/").map(res => res.json())
 
   }
 }

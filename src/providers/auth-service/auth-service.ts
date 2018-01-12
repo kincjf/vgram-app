@@ -14,7 +14,7 @@ const auth0Config = {
   clientId: '0ruSAuhcONN2gQY32a17fCxQN2hrxO3W',
   domain: 'wowjoy-dev.auth0.com',
   callbackURL: location.href,
-  packageIdentifier: 'com.startapplabs.ion2FullApp.elite'
+  packageIdentifier: 'com.startapplabs.ion2fullapp.elite'
 };
 /*
   Generated class for the AuthServiceProvider provider.
@@ -100,6 +100,7 @@ export class AuthServiceProvider {
     };
 
     client.authorize(options, (err, authResult) => {
+      console.log(err, JSON.stringify(authResult));
       if(err) {
         throw err;
       }

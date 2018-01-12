@@ -28,23 +28,23 @@
     <div style="display: flex; align-items: center;" *ngIf="m_bSelect">
       <span style="font-size: 150%; margin: 5px;">
         <a (click)="onSelectAll()">
-          <img *ngIf="!m_bAllSelected" src="../../assets/images/gallery/uncheckbox1.png" width="20px" height="20px"/>
-          <img *ngIf="m_bAllSelected" src="../../assets/images/gallery/checkbox1.png"  width="20px" height="20px"/>
+          <img *ngIf="!m_bAllSelected" src="../../assets/images/gallery/uncheckbox1.png" width="20px" height="20px" />
+          <img *ngIf="m_bAllSelected" src="../../assets/images/gallery/checkbox1.png" width="20px" height="20px" />
           <font class="all-text">{{'ALL' | translate}}</font>
         </a>
       </span>
-    
+
       <div style="flex: 1; font-size: 150%; color: #5f5f5f; text-align: center;">
         {{selectedCount}}{{'_PHOTOS_SELECTED' | translate}}
       </div>
-    
+
       <span class="get-photo">
         <a (click)="onTrash()">
           <font class="text">{{'GET_PHOTOS' | translate}}</font>
         </a>
       </span>
     </div>
-    
+
   </ion-navbar>
 </ion-header>
 
@@ -59,19 +59,15 @@
 
   <ion-row>
     <ion-col width-50 class="gallery-item" *ngFor="let image of images">
-      <a (click)="onImageDetial(image)"><img src="{{image.image}}"/></a>
-      <div *ngIf="m_bSelect" class="check-box">
-        <a (click)="onSelectImage(image)">
-          <img *ngIf="image.selected" src="../../assets/images/gallery/checkbox.png"  width="30px" height="30px"/>
-          <img *ngIf="!image.selected" src="../../assets/images/gallery/uncheckbox.png"  width="30px" height="30px"/>
-        </a>
-      </div>
+      <a (click)="onImageDetial(image)">
+        <img src="{{image.image}}" />
+      </a>
     </ion-col>
   </ion-row>
 
 </ion-content>
 
-<ion-footer class="footer">
+<!-- <ion-footer class="footer">
   <ion-segment [(ngModel)]="selectedTab" class="segment-buttons">
     <ion-segment-button value="vr" class="selected" *ngIf="selectedTab=='vr'" (ionSelect)="selectVR()">
       <font class="selected-font">{{'VR_CAMERA'  | translate }}</font>
@@ -86,4 +82,4 @@
       <font class="unselected-font">{{'MY_DEVICE'  | translate }}</font>
     </ion-segment-button>
   </ion-segment>
-</ion-footer>
+</ion-footer> -->

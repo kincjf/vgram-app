@@ -57,7 +57,8 @@ export class VRCameraViewPage {
 
     private file: File,
 
-    private OscAPIService: OscAPIService) {
+    private OscAPIService: OscAPIService
+  ) {
     this.post = navParams.get('item');
   }
 
@@ -93,41 +94,21 @@ export class VRCameraViewPage {
   selectVR() {
     console.log('--photo--');
     this.selectedTab = "vr";
-
-    // 카메라 촬영 예제
-    this.OscAPIService.getTakePictureFileUri().then(path => {
-      // this.file.readAsDataURL(this.file.cacheDirectory + "VRThumb", "vrThumb.jpg").then(data => {
-        if (!this.photoSphereView) {
-          // this.photoSphereView.destroy();
-          this.photoSphereView = photoSphereViewer({
-            container: this.panoDiv.nativeElement,
-            panorama: path,
-            // panorama: data,
-          });
-        } else {
-          this.photoSphereView.setPanorama(path);
-        }
-      // }).catch(err => err);
-    });
   }
 
   showDetail() {
     console.log('--capture VR Camera---');
-    
-    
-    this.OscAPIService.getThumbImagePath("99").then(path => {
-      // this.file.readAsDataURL(this.file.cacheDirectory + "VRThumb", "vrThumb.jpg").then(data => {
-        if (!this.photoSphereView) {
-          // this.photoSphereView.destroy();
-          this.photoSphereView = photoSphereViewer({
-            container: this.panoDiv.nativeElement,
-            panorama: path,
-            // panorama: data,
-          });
-        } else {
-          this.photoSphereView.setPanorama(path);
-        }
-      // }).catch(err => err);
+
+    // 카메라 촬영 예제
+    this.OscAPIService.getTakePictureFileUri().then(path => {
+      if (!this.photoSphereView) {
+        this.photoSphereView = photoSphereViewer({
+          container: this.panoDiv.nativeElement,
+          panorama: path,
+        });
+      } else {
+        this.photoSphereView.setPanorama(path);
+      }
     });
   }
 

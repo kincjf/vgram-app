@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/htt
 import { File } from '@ionic-native/file';
 
 import { AbstractApiv1 } from './osc.interface';
+import { OscInfo } from './osc.dto';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -30,7 +31,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
     });
   }
 
-  getInfo(): Promise<any> {
+  getInfo(): Promise<OscInfo> {
     const headers = new Headers();
     headers.append('Accept', 'application/json;chartset=utf-8');
     headers.append('X-XSRF-Protected', '1');
@@ -154,7 +155,7 @@ export class OscAPIv1Service implements AbstractApiv1 {
         let result = response.json().results;
         this.continuationToken = result.continuationToken;
         result.end = result.continuationToken ? false : true;
-        
+
         return result;
       }).catch(this.handleError);
   }

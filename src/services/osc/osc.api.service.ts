@@ -12,6 +12,7 @@ import { LG360APIv1Service } from './devices/osc.lg360.service';
 import { Gear360APIv1Service } from './devices/osc.gear360.service';
 import { MockAPIv1Service } from './devices/osc.mock.service';
 
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 import * as _ from 'lodash';
 
@@ -31,6 +32,18 @@ export class OscAPIService {
   // private OscAPIv2: OscAPIv2Service;
 
   private info: OscInfo;
+
+  private ipObserver;
+  private ip = Observable.create(observer => {
+    this.ipObserver = observer;
+  });
+
+  private modelObserver;
+  private model = Observable.create(observer => {
+    this.modelObserver = observer;
+  });
+
+  private address: String;
   private apiVersion: number;    // osc api version
 
   constructor(
@@ -38,17 +51,30 @@ export class OscAPIService {
     protected file: File,
     protected network: Network,
   ) {
-    this.apiVersion = 0;
-    this.checkDevice();
+    setInterval(() => {
+      this.checkIP();
+    }, 1000);
 
-    this.network.onConnect().subscribe(() => {
+    this.ip.subscribe(() => {
       this.apiVersion = 0;
       this.checkDevice();
     });
+  }
 
-    this.network.onDisconnect().subscribe(() => {
-      this.apiVersion = -1;
-    });
+  private checkIP(): void {
+    if (typeof networkinterface !== 'undefined') {
+      networkinterface.getWiFiIPAddress((ip) => {
+        if (ip != this.address) {
+          this.address = ip;
+          this.ipObserver.next(ip);
+        }
+      }, (error) => {
+        if (this.address != 'Error') {
+          this.address = 'Error';
+          this.ipObserver.next('Error');
+        }
+      });
+    }
   }
 
   private async checkDevice(): Promise<void> {
@@ -56,14 +82,7 @@ export class OscAPIService {
 
     if (typeof networkinterface !== 'undefined') {
       ip = await new Promise<String>((resolve, reject) => {
-        networkinterface.getWiFiIPAddress((ip) => resolve(ip), (err) => {
-          log.error('No wifi connection found.');
-          alert('Wifi not connected.\n' +
-            'Make sure you have a wifi connection with your VR camera');
-
-          return resolve(mockIP);
-          // this.version = -1; return reject(err);
-        });
+        networkinterface.getWiFiIPAddress((ip) => resolve(ip), (err) => resolve('127.0.0.1'));
       });
 
       // get device ip, 타 VR 카메라 연결시 gateway ip가 .1이 아닐 수 있음
@@ -76,14 +95,12 @@ export class OscAPIService {
       ip = gateway = mockIP;
     }
 
-    console.log(gateway);
+    let info = await getDeviceInfo(this.http, gateway);
+    if (!info) info.model = 'Error';
 
-    // if (true) { // 기기를 연결할 경우 주석하면됨.
-    //   gateway = mockIP;
-    //   console.log('enter test mode.');
-    // }
+    if (this.info && this.info.model == info.model) return;
 
-    this.info = await getDeviceInfo(this.http, gateway);
+    this.info = info;
 
     switch (this.info.model) {
       case 'LG-R105':
@@ -108,35 +125,27 @@ export class OscAPIService {
         break;
       case 'Error':
       default:
+        this.apiVersion = -1;
 
-        this.apiVersion = 1;
-        this.info.mocked = true;
-        this.oscAPIv1 = new MockAPIv1Service(this.http, this.file);
-
-        log.info('Connects to the OSC Mock server (api v1).\n' +
+        log.error('No VR Camera connection found.');
+        alert('No VR Camera connection found. \n' +
           'Please connect the VR camera supported by the app to WiFi.\n' +
-          'Available Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
-
-        // this.apiVersion = -1;
-
-        // log.error('No VR Camera connection found.');
-        // alert('No VR Camera connection found. \n' +
-        //   'Please connect the VR camera supported by the app to WiFi.\n' +
-        //   'Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
+          'Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
         break;
     }
+    this.modelObserver.next(this.info.model);
   }
 
   /**
    * /osc/info
    * @returns {Promise<any>}
    */
-  getInfo(): Promise<any> {
+  getInfo(): Promise<OscInfo> {
     if (this.apiVersion == 1) {
       return this.oscAPIv1.getInfo();
     }
 
-    return Promise.reject({ Model: 'None' });
+    return Promise.reject({ model: 'None' });
   }
 
   /**
@@ -232,17 +241,24 @@ export class OscAPIService {
     }
   }
 
-  async getDeviceInfo(): Promise<any> {
+  getDeviceModel(): Observable<any> {
+    return this.model;
+  }
+
+  async getDeviceInfo(): Promise<OscInfo> {
     switch (this.apiVersion) {
       case 0:
-        return { model: 'Wait' }
+        console.log('wait');
+        return <OscInfo>{ model: 'Wait' }
       case 1:
+        console.log('version 1');
         return this.oscAPIv1.getInfo();
       // case 2:
       // return this.oscAPIv2.getInfo();
       case -1:
       default:
-        return { model: 'Error' }
+        console.log('error');
+        return <OscInfo>{ model: 'Error' }
     }
   }
 
@@ -278,17 +294,17 @@ export class OscAPIService {
 }
 
 
-function getDeviceInfo(http: Http, URL: String): Promise<OscInfo> {
+function getDeviceInfo(http: Http, Address: String): Promise<OscInfo> {
   const headers = new Headers();
   headers.append('X-Content-Type-Options', 'nosniff');
   headers.append('Content-Type', 'application/json; charset=utf-8');
   headers.append('X-XSRF-Protected', '1');
   let options = new RequestOptions({ headers: headers });
 
-  return http.get(["http:/", URL, "osc/info"].join("/"), options).toPromise()
+  return http.get(["http:/", Address, "osc/info"].join("/"), options).toPromise()
     .then(response => <OscInfo>response.json())
     .catch(err => {
-      console.error('fail to requect /osc/api, init as api');
+      console.error('fail to request /osc/api, init as api');
 
       return <OscInfo>{ model: "Error" };
     });

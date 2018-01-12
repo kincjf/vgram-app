@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.startapplabs.ion2FullApp.elite" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.startapplabs.ion2fullapp.elite" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ion2-FullApp ELITE</name>
     <description>The Best Ionic 2 Starter app - ELITE version</description>
     <author email="hi@ionicthemes.com" href="https://ionicthemes.com/">Ionic Themes</author>
@@ -86,8 +86,6 @@
     <allow-navigation href="http://192.168.1.60:8100" />
     <allow-navigation href="http://192.168.1.60:8101" />
     <allow-navigation href="http://192.168.5.103:8100" />
-    <engine name="ios" spec="~4.5.4" />
-    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-apprate" spec="^1.3.0" />
     <plugin name="cordova-plugin-console" spec="^1.1.0" />
     <plugin name="cordova-plugin-crop" spec="^0.3.1" />
@@ -126,10 +124,12 @@
     <plugin name="cordova-plugin-networkinterface" spec="^1.2.0" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.2" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
-        <variable name="URL_SCHEME" value="com.startapplabs.ion2FullApp.elite" />
-        <variable name="ANDROID_SCHEME" value="com.startapplabs.ion2FullApp.elite" />
+        <variable name="URL_SCHEME" value="com.startapplabs.ion2fullapp.elite" />
+        <variable name="ANDROID_SCHEME" value="com.startapplabs.ion2fullapp.elite" />
         <variable name="ANDROID_HOST" value="wowjoy-dev.auth0.com" />
-        <variable name="ANDROID_PATHPREFIX" value="/cordova/com.startapplabs.ion2FullApp.elite/callback" />
+        <variable name="ANDROID_PATHPREFIX" value="/cordova/com.startapplabs.ion2fullapp.elite/callback" />
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
+    <engine name="ios" spec="~4.5.4" />
+    <engine name="android" spec="6.3.0" />
 </widget>
