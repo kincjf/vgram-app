@@ -10,7 +10,8 @@
     <div style="display: flex; align-items: center; background-color:white;">
       <span>
         <a (click)="onBack()">
-          <img src="../../assets/images/homeHeader/back.png" />
+          <!-- <img src="../../assets/images/homeHeader/back.png" /> -->
+          <ion-icon name="md-arrow-back"></ion-icon>
         </a>
       </span>
       <!-- <ion-segment style="flex: 1; margin: 10px;" [(ngModel)]="selectedTab" class="segment-buttons">
@@ -27,7 +28,7 @@
           <font class="unselected-font">PHOTO</font>
         </ion-segment-button>
       </ion-segment> -->
-      <span>
+      <!-- <span>
         <a (click)="onNotificationPage()">
           <img src="../../assets/images/homeHeader/chat.png" />
         </a>
@@ -36,7 +37,7 @@
         <a (click)="onClickMenu()">
           <img src="../../assets/images/homeHeader/menu.png" />
         </a>
-      </span>
+      </span> -->
     </div>
   </ion-navbar>
 
@@ -61,20 +62,20 @@
 
 <ion-footer>
   <ion-item class="footer-item">
-    <div class="footer-image" item-left>
+    <!-- <div class="footer-image" item-left>
       <img class="user-image" src="{{profileImage}}" />
-    </div>
+    </div> -->
     <div class="footer-content">
       <a (click)="showDetail()"><p class="item-title">
         {{profileName}}
       </p></a>
     </div>
-    <ion-note class="item-time" item-right>
+    <!-- <ion-note class="item-time" item-right>
       <div>
         <button icon-only ion-button clear small class="del-button">
           <ion-icon name='heart' color="dark"></ion-icon>
         </button>
       </div>
-    </ion-note>
+    </ion-note> -->
   </ion-item>
 </ion-footer>

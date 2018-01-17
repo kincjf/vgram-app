@@ -135,13 +135,13 @@ export class VRCameraViewPage {
     // 카메라 촬영 예제
     this.OscAPIService.getTakePictureFileUri().then(path => {
       if (!this.photoSphereView) {
-        console.log(path);
+        // console.log(path);
         this.photoSphereView = photoSphereViewer({
           container: this.panoDiv.nativeElement,
           panorama: path,
         });
       } else {
-        console.log(path);
+        // console.log(path);
         this.photoSphereView.setPanorama(path);
       }
     });

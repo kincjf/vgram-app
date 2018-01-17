@@ -92,6 +92,9 @@ export class GalleryPage {
   }
 
   onImageDetial(image) {
-    this.nav.push(GalleryDetailPage);
+    // console.log(image);
+    this.nav.push(GalleryDetailPage, {
+      path: image.image
+    });
   }
 }
