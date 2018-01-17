@@ -41,6 +41,10 @@ export class VRCameraViewPage {
 
   photoSphereView: any;
 
+  modelSubscribe: any;
+  active = true;
+  captureLock = false;
+
   @ViewChild('pano') panoDiv: ElementRef;
 
 
@@ -63,8 +67,6 @@ export class VRCameraViewPage {
   }
 
   ngOnInit() {
-    // if (this.selectedTab == "vr")
-    //   this.selectVR();
   }
 
   ngAfterViewInit() {
@@ -75,10 +77,36 @@ export class VRCameraViewPage {
       container: this.panoDiv.nativeElement,
       panorama: this.initVRImage,
     });
+
+    this.OscAPIService.getDeviceInfo().then((info) => {
+      // console.log('vr init', info);
+      if (!info.model) this.navCtrl.pop();
+      this.modelSubscribe = this.OscAPIService.getDeviceModel().subscribe(model => {
+        if (!model && this.active) {
+          // console.log('vr sub', model);
+          this.navCtrl.pop();
+        }
+      });
+    })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ImageViewPage');
+  ionViewDidEnter() {
+    this.OscAPIService.getDeviceInfo().then((info) => {
+      // console.log('vr enter', info);
+      if (!info.model) this.navCtrl.pop();
+    })
+
+    this.active = true;
+  }
+
+  ionViewDidLeave() {
+    // console.log('vr leave');
+    this.active = false;
+  }
+
+  ngOnDestroy() {
+    // console.log('vr destroy');
+    this.modelSubscribe.unsubscribe();
   }
 
   onBack() {
@@ -98,6 +126,11 @@ export class VRCameraViewPage {
 
   showDetail() {
     console.log('--capture VR Camera---');
+
+    if (this.captureLock) return;
+    this.captureLock = true;
+
+    setTimeout(() => { this.captureLock = false; }, 5000);
 
     // 카메라 촬영 예제
     this.OscAPIService.getTakePictureFileUri().then(path => {

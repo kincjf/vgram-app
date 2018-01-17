@@ -69,9 +69,9 @@ export class OscAPIService {
           this.ipObserver.next(ip);
         }
       }, (error) => {
-        if (this.address != 'Error') {
-          this.address = 'Error';
-          this.ipObserver.next('Error');
+        if (this.address != undefined) {
+          this.address = undefined;
+          this.ipObserver.next(undefined);
         }
       });
     }
@@ -96,7 +96,6 @@ export class OscAPIService {
     }
 
     let info = await getDeviceInfo(this.http, gateway);
-    if (!info) info.model = 'Error';
 
     if (this.info && this.info.model == info.model) return;
 
@@ -248,8 +247,8 @@ export class OscAPIService {
   async getDeviceInfo(): Promise<OscInfo> {
     switch (this.apiVersion) {
       case 0:
-        console.log('wait');
-        return <OscInfo>{ model: 'Wait' }
+        await new Promise(resolve => setTimeout(resolve, 200));
+        return await this.getDeviceInfo();
       case 1:
         console.log('version 1');
         return this.oscAPIv1.getInfo();
@@ -258,7 +257,7 @@ export class OscAPIService {
       case -1:
       default:
         console.log('error');
-        return <OscInfo>{ model: 'Error' }
+        return <OscInfo>{ model: undefined }
     }
   }
 
@@ -306,6 +305,6 @@ function getDeviceInfo(http: Http, Address: String): Promise<OscInfo> {
     .catch(err => {
       console.error('fail to request /osc/api, init as api');
 
-      return <OscInfo>{ model: "Error" };
+      return <OscInfo>{ model: undefined };
     });
 }

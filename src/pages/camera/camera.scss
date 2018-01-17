@@ -6,19 +6,24 @@ camera-page {
 		justify-content: center;
 
 		.one-action-container{
-			width: 60%;
+			width: 50%;
 			border-radius: 20px;
 			border: solid 5px #1d436f;
-			margin-left: 20%;
-			font-size: 200%;
+			margin-left: 25%;
+			font-size: 150%;
 			padding: 10px;
 			text-align: center;
 
 			margin-top: 5%;
 
 			.action-icon{
-				font-size: 300%;
+				font-size: 250%;
 			}
 		}
+	}
+
+	.camera-model {
+		text-align:center;
+		height:10%;
 	}
 }
