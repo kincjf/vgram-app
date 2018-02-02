@@ -8,7 +8,7 @@ import { CommentsService } from './comments.service';
 
 import { ProfilePage } from '../profile/profile';
 
-import { PostapiProvider } from "../../providers/postapi/postapi";
+import { PostAPIService } from '../../services/moblab/apis/post.api.service';
 
 @Component({
   selector: 'comments-page',
@@ -29,7 +29,7 @@ export class CommentsPage {
     public nav: NavController,
     public commentsService: CommentsService,
     public loadingCtrl: LoadingController,
-    public commentApi: PostapiProvider,
+    public commentApi: PostAPIService,
   ) {
     this.loading = this.loadingCtrl.create();
   }
@@ -37,7 +37,7 @@ export class CommentsPage {
   ionViewDidLoad() {
     this.loading.present();
 
-    this.commentApi.getComment(this.page).subscribe(
+    this.commentApi.getComments(this.page).subscribe(
       data => {
 
         this.curComments = data;
@@ -86,7 +86,7 @@ export class CommentsPage {
         this.infiniteScrollVisible = false;
       }
       else {
-        this.commentApi.getComment(this.page).subscribe(
+        this.commentApi.getComments(this.page).subscribe(
           data => {
 
             for (let i = 0; i < data.length; i++) {

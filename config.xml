@@ -128,7 +128,7 @@
     <plugin name="com.synconset.imagepicker" spec="~2.1.10">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="" />
     </plugin>
-    <engine name="ios" spec="~4.5.4" />
     <plugin name="cordova.plugins.diagnostic" spec="^3.9.1" />
-    <engine name="android" spec="~6.3.0" />
+    <engine name="ios" spec="~4.5.4" />
+    <engine name="android" spec="6.3.0" />
 </widget>

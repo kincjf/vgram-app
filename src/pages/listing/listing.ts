@@ -20,7 +20,7 @@ import { NotificationsPage } from '../notifications/notifications';
 import { SearchPage } from '../search/search';
 
 import { ImageViewPage } from '../imageview/imageview';
-import { PostapiProvider } from "../../providers/postapi/postapi";
+import { PostAPIService } from '../../services/moblab/apis/post.api.service';
 
 
 @Component({
@@ -63,7 +63,7 @@ export class ListingPage {
     public platform: Platform,
     private clipboard: Clipboard,
     public socialSharing: SocialSharing,
-    public listpostapi: PostapiProvider,
+    private listpostapi: PostAPIService,
     public toastCtrl: ToastController
   ) {
     this.loading = this.loadingCtrl.create();
@@ -148,12 +148,12 @@ export class ListingPage {
 
     this.loading.present();
 
-    this.listpostapi.getPost(this.page).subscribe(
+    this.listpostapi.getPostList(this.page).subscribe(
       data => {
 
         this.posts = data;
         //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
-        console.log(this.posts);
+        // console.log(this.posts);
         // console.log(this.thumnail_slidersimages);
       },
       error => {
@@ -216,7 +216,7 @@ export class ListingPage {
         this.infiniteScrollVisible = false;
       }
       else {
-        this.listpostapi.getPost(this.page).subscribe(
+        this.listpostapi.getPostList(this.page).subscribe(
           data => {
 
             for (let i = 0; i < data.length; i++) {

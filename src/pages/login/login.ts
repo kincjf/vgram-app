@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,  App, LoadingController, MenuController, SegmentButton, Events } from 'ionic-angular';
+import { NavController, App, LoadingController, MenuController, SegmentButton, Events } from 'ionic-angular';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { TabsNavigationPage } from '../tabs-navigation/tabs-navigation';
@@ -89,7 +89,7 @@ export class LoginPage {
   //   this.googleLoginService.trySilentLogin()
   //   .then(function(data) {
   //      // user is previously logged with Google and we have his data we will let him access the app
-      
+
   //   }, function(error){
   //     //we don't have the user data so we will ask him to log in
   //     env.googleLoginService.doGoogleLogin()
@@ -113,8 +113,7 @@ export class LoginPage {
   // }
 
 
-doLogin(){
-
-  this.authService.login();
-}
+  doLogin() {
+    this.authService.login();
+  }
 }

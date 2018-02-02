@@ -41,7 +41,7 @@ export class MyApp {
   // rootPage: any = TabsNavigationPage;
   textDir: string = "ltr";
 
-  pages: Array<{title: any, icon: string, component: any}>;
+  pages: Array<{ title: any, icon: string, component: any }>;
 
   constructor(
     platform: Platform,
@@ -70,118 +70,67 @@ export class MyApp {
       this.splashScreen.hide();
       this.statusBar.styleDefault();
 
-       (<any>window).handleOpenURL = (url) => {
+      (<any>window).handleOpenURL = (url) => {
         Auth0Cordova.onRedirectUri(url);
       };
     });
 
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) =>
-      {
-        if(event.lang == 'ar')
-        {
-          platform.setDir('rtl', true);
-          platform.setDir('ltr', false);
-        }
-        else
-        {
-          platform.setDir('ltr', true);
-          platform.setDir('rtl', false);
-        }
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      if (event.lang == 'ar') {
+        platform.setDir('rtl', true);
+        platform.setDir('ltr', false);
+      } else {
+        platform.setDir('ltr', true);
+        platform.setDir('rtl', false);
+      }
 
-        Observable.forkJoin(
-          this.translate.get('PROFILE'),
-          this.translate.get('CHATTING'),
-          this.translate.get('EVENT_BLOG'),
-          this.translate.get('FREQ_QUESTIONS'),
-          this.translate.get('CUSTOMER_CENTER'),
-          this.translate.get('LOGIN_SIGNUP'),
-          this.translate.get('TEST')
-        ).subscribe(data => {
-          if (this.authService.authenticated()) {
-            const chatting_first = localStorage.getItem('chatting_first');
-            this.pages = [
-              { title: data[0], icon: 'person', component: ProfilePage },
-              { title: data[1], icon: 'create', component: (chatting_first == undefined ? ChattingNoPage : ChattingYesPage) },
-              { title: data[2], icon: 'code', component: FunctionalitiesPage },
-              { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage },
-              { title: data[6], icon: 'settings', component: TestPage }
-            ];
-          } else {
-            this.pages = [
-              { title: data[5], icon: 'person', component: LoginPage },
-              { title: 'Forms', icon: 'create', component: undefined },
-              { title: data[2], icon: 'code', component: FunctionalitiesPage },
-              { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage },
-              { title: data[6], icon: 'settings', component: TestPage }
-            ];
-          }
-        });
-      });
+      this.setMenu(authService.authenticated());
+    });
 
     events.subscribe('authenticate', () => {
-      Observable.forkJoin(
-          this.translate.get('PROFILE'),
-          this.translate.get('CHATTING'),
-          this.translate.get('EVENT_BLOG'),
-          this.translate.get('FREQ_QUESTIONS'),
-          this.translate.get('CUSTOMER_CENTER'),
-          this.translate.get('LOGIN_SIGNUP')
-        ).subscribe(data => {
-          if (this.authService.authenticated()) {
-            this.pages = [
-              { title: data[0], icon: 'person', component: ProfilePage },
-              { title: data[1], icon: 'create', component: FormsPage },
-              { title: data[2], icon: 'code', component: FunctionalitiesPage },
-              { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage }
-            ];
-          } else {
-            this.pages = [
-              { title: data[5], icon: 'person', component: LoginPage },
-              { title: 'Forms', icon: 'create', component: undefined },
-              { title: data[2], icon: 'code', component: FunctionalitiesPage },
-              { title: data[3], icon: 'grid', component: LayoutsPage },
-              { title: data[4], icon: 'settings', component: SettingsPage }
-            ];
-          }
-        });
-
+      this.setMenu(authService.authenticated());
     });
 
     events.subscribe('chatting_first', () => {
-      Observable.forkJoin(
-        this.translate.get('PROFILE'),
-        this.translate.get('CHATTING'),
-        this.translate.get('EVENT_BLOG'),
-        this.translate.get('FREQ_QUESTIONS'),
-        this.translate.get('CUSTOMER_CENTER'),
-        this.translate.get('LOGIN_SIGNUP')
-      ).subscribe(data => {
-        if (this.authService.authenticated()) {
-          const chatting_first = localStorage.getItem('chatting_first');
-          this.pages = [
-            { title: data[0], icon: 'person', component: ProfilePage },
-            { title: data[1], icon: 'create', component: (chatting_first == undefined ? ChattingNoPage : ChattingYesPage) },
-            { title: data[2], icon: 'code', component: FunctionalitiesPage },
-            { title: data[3], icon: 'grid', component: LayoutsPage },
-            { title: data[4], icon: 'settings', component: SettingsPage }
-          ];
-        } else {
-          this.pages = [
-            { title: data[5], icon: 'person', component: LoginPage },
-            { title: 'Forms', icon: 'create', component: undefined },
-            { title: data[2], icon: 'code', component: FunctionalitiesPage },
-            { title: data[3], icon: 'grid', component: LayoutsPage },
-            { title: data[4], icon: 'settings', component: SettingsPage }
-          ];
-        }
-      });
+      this.setMenu(authService.authenticated());
     });
   }
 
-  ionViewEnter(){
+  private setMenu(login) {
+    Observable.forkJoin(
+      this.translate.get('PROFILE'),
+      this.translate.get('CHATTING'),
+      this.translate.get('EVENT_BLOG'),
+      this.translate.get('FREQ_QUESTIONS'),
+      this.translate.get('CUSTOMER_CENTER'),
+      this.translate.get('LOGIN_SIGNUP'),
+      this.translate.get('TEST')
+    ).subscribe(data => {
+      if (login) {
+        const chatting_first = localStorage.getItem('chatting_first');
+        this.pages = [
+          { title: data[0], icon: 'person', component: ProfilePage },
+          { title: data[1], icon: 'create', component: (chatting_first == undefined ? ChattingNoPage : ChattingYesPage) },
+          { title: data[2], icon: 'code', component: FunctionalitiesPage },
+          { title: data[3], icon: 'grid', component: LayoutsPage },
+          { title: data[4], icon: 'settings', component: SettingsPage },
+          { title: data[6], icon: 'settings', component: TestPage }
+        ];
+      } else {
+        this.pages = [
+          { title: data[5], icon: 'person', component: LoginPage },
+          { title: 'Forms', icon: 'create', component: undefined },
+          { title: data[2], icon: 'code', component: FunctionalitiesPage },
+          { title: data[3], icon: 'grid', component: LayoutsPage },
+          { title: data[4], icon: 'settings', component: SettingsPage },
+          { title: data[6], icon: 'settings', component: TestPage }
+        ];
+      }
+    });
+
+  }
+
+  ionViewEnter() {
     console.log('-------');
   }
 
@@ -198,6 +147,13 @@ export class MyApp {
     if (page.component == undefined) {
       return;
     }
+
+    // if login event
+    if (page.component == LoginPage) {
+      this.authService.login();
+      return;
+    }
+
     // rootNav is now deprecated (since beta 11) (https://forum.ionicframework.com/t/cant-access-rootnav-after-upgrade-to-beta-11/59889)
     this.app.getRootNav().push(page.component);
   }

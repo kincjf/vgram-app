@@ -127,8 +127,9 @@ import { ValidatorsModule } from '../components/validators/validators.module';
 
 import { LanguageService } from '../providers/language/language.service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
 import { OscAPIService } from "../services/osc/osc.api.service";
-import { PostapiProvider } from '../providers/postapi/postapi';
+import { PostAPIService } from '../services/moblab/apis/post.api.service';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -318,7 +319,7 @@ export function createTranslateLoader(http: Http) {
     OpenNativeSettings,
 
     OscAPIService,
-    PostapiProvider
+    PostAPIService
     // VRCameraConfiguration,
     // OscBaseService,
     // MockDeviceV1Service,

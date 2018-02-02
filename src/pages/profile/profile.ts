@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuController, SegmentButton, NavController, App, NavParams, LoadingController, ActionSheetController, Platform, ToastController,Events } from 'ionic-angular';
+import { MenuController, SegmentButton, NavController, App, NavParams, LoadingController, ActionSheetController, Platform, ToastController, Events } from 'ionic-angular';
 import { Clipboard } from '@ionic-native/clipboard';
 import { FollowersPage } from '../followers/followers';
 import { SettingsPage } from '../settings/settings';
@@ -117,22 +117,22 @@ export class ProfilePage {
   }
 
   sharePost(post) {
-   //this code is to use the social sharing plugin
-   // message, subject, file, url
-   this.socialSharing.share(post.description, post.title, post.image)
-   .then(() => {
-     console.log('Success!');
-   })
-   .catch(() => {
-      console.log('Error');
-   });
+    //this code is to use the social sharing plugin
+    // message, subject, file, url
+    this.socialSharing.share(post.description, post.title, post.image)
+      .then(() => {
+        console.log('Success!');
+      })
+      .catch(() => {
+        console.log('Error');
+      });
   }
 
-  onClickMenu(){
+  onClickMenu() {
     console.log('---more---');
 
     if (this.moreActionSheet == undefined) {
-      
+
     }
 
     Observable.forkJoin(
@@ -195,7 +195,6 @@ export class ProfilePage {
             icon: !this.platform.is('ios') ? 'log-out' : null,
             handler: () => {
               this.authService.logout();
-              this.events.publish('authenticate');
               this.menu.close();
               this.app.getRootNav().setRoot(TabsNavigationPage);
             }
@@ -209,11 +208,11 @@ export class ProfilePage {
 
   }
 
-  toNotificationPage(){
-    this.nav.push( NotificationsPage );
+  toNotificationPage() {
+    this.nav.push(NotificationsPage);
   }
 
-  toProfile(){
+  toProfile() {
     this.nav.push(OtherProfilePage);
   }
 
