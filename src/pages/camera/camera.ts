@@ -54,19 +54,12 @@ export class CameraPage {
   }
 
   ionViewDidEnter() {
-    setTimeout(() => {
-      this.OscAPIService.getDeviceInfo().then((info) => {
-        // console.log('camera enter', info);
-        this.setModel(info.model);
-
-        // unconnected VR
-        if (!info.model) {
-          if (this.plt.is('android')) {
-            this.diagnostic.switchToWifiSettings();
-          }
-        }
-      })
-    }, 1000);
+    // setTimeout(() => {
+    this.OscAPIService.getDeviceInfo().then((info) => {
+      // console.log('camera enter', info);
+      this.setModel(info.model);
+    })
+    // }, 1000);
 
     this.active = true;
   }
@@ -86,6 +79,11 @@ export class CameraPage {
       this.app.getRootNav().push(VRCameraViewPage);
     } else {
       alert('Please connect VR');
+
+      // unconnected VR
+      if (this.plt.is('android')) {
+        this.diagnostic.switchToWifiSettings();
+      }
     }
   }
 
