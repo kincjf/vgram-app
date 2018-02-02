@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.startapplabs.ion2fullapp.elite" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>ion2-FullApp ELITE</name>
+    <name>VGRAM</name>
     <description>The Best Ionic 2 Starter app - ELITE version</description>
     <author email="hi@ionicthemes.com" href="https://ionicthemes.com/">Ionic Themes</author>
     <content src="index.html" />
