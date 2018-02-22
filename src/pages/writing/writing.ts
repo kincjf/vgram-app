@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuController, SegmentButton, NavController, App, NavParams, LoadingController, ActionSheetController, Platform, ToastController,Events } from 'ionic-angular';
+import { MenuController, SegmentButton, NavController, App, NavParams, LoadingController, ActionSheetController, Platform, ToastController, Events } from 'ionic-angular';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -11,6 +11,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { WritingNormalPage } from '../write-normal/write-normal';
 import { ImageEditPage } from '../imageedit/imageedit';
 
+import { ListingPage } from '../listing/listing'; // main page
+
 @Component({
   selector: 'writing-page',
   templateUrl: 'writing.html'
@@ -19,12 +21,8 @@ export class WritingPage {
 
   loading: any;
 
-  images = [
-    "./assets/images/listing/200x200basquet.png",
-    "./assets/images/listing/200x200swimming.png",
-    "./assets/images/listing/300x300ExtremeSports.png"
-  ];
-  
+  images = [];
+
   constructor(
     public menu: MenuController,
     public app: App,
@@ -32,34 +30,73 @@ export class WritingPage {
     public translate: TranslateService,
     public loadingCtrl: LoadingController,
     public imagePicker: ImagePicker,
-    public nav: NavController
+    public nav: NavController,
+    private authService: AuthServiceProvider,
+    private events: Events,
+    private toastCtrl: ToastController
   ) {
-
     this.loading = this.loadingCtrl.create();
+
+    events.subscribe('authenticate', () => {
+      if (!this.authService.authenticated()) {
+        this.showToast('Please login.');
+      }
+    });
   }
 
-  ionViewDidLoad() {
-    
+  ionViewDidEnter() {
+    if (!this.authService.authenticated()) {
+      this.showToast('로그인을 해주세요.');
+
+      // this.root
+      this.authService.login();
+    }
   }
 
-  onClickNext(){
-    this.nav.push(WritingNormalPage);
+  onClickNext() {
+    if (this.authService.authenticated()) {
+      if (this.images.length == 0) {
+        this.showToast('VR사진을 한장 이상 추가해 주세요.');
+      } else {
+        this.nav.push(WritingNormalPage, {
+          VR: this.images
+        });
+      }
+    } else {
+      this.showToast('로그인을 해주세요.');
+    }
   }
 
-  addVRPicture(){
+  addVRPicture() {
     this.imagePicker.getPictures({ maximumImagesCount: 15 }).then(
       (results) => {
-        console.log(results);
-        this.images.push(results);
+        for (var i in results) {
+          // console.log(results);
+          this.images.push(results[i]);
+        }
       }, (err) => console.log(err)
     );
   }
 
-  editImage(image){
-    this.nav.push(ImageEditPage, {image});
+  editImage(image) {
+    this.nav.push(ImageEditPage, { image });
   }
 
   removeImage(image) {
+    this.images.splice(this.images.indexOf(image), 1);
+  }
 
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 }

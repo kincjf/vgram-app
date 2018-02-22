@@ -23,6 +23,34 @@ listing-page {
 
 	.listing-content
 	{
+		.card
+		{
+			background: $black-a;
+			color: $white-b;
+			margin: 0px !important;
+			width: inherit !important;
+
+			.card-content {
+				padding: 0px !important;
+			}
+
+			.slides {
+				background-color: $white-b;
+			}
+
+			h3 {
+				color: $white-b;
+			}
+
+			h5, p {
+				color: $white-d;
+			}
+
+			.user-profile {
+				border-radius: 50%;
+			}
+		}
+
 		.image-heading
 		{
 			height: $categories-heading-image-height;

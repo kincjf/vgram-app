@@ -23,12 +23,12 @@
           <ion-icon name='chatboxes' style="font-size: 400%; color: #333333;"></ion-icon>
         </a>
       </span>
-      <span style="width: 50px;text-align: center;">
-        <a (click)="onClickMenu()">
+      <!-- <span style="width: 50px;text-align: center;"> -->
+        <!-- <a (click)="onClickMenu()"> -->
           <!-- <img src="../../assets/images/homeHeader/menu.png"/> -->
-          <ion-icon name='more' style="font-size: 400%; margin: 0 auto; color: #333333;"></ion-icon>
-        </a>
-      </span>
+          <!-- <ion-icon name='more' style="font-size: 400%; margin: 0 auto; color: #333333;"></ion-icon> -->
+        <!-- </a> -->
+      <!-- </span> -->
     </div>
   </ion-navbar>
 
@@ -36,9 +36,7 @@
 
 
 <ion-content padding class="main-content">
-  <div>
-    content
-  </div>
+  <div [innerHtml]="postContent"></div>
   <div #map class="map-view" ></div>
 </ion-content>
 
@@ -52,12 +50,12 @@
         {{profileName}}
       </p>
     </div>
-    <ion-note class="item-time" item-right>
+    <!-- <ion-note class="item-time" item-right>
       <div>
         <button icon-only ion-button clear small class="del-button">
           <ion-icon name='heart' color="dark"></ion-icon>
         </button>
       </div>
-    </ion-note>
+    </ion-note> -->
   </ion-item>
 </ion-footer>

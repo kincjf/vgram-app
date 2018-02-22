@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuController, SegmentButton, NavController, App, NavParams, LoadingController, ActionSheetController, Platform, ToastController,Events } from 'ionic-angular';
+import { MenuController, SegmentButton, NavController, App, NavParams, LoadingController, ActionSheetController, Platform, ToastController, Events } from 'ionic-angular';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -20,12 +20,10 @@ export class WritingNormalPage {
 
   loading: any;
 
-  images = [
-    "./assets/images/listing/200x200basquet.png",
-    "./assets/images/listing/200x200swimming.png",
-    "./assets/images/listing/300x300ExtremeSports.png"
-  ];
-  
+  images = [];
+
+  VR = [];
+
   constructor(
     public menu: MenuController,
     public app: App,
@@ -33,34 +31,59 @@ export class WritingNormalPage {
     public translate: TranslateService,
     public loadingCtrl: LoadingController,
     public imagePicker: ImagePicker,
-    public nav: NavController
+    public nav: NavController,
+    private authService: AuthServiceProvider,
+    private toastCtrl: ToastController
   ) {
-
     this.loading = this.loadingCtrl.create();
+    this.VR = navParams.get('VR');
   }
 
   ionViewDidLoad() {
-    
+
   }
 
-  onClickNext(){
-    this.nav.push(WritingAddPage);
+  onClickNext() {
+    if (this.authService.authenticated()) {
+      this.nav.push(WritingAddPage, {
+        VR: this.VR,
+        NORMAL: this.images
+      });
+    } else {
+      this.showToast('로그인을 해주세요.');
+    }
   }
 
-  addVRPicture(){
+  addVRPicture() {
     this.imagePicker.getPictures({ maximumImagesCount: 15 }).then(
       (results) => {
-        console.log(results);
-        this.images.push(results);
+        for (var i in results) {
+          // console.log(results);
+          this.images.push(results[i]);
+        }
       }, (err) => console.log(err)
     );
   }
 
-  editImage(image){
-    this.nav.push(ImageEditPage, {image});
+  editImage(image) {
+    this.nav.push(ImageEditPage, { image });
   }
 
   removeImage(image) {
+    this.images.splice(this.images.indexOf(image), 1);
+  }
 
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 }

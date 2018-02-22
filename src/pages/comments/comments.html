@@ -8,29 +8,29 @@
   <ion-item-group>
     <ion-item class="comment-item" *ngFor="let comment of curComments">
       <ion-avatar item-left>
-        <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="comment.user.profile_image_path" (click)="goToProfile(comment)"></preload-image>
+        <preload-image class="user-image" [ratio]="{w:1, h:1}" [src]="comment.user.profile_image_path"></preload-image>
       </ion-avatar>
       <h2 class="item-title">{{comment.user.nickname}}</h2>
       <p class="item-description">{{comment.content | slice:0:5}}</p>
-        <div>
-          <button class="action-button" ion-button clear small (click)="replyComment(comment)">
-            {{'REPLY' | translate}}
-          </button>
-          <button  class="action-button" ion-button clear small (click)="deleteComment(comment)">
-            {{'DELETE' | translate}}
-          </button>
-          <!--*ngIf="comment.isMine"-->
-        </div>
+      <div>
+        <!-- <button class="action-button" ion-button clear small (click)="replyComment(comment)">
+          {{'REPLY' | translate}}
+        </button> -->
+        <button class="action-button" ion-button clear small (click)="deleteComment(comment)">
+          {{'DELETE' | translate}}
+        </button>
+        <!--*ngIf="comment.isMine"-->
+      </div>
       <ion-note class="item-time" item-right>
         <div>
-        {{comment.createdAt | slice:11:16}}
+          {{comment.createdAt | slice:11:16}}
         </div>
         <div>
-        <button class="action-button" ion-button clear small  icon-left (click)="likeComment(comment)">
+          <!-- <button class="action-button" ion-button clear small  icon-left (click)="likeComment(comment)">
           <ion-icon  name='heart' color="danger" *ngIf="comment.like"></ion-icon>
           <ion-icon  name='heart' color="dark" *ngIf="!comment.like"></ion-icon>
           {{comment.like}}
-        </button>
+        </button> -->
         </div>
       </ion-note>
     </ion-item>
@@ -38,19 +38,19 @@
 
 
   <ion-infinite-scroll (ionInfinite)="doCommentsInfinite($event)" *ngIf="infiniteScrollVisible">
-      <ion-infinite-content>
-        <div style="margin: 0 auto;">
-          <p style="text-align: center;">
-            Loading
-          </p>
-        </div>
-      </ion-infinite-content>
+    <ion-infinite-content>
+      <div style="margin: 0 auto;">
+        <p style="text-align: center;">
+          {{Loading}}
+        </p>
+      </div>
+    </ion-infinite-content>
   </ion-infinite-scroll>
 </ion-content>
 
 <ion-footer>
   <ion-item class="commentFooter">
-    <ion-input type="text" placeholder="{{'REPLYWRITE' | translate}}"></ion-input>
+    <ion-input type="text" [(ngModel)]="newComment" placeholder="{{'REPLYWRITE' | translate}}"></ion-input>
     <ion-icon item-right name="send" (click)="sendReply()"></ion-icon>
   </ion-item>
 </ion-footer>

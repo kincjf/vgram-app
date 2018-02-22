@@ -22,7 +22,6 @@ import { SearchPage } from '../search/search';
 import { ImageViewPage } from '../imageview/imageview';
 import { PostAPIService } from '../../services/moblab/apis/post.api.service';
 
-
 @Component({
   selector: 'listing-page',
   templateUrl: 'listing.html',
@@ -42,8 +41,6 @@ export class ListingPage {
 
   shareActionSheet: any;
   clipboardToast: any;
-
-
   thumnail_slidersimages: any;
 
   page: any = 1;
@@ -72,8 +69,7 @@ export class ListingPage {
       if (event.lang == 'ar') {
         platform.setDir('rtl', true);
         platform.setDir('ltr', false);
-      }
-      else {
+      } else {
         platform.setDir('ltr', true);
         platform.setDir('rtl', false);
       }
@@ -84,7 +80,6 @@ export class ListingPage {
         this.translate.get('REPORT'),
         this.translate.get('LINK_POST_COPY_CLIPBOARD')
       ).subscribe(data => {
-
         this.clipboardToast = this.toastCtrl.create({
           message: data[3],
           duration: 3000,
@@ -93,75 +88,53 @@ export class ListingPage {
 
         this.shareActionSheet = this.actionsheetCtrl.create({
           title: 'Select an action',
-          buttons: [
-            {
-              text: data[0],
-              role: 'destructive',
-              icon: !this.platform.is('ios') ? 'share' : null,
-              handler: () => {
-
-                this.socialSharing.share(this.postToShare.comments[0].comment, this.postToShare.date, this.postToShare.images[0])
-                  .then(() => {
-                    console.log('Success!');
-                  })
-                  .catch(() => {
-                    console.log('Error');
-                  });
-              }
-            },
-            {
-              text: data[1],
-              role: 'destructive',
-              icon: !this.platform.is('ios') ? 'link' : null,
-              handler: () => {
-                this.clipboard.copy(this.postToShare.images[0]);
-
-                this.clipboard.paste().then(
-                  (resolve: string) => {
-                    this.clipboardToast.present();
-                  },
-                  (reject: string) => {
-
-                  }
-                );
-              }
-            },
-            {
-              text: data[2],
-              role: 'destructive',
-              icon: !this.platform.is('ios') ? 'paper' : null,
-              handler: () => {
-
-              }
+          buttons: [{
+            text: data[0],
+            role: 'destructive',
+            icon: !this.platform.is('ios') ? 'share' : null,
+            handler: () => {
+              this.socialSharing.share(this.postToShare.comments[0].comment, this.postToShare.date, this.postToShare.images[0])
+                .then(() => { console.log('Success!'); })
+                .catch(() => { console.log('Error'); });
             }
-          ]
+          },
+          {
+            text: data[1],
+            role: 'destructive',
+            icon: !this.platform.is('ios') ? 'link' : null,
+            handler: () => {
+              this.clipboard.copy(this.postToShare.images[0]);
+              this.clipboard.paste().then(
+                (resolve: string) => { this.clipboardToast.present(); },
+                (reject: string) => { }
+              );
+            }
+          },
+          {
+            text: data[2],
+            role: 'destructive',
+            icon: !this.platform.is('ios') ? 'paper' : null,
+            handler: () => { }
+          }]
         });
-
       });
     });
-
   }
 
 
   ionViewDidLoad() {
-
-
     this.loading.present();
 
     this.listpostapi.getPostList(this.page).subscribe(
       data => {
-
         this.posts = data;
         //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
         // console.log(this.posts);
         // console.log(this.thumnail_slidersimages);
       },
-      error => {
-        console.log(error.JSON)
-      },
+      error => { console.log(error.JSON) },
       () => console.log('finished')
     )
-
 
     this.listingService
       .getData()
@@ -182,12 +155,10 @@ export class ListingPage {
     this.selectedCategory = popular.title;
   }
 
-
   goToFeed(category: any) {
     console.log("Clicked goToFeed", category);
     this.nav.push(FeedPage, { category: category });
   }
-
 
   initPosts() {
     this.posts = [];
@@ -199,11 +170,6 @@ export class ListingPage {
     //     this.posts.push(this.listing.posts[ this.posts.length ]);
     //   }
     // }
-
-
-
-
-
   }
 
   doPostsInfinite(infiniteScroll: any) {
@@ -218,14 +184,14 @@ export class ListingPage {
       else {
         this.listpostapi.getPostList(this.page).subscribe(
           data => {
-
             for (let i = 0; i < data.length; i++) {
+              // console.log(JSON.stringify(data[i]));
               this.posts.push(data[i]);
             }
 
             //  this.posts = this.posts.push(data);
             //  this.thumnail_slidersimages =  JSON.parse(data.thumbnail_image_path);
-            console.log(this.posts);
+            // console.log(this.posts);
             // console.log(this.thumnail_slidersimages);
           },
           error => {
@@ -268,6 +234,14 @@ export class ListingPage {
 
   toImageView(item) {
     this.menu.close();
-    this.app.getRootNav().push(ImageViewPage, { item });
+    let vtour = [];
+    for (var i in item.media) {
+      if (item.media[i].type == 'VTOUR') {
+        vtour.push(item.media[i]);
+      }
+    }
+
+    var panoXML = ["https://media.vgram.kr", vtour[0].file_path, vtour[0].file_name].join('/').replace(/([^:]\/)\/+/g, "$1");
+    this.app.getRootNav().push(ImageViewPage, { item: item, id: item.ID, xml: panoXML });
   }
 }

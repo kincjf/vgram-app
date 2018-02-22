@@ -1,11 +1,15 @@
-import { Component,  Renderer2, OnInit, Inject } from '@angular/core';
+import { Component, Renderer2, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, AlertController, ToastController } from 'ionic-angular';
+
+import { IonicPage, App, MenuController, NavController, NavParams, ActionSheetController, Platform, AlertController, ToastController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Clipboard } from '@ionic-native/clipboard';
 import { ImageViewDetailPage } from '../imageviewdetail/imageview-detail';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+
+import { CommentsPage } from '../comments/comments';
+import { PostAPIService } from '../../services/moblab/apis/post.api.service';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -26,14 +30,19 @@ export class ImageViewPage {
   profileImage = "../../assets/images/notifications/100x100Notification1.jpeg";
   profileName = "Test Title";
 
+  id: any;
   post: any;
   clipboardToast: any;
   moreActionSheet: any;
+  panoXML: String;
+  position: any;
 
-tempView: any;
+  tempView: any;
 
-
-  constructor(public navCtrl: NavController,
+  constructor(
+    private app: App,
+    private menu: MenuController,
+    public navCtrl: NavController,
     public socialSharing: SocialSharing,
     private _renderer2: Renderer2, @Inject(DOCUMENT) private _document,
     public actionsheetCtrl: ActionSheetController,
@@ -42,57 +51,68 @@ tempView: any;
     public clipboard: Clipboard,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private postAPIService: PostAPIService
+  ) {
+    this.id = navParams.get('id');
     this.post = navParams.get('item');
-  }
+    this.panoXML = navParams.get('xml');
 
-  ngOnInit(){
-    if (this.selectedTab == "vr")
-      this.selectVR();
+    this.profileImage = this.post.user.profile_image_path;
+    this.profileName = this.post.user.nickname;
+
+    this.postAPIService.getPostInfo(this.id).subscribe(data => {
+      this.position = data.positions[0];
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ImageViewPage');
+    if (this.selectedTab == "vr") this.selectVR();
   }
 
-  onBack(){
+  onBack() {
     console.log('----back----');
     this.navCtrl.pop();
   }
 
-  selectPhoto(){
+  selectPhoto() {
     console.log('--photo--');
     this.selectedTab = "photo";
   }
 
-  selectVR(){
+  selectVR() {
     console.log('--photo--');
     this.selectedTab = "vr";
 
     setTimeout(() => {
-      let s = this._renderer2.createElement('script');    
-      s.text = `
-          embedpano({swf:"./assets/krpano/krpano-tour.swf", xml:"./assets/krpano/krpano-tour.xml", target:"pano", html5:"auto", mobilescale:1.0, passQueryParameters:true});
-      `;
+      let s = this._renderer2.createElement('script');
+      s.text = `embedpano({swf:"./assets/krpano/krpano-tour.swf", xml:"` + this.panoXML + `", target:"pano", html5:"auto", mobilescale:1.0, passQueryParameters:true});`;
 
-      this._renderer2.appendChild(this._document.body, s);    
+      this._renderer2.appendChild(this._document.body, s);
     }, 100);
-
-
 
     //this.tempView = embedpano({ swf: "../../assets/krpano/krpano-tour.swf", xml: "../../assets/krpano/krpano-tour.xml", target: "pano", html5: "auto", mobilescale: 1.0, passQueryParameters: true });
   }
 
-  showDetail(){
+  showDetail() {
     console.log('--todetail---');
-    this.navCtrl.push(ImageViewDetailPage, {item: this.post});
+    this.navCtrl.push(ImageViewDetailPage, {
+      id: this.id,
+      item: this.post,
+      position: this.position
+    });
   }
 
-  onNotificationPage(){
-
+  onNotificationPage() {
+    this.menu.close();
+    // console.log(this.id);
+    this.app.getRootNav().push(CommentsPage, {
+      ID: this.id
+    });
   }
 
-  onClickMenu(){
+  onClickMenu() {
     Observable.forkJoin(
       this.translate.get('COPY_URL_LINK'),
       this.translate.get('SHARE'),
@@ -112,95 +132,72 @@ tempView: any;
 
       this.moreActionSheet = this.actionsheetCtrl.create({
         title: 'Select an action',
-        buttons: [
-          {
-            text: data[0],
-            role: 'destructive',
-            icon: !this.platform.is('ios') ? 'link' : null,
-            handler: () => {
-              //this.clipboard.copy(this.profile.user.image);
+        buttons: [{
+          text: data[0],
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'link' : null,
+          handler: () => {
+            //this.clipboard.copy(this.profile.user.image);
 
-              this.clipboard.paste().then(
-                (resolve: string) => {
-                  this.clipboardToast.present();
-                },
-                (reject: string) => {
-
-                }
-              );
-            }
-          },
-          {
-            text: data[1],
-            role: 'destructive',
-            icon: !this.platform.is('ios') ? 'share' : null,
-            handler: () => {
-            }
-          },
-          {
-            text: data[2],
-            role: 'destructive',
-            icon: !this.platform.is('ios') ? 'create' : null,
-            handler: () => {
-            }
-          },
-          {
-            text: data[3],
-            role: 'destructive',
-            icon: !this.platform.is('ios') ? 'redo' : null,
-            handler: () => {
-                let confirm = this.alertCtrl.create({
-                title: "ALERT",
-                message: data[5],
-                buttons: [
-                  {
-                    text: data[7],
-                    handler: () => {
-                      
-                    }
-                  },
-                  {
-                    text: data[3],
-                    handler: () => {
-                      
-                    }
-                  }
-                ]
-              });
-              confirm.present();
-            }
+            this.clipboard.paste().then(
+              (resolve: string) => { this.clipboardToast.present(); },
+              (reject: string) => { }
+            );
           }
-          ,
-          {
-            text: data[4],
-            role: 'destructive',
-            icon: !this.platform.is('ios') ? 'trash' : null,
-            handler: () => {
-              let confirm = this.alertCtrl.create({
-                title: "ALERT",
-                message: data[6],
-                buttons: [
-                  {
-                    text: data[7],
-                    handler: () => {
-                      
-                    }
-                  },
-                  {
-                    text: data[4],
-                    handler: () => {
-                      
-                    }
-                  }
-                ]
-              });
-              confirm.present();
-
-            }
+        },
+        {
+          text: data[1],
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'share' : null,
+          handler: () => { }
+        },
+        {
+          text: data[2],
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'create' : null,
+          handler: () => { }
+        },
+        {
+          text: data[3],
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'redo' : null,
+          handler: () => {
+            let confirm = this.alertCtrl.create({
+              title: "ALERT",
+              message: data[5],
+              buttons: [{
+                text: data[7],
+                handler: () => { }
+              },
+              {
+                text: data[3],
+                handler: () => { }
+              }]
+            });
+            confirm.present();
           }
-        ]
+        },
+        {
+          text: data[4],
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'trash' : null,
+          handler: () => {
+            let confirm = this.alertCtrl.create({
+              title: "ALERT",
+              message: data[6],
+              buttons: [{
+                text: data[7],
+                handler: () => { }
+              },
+              {
+                text: data[4],
+                handler: () => { }
+              }]
+            });
+            confirm.present();
+          }
+        }]
       });
-
 
       this.moreActionSheet.present();
     });

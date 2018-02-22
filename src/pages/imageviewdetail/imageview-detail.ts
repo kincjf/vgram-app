@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { ViewChild, OnInit, ElementRef } from '@angular/core';
+
+import { CommentsPage } from '../comments/comments';
+
 /**
  * Generated class for the SearchResultPage page.
  *
@@ -17,17 +20,29 @@ export class ImageViewDetailPage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
-
+  id: any;
+  position: any;
 
   selectedTab = "vr"; // vr, photo
 
   profileImage = "../../assets/images/notifications/100x100Notification1.jpeg";
   profileName = "Test Title";
+  postContent = "";
 
   post: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private app: App,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
+    this.id = navParams.get('id');
     this.post = navParams.get('item');
+    this.position = navParams.get('position');
+
+    this.profileImage = this.post.user.profile_image_path;
+    this.profileName = this.post.user.nickname;
+    this.postContent = this.post.content;
   }
 
   ionViewDidLoad() {
@@ -35,13 +50,20 @@ export class ImageViewDetailPage {
     this.loadMap();
   }
 
-  onBack(){
+  onBack() {
     console.log('----back----');
     this.navCtrl.pop();
   }
-  loadMap() {
 
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+  onNotificationPage() {
+    // console.log(this.id);
+    this.app.getRootNav().push(CommentsPage, {
+      ID: this.id
+    });
+  }
+
+  loadMap() {
+    let latLng = new google.maps.LatLng(this.position.lat, this.position.lng);
 
     let mapOptions = {
       center: latLng,
@@ -51,5 +73,9 @@ export class ImageViewDetailPage {
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: this.map,
+    });
   }
 }

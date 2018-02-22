@@ -17,11 +17,11 @@ import { ChattingNoPage } from '../pages/chatting-no/chatting-no';
 import { ChattingYesPage } from '../pages/chatting-yes/chatting-yes';
 import { LoginPage } from '../pages/login/login';
 
-// for test
-import { TestPage } from '../pages/tests/tests';
-
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { locale } from 'core-js/library/web/timers';
+
+import { AuthAPIService } from '../services/moblab/apis/auth.api.service';
+
 // Import Auth0Cordova
 import Auth0Cordova from '@auth0/cordova';
 
@@ -35,6 +35,9 @@ export class MyApp {
 
   isInitialOpen = true;
 
+  profile = './assets/images/user/register.png';
+  nologinProfile = './assets/images/user/unregister.png';
+
   // make WalkthroughPage the root (or first) page
   rootPage: any = WalkthroughPage;
   // rootPage: any = FunctionalitiesPage;
@@ -42,6 +45,8 @@ export class MyApp {
   textDir: string = "ltr";
 
   pages: Array<{ title: any, icon: string, component: any }>;
+
+  selectedPage = null;
 
   constructor(
     platform: Platform,
@@ -52,7 +57,8 @@ export class MyApp {
     public translate: TranslateService,
     public toastCtrl: ToastController,
     public authService: AuthServiceProvider,
-    public events: Events
+    public events: Events,
+    private authApi: AuthAPIService
   ) {
     translate.setDefaultLang('en');
     translate.use('ko');
@@ -89,6 +95,11 @@ export class MyApp {
 
     events.subscribe('authenticate', () => {
       this.setMenu(authService.authenticated());
+
+      console.log('auth check');
+      // this.authApi.initAccount().toPromise().then(data => {
+      //   console.log(JSON.stringify(data));
+      // });
     });
 
     events.subscribe('chatting_first', () => {
@@ -103,27 +114,25 @@ export class MyApp {
       this.translate.get('EVENT_BLOG'),
       this.translate.get('FREQ_QUESTIONS'),
       this.translate.get('CUSTOMER_CENTER'),
-      this.translate.get('LOGIN_SIGNUP'),
-      this.translate.get('TEST')
+      this.translate.get('LOGIN_SIGNUP')
     ).subscribe(data => {
       if (login) {
+        this.profile = './assets/images/user/register.png';
         const chatting_first = localStorage.getItem('chatting_first');
         this.pages = [
           { title: data[0], icon: 'person', component: ProfilePage },
           { title: data[1], icon: 'create', component: (chatting_first == undefined ? ChattingNoPage : ChattingYesPage) },
           { title: data[2], icon: 'code', component: FunctionalitiesPage },
           { title: data[3], icon: 'grid', component: LayoutsPage },
-          { title: data[4], icon: 'settings', component: SettingsPage },
-          { title: data[6], icon: 'settings', component: TestPage }
+          { title: data[4], icon: 'settings', component: SettingsPage }
         ];
       } else {
+        this.profile = this.nologinProfile;
         this.pages = [
           { title: data[5], icon: 'person', component: LoginPage },
-          { title: 'Forms', icon: 'create', component: undefined },
           { title: data[2], icon: 'code', component: FunctionalitiesPage },
           { title: data[3], icon: 'grid', component: LayoutsPage },
-          { title: data[4], icon: 'settings', component: SettingsPage },
-          { title: data[6], icon: 'settings', component: TestPage }
+          { title: data[4], icon: 'settings', component: SettingsPage }
         ];
       }
     });
@@ -153,6 +162,21 @@ export class MyApp {
       this.authService.login();
       return;
     }
+
+    // if (page.component != ProfilePage) {
+    //   let toast = this.toastCtrl.create({
+    //     message: '구현중입니다.',
+    //     duration: 3000,
+    //     position: 'bottom'
+    //   });
+
+    //   toast.onDidDismiss(() => {
+    //     console.log('Dismissed toast');
+    //   });
+
+    //   toast.present();
+    //   return;
+    // }
 
     // rootNav is now deprecated (since beta 11) (https://forum.ionicframework.com/t/cant-access-rootnav-after-upgrade-to-beta-11/59889)
     this.app.getRootNav().push(page.component);

@@ -1,4 +1,14 @@
 profile-page {
+
+	.icon {
+		width:100%;
+		display:inline-block;
+		text-align:right;
+		span {
+			display:inline-block;
+		}
+	}
+
 	.profile-content
 	{
 		background-color: color($colors, background, base);

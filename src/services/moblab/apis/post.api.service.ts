@@ -11,13 +11,15 @@ import { MoblabAPIBase } from '../moblab.api.base';
 */
 @Injectable()
 export class PostAPIService extends MoblabAPIBase {
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+  ) {
     super();
     this.baseUrl = [this.baseUrl, "post"].join('/');
   }
 
   getPostInfo(postId) {
-    return this.http.get([this.baseUrl, 'list', postId].join('/')).map(res => res.json());
+    return this.http.get([this.baseUrl, postId].join('/')).map(res => res.json());
   }
 
   getPostList(pageIdx = 1) {
@@ -25,25 +27,84 @@ export class PostAPIService extends MoblabAPIBase {
   }
 
   getComments(postId, commentPageIdx = 1) {
+    // console.log(postId);
     return this.http.get([this.baseUrl, postId, "comment"].join('/')).map(res => res.json());
   }
 
-  createPost(/* options */) {
+  createPost(title, post_status, post_type, content, lat, lng) {
     const headers = new Headers();
-    // headers.append('Accept', 'application/json');
+    if (window.localStorage.getItem('id_token')) {
+      headers.append('authorization', JSON.parse(window.localStorage.getItem('id_token')));
+    }
+    headers.append('Content-Type', 'application/json');
 
     const options = new RequestOptions({ headers: headers });
-    const body = JSON.stringify({ /* options */ });
+    const body = JSON.stringify({
+      addr1: '',
+      addr2: '',
+      lat: lat,
+      lng: lng,
+
+      post_status: post_status,
+      post_type: post_type,
+      title: title,
+      content: content
+    });
+
+    console.log(body);
 
     return this.http.post([this.baseUrl].join('/'), body, options).map(res => res.json());
   }
 
-  createComment(postId/*, options */) {
+  sendVRImages(postID, images) {
     const headers = new Headers();
-    // headers.append('Accept', 'application/json');
+    if (window.localStorage.getItem('id_token')) {
+      headers.append('authorization', JSON.parse(window.localStorage.getItem('id_token')));
+    }
+    headers.append("enctype", "multipart/form-data");
+
+    // headers.append('Content-Type', 'multipart/form-data; charset=utf-8');
 
     const options = new RequestOptions({ headers: headers });
-    const body = JSON.stringify({ /* options */ });
+
+    var fd = new FormData();
+    fd.append('postID', postID);
+    for (var i = 0; i < images.length; i++) {
+      fd.append('vr_images', images[i].blob, images[i].name);
+    }
+
+    return this.http.post(["https://media.vgram.kr", "convert", "vtour"].join('/'), fd, options).map(res => res.json());
+  }
+
+  sendNoramlImages(postID, images) {
+    const headers = new Headers();
+    if (window.localStorage.getItem('id_token')) {
+      headers.append('authorization', JSON.parse(window.localStorage.getItem('id_token')));
+    }
+    headers.append("enctype", "multipart/form-data");
+
+    const options = new RequestOptions({ headers: headers });
+
+    var fd = new FormData();
+    fd.append('postID', postID);
+    for (var i = 0; i < images.length; i++) {
+      fd.append('normal_images', images[i].blob, images[i].name);
+    }
+
+    return this.http.post(["https://media.vgram.kr", "convert", "images"].join('/'), fd, options).map(res => res.json());
+  }
+
+  createComment(postId, comment) {
+    const headers = new Headers();
+    if (window.localStorage.getItem('id_token')) {
+      headers.append('authorization', JSON.parse(window.localStorage.getItem('id_token')));
+    }
+    headers.append('Content-Type', 'application/json');
+
+    const options = new RequestOptions({ headers: headers });
+    const body = JSON.stringify({ comment: comment });
+
+    console.log(body);
 
     return this.http.post([this.baseUrl, postId, 'comment'].join('/'), body, options).map(res => res.json());
   }

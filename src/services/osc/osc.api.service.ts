@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { File } from '@ionic-native/file';
+import { ToastController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 // import { Hotspot, HotspotNetworkConfig } from '@ionic-native/hotspot';
 import { Log, Level } from 'ng2-logger';
@@ -50,6 +51,7 @@ export class OscAPIService {
     protected http: Http,
     protected file: File,
     protected network: Network,
+    protected toastCtrl: ToastController
   ) {
     setInterval(() => {
       this.checkIP();
@@ -59,6 +61,20 @@ export class OscAPIService {
       this.apiVersion = 0;
       this.checkDevice();
     });
+  }
+
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
   private checkIP(): void {
@@ -95,6 +111,10 @@ export class OscAPIService {
       ip = gateway = mockIP;
     }
 
+    if (true) { // test mode 
+      gateway = mockIP;
+    }
+
     let info = await getDeviceInfo(this.http, gateway);
 
     if (this.info && this.info.model == info.model) return;
@@ -127,7 +147,7 @@ export class OscAPIService {
         this.apiVersion = -1;
 
         log.error('No VR Camera connection found.');
-        alert('No VR Camera connection found. \n' +
+        this.showToast('No VR Camera connection found. \n' +
           'Please connect the VR camera supported by the app to WiFi.\n' +
           'Products: LG 360 Cam(api v1), Gear 360 2016(api v1)');
         break;

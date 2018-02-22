@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>{{ 'WRITING' | translate }} - {{ 'ADDITIONAL_INFO' | translate }}</ion-title>
     <ion-buttons end>
-      <button class="finish-btn">
+      <button class="finish-btn" (click)="registerPost()">
         {{ 'FINISH' | translate }}
       </button>
     </ion-buttons>
@@ -13,7 +13,7 @@
 
   <div #map id="map"></div>
 
-  <ion-row class="search-group">
+  <!-- <ion-row class="search-group">
     <ion-col class="one-button">
       <div class="button-content">
         <ion-icon name="search"></ion-icon>
@@ -26,9 +26,9 @@
          {{ 'CURRENT_LOCATION' | translate }}
       </div>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
-  <ion-item>
+  <!-- <ion-item>
     <ion-label item-left>{{ 'STREET_ADDRESS' | translate }}</ion-label>
     <ion-input type="text" [(ngModel)]="streetAddress"></ion-input>
   </ion-item>
@@ -40,7 +40,7 @@
 
   <ion-label class="comment">
      {{ 'INPUT_DETAIL_ADDRESS' | translate }}
-  </ion-label>
+  </ion-label> -->
 
   <ion-item>
     <ion-label item-left>{{ 'PUBLIC_PRIVATE' | translate }}</ion-label>
@@ -53,8 +53,15 @@
   <ion-label class="comment1">{{ 'CATEGORY' | translate }}</ion-label>
   <ion-item>
     <ion-select [(ngModel)]="category">
-      <ion-option value="public">{{ 'PUBLIC' | translate }}</ion-option>
-      <ion-option value="private">{{ 'PRIVATE' | translate }}</ion-option>
+      <ion-option value="NORMAL">{{ 'NORMAL' | translate }}</ion-option>
+      <ion-option value="TRAVEL">{{ 'TRAVEL' | translate }}</ion-option>
+      <ion-option value="REAL_ESTATE">{{ 'REAL_ESTATE' | translate }}</ion-option>
+      <ion-option value="ACCOMMODATION">{{ 'ACCOMMODATION' | translate }}</ion-option>
+      <ion-option value="VACATION_SPOT">{{ 'VACATION_SPOT' | translate }}</ion-option>
+      <ion-option value="RESTAURANT">{{ 'RESTAURANT' | translate }}</ion-option>
+      <ion-option value="INTERIOR">{{ 'INTERIOR' | translate }}</ion-option>
+      <ion-option value="AERIAL">{{ 'AERIAL' | translate }}</ion-option>
+      <ion-option value="ETC">{{ 'ETC' | translate }}</ion-option>
     </ion-select>
   </ion-item>
 

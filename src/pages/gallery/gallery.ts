@@ -45,7 +45,7 @@ export class GalleryPage {
 
   ionViewDidLoad() {
     this.image.subscribe(item => {
-      console.log(item);
+      // console.log(item);
       this.images.push(item);
     });
 
@@ -54,7 +54,9 @@ export class GalleryPage {
 
   async getLists(): Promise<any> {
     let lists = await this.file.listDir(this.file.dataDirectory, dirName);
-    console.log(lists);
+    // console.log(lists);
+
+    lists = lists.reverse();
 
     for (var i in lists) {
       this.imageObserver.next({ image: lists[i].nativeURL });

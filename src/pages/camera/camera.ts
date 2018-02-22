@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, App, LoadingController, MenuController, SegmentButton, Events } from 'ionic-angular';
+import { NavController, App, LoadingController, MenuController, SegmentButton, Events, ToastController } from 'ionic-angular';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Network } from '@ionic-native/network';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -39,7 +39,8 @@ export class CameraPage {
 
     private OscAPIService: OscAPIService,
     private network: Network,
-    private diagnostic: Diagnostic
+    private diagnostic: Diagnostic,
+    public toastCtrl: ToastController
   ) {
     setInterval(() => {
       var len = this.app.getRootNav().length();
@@ -54,23 +55,18 @@ export class CameraPage {
   }
 
   ionViewDidEnter() {
-    // setTimeout(() => {
     this.OscAPIService.getDeviceInfo().then((info) => {
-      // console.log('camera enter', info);
       this.setModel(info.model);
     })
-    // }, 1000);
 
     this.active = true;
   }
 
   ionViewDidLeave() {
-    // console.log('camera leave');
     this.active = false;
   }
 
   ngOnDestroy() {
-    // console.log('camera destroy');
     this.modelSubscribe.unsubscribe();
   }
 
@@ -78,7 +74,7 @@ export class CameraPage {
     if (this.connected) {
       this.app.getRootNav().push(VRCameraViewPage);
     } else {
-      alert('Please connect VR');
+      this.showToast('Please connect VR');
 
       // unconnected VR
       if (this.plt.is('android')) {
@@ -105,5 +101,19 @@ export class CameraPage {
       // button disable
       this.connected = false;
     }
+  }
+
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+  
+    toast.present();
   }
 }

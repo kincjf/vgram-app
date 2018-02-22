@@ -110,6 +110,8 @@ import { Network } from '@ionic-native/network';
 
 import { Hotspot } from '@ionic-native/hotspot';
 
+import { MomentModule } from 'angular2-moment';
+
 
 
 // Functionalities
@@ -130,6 +132,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 import { OscAPIService } from "../services/osc/osc.api.service";
 import { PostAPIService } from '../services/moblab/apis/post.api.service';
+import { UserAPIService } from '../services/moblab/apis/user.api.service';
+import { AuthAPIService } from '../services/moblab/apis/auth.api.service';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -218,7 +222,8 @@ export function createTranslateLoader(http: Http) {
 			}
 		}),
 		VideoPlayerModule,
-		ValidatorsModule
+    ValidatorsModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -319,7 +324,10 @@ export function createTranslateLoader(http: Http) {
     OpenNativeSettings,
 
     OscAPIService,
-    PostAPIService
+    PostAPIService,
+    UserAPIService,
+    AuthAPIService
+    
     // VRCameraConfiguration,
     // OscBaseService,
     // MockDeviceV1Service,

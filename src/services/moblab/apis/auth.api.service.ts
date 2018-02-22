@@ -18,7 +18,9 @@ export class AuthAPIService extends MoblabAPIBase {
 
   initAccount() {
     const headers = new Headers();
-    // headers.append('Accept', 'application/json');
+    if (window.localStorage.getItem('id_token')) {
+      headers.append('authorization', JSON.parse(window.localStorage.getItem('id_token')));
+    }
 
     const options = new RequestOptions({ headers: headers });
     const body = JSON.stringify({ /* options */ });

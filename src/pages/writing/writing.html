@@ -1,9 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title style="flex: 1;"><font style="text-align: center;">
+    <ion-title style="flex: 1;">
+      <font style="text-align: center;">
         {{'WRITING' | translate}} - {{'VR_PHOTO' | translate}} {{'ADD' | translate}}
-    </font></ion-title>
-    <ion-buttons end>
+      </font>
+    </ion-title>
+    <ion-buttons end *ngIf="authService.authenticated()">
       <button ion-button (click)="onClickNext()">
         <span class="next-btn">{{'NEXT' | translate}}</span>
       </button>
@@ -12,31 +14,36 @@
 </ion-header>
 
 <ion-content class="write-content">
-<button ion-button (click)="addVRPicture()"  class="add-vr-action">
-  <span>{{'ADD_VR_PICTURE' | translate}}</span>
-</button>
+  <div *ngIf="authService.authenticated()">
+    <button ion-button (click)="addVRPicture()" class="add-vr-action">
+      <span>{{'ADD_VR_PICTURE' | translate}}</span>
+    </button>
 
-  <div class="images-content">
-    <ion-row>
-      <ion-col width-50 class="one-image-container" *ngFor="let image of images">
-        <preload-image [ratio]="{w:1, h:1}" [src]="image"></preload-image>
-        <div class="buttons">
-          <button ion-button (click)="editImage(image)" class="action-button">
-            <span>{{'EDIT' | translate}}</span>
-          </button>
-          <button ion-button (click)="removeImage(image)" class="action-button">
-            <span>{{'REMOVE' | translate}}</span>
-          </button>
-        </div>
-      </ion-col>
-    </ion-row>
+    <div class="images-content">
+      <ion-row>
+        <ion-col width-50 class="one-image-container" *ngFor="let image of images">
+          <preload-image [ratio]="{w:2, h:1}" [src]="image"></preload-image>
+          <div class="buttons">
+            <!-- <button ion-button (click)="editImage(image)" class="action-button">
+                  <span>{{'EDIT' | translate}}</span>
+                </button> -->
+            <button ion-button (click)="removeImage(image)" class="action-button">
+              <span>{{'REMOVE' | translate}}</span>
+            </button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="rules-content">
+      <p>
+        - VR images are mostly 2:1
+      </p>
+      <p>
+        - At least one VR image is required
+      </p>
+    </div>
   </div>
-  <div class="rules-content">
-    <p>
-      - VR images are mostly 2:1
-    </p>
-    <p>
-      - At least one VR image is required
-    </p>
+  <div *ngIf="!authService.authenticated()">
+    <p>Please Login.</p>
   </div>
 </ion-content>

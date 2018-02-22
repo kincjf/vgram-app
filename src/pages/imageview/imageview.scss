@@ -1,21 +1,35 @@
 page-imageview {
-    .segment-buttons{
-        border: solid 1px #f4344f;
-        border-radius: 5px;
-        .selected{
-            background-color: #f4344f;
-            .selected-font{
-                color: white;
-                font-size: 150%;
-            }
+    // .segment-buttons{
+    //     border: solid 1px #f4344f;
+    //     border-radius: 5px;
+    //     .selected{
+    //         background-color: #f4344f;
+    //         .selected-font{
+    //             color: white;
+    //             font-size: 150%;
+    //         }
+    //     }
+    //     .unselected{
+    //         background-color: white;
+    //         .unselected-font{
+    //             color: black;
+    //             font-size: 150%;
+    //         }
+    //     }
+    // }
+
+    ion-navbar .icon {
+        width:100%;
+        display:inline-block;
+        text-align:right;
+
+        span {
+            display:inline-block;
         }
-        .unselected{
-            background-color: white;
-            .unselected-font{
-                color: black;
-                font-size: 150%;
-            }
-        }
+    }
+
+    .segment-buttons {
+        border:none !important;
     }
 
     .main-content{

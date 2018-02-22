@@ -59,15 +59,13 @@ export class AuthServiceProvider {
   }
 
   private setIdToken(token) {
-    this.setStorageVariable('id_token', token);
+    // console.log('auth', token);
+    // token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiMzMzM0BnbWFpbC5jb20iLCJlbWFpbCI6IjMzMzNAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvMGMxOGEzY2JmMWQyYTE3MWE4N2RmNTg3MGFjOTk0YmQ_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkYzMy5wbmciLCJJRCI6MywiaXNzIjoiaHR0cHM6Ly93b3dqb3ktZGV2LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1OTRkNzM5NzQyZWNkZDJiZjQ2OWFhOWIiLCJhdWQiOiJSd05DbmQxTXQxVmZPT0hscm90c3NUVktSUG9rM0lpVSIsImlhdCI6MTUxODk2OTc1MiwiZXhwIjoxNTE5MDA1NzUyfQ.0F2XPq5JUOrDdgLEe32XwuWG89GFv2-zy5FXSc6-x2g';
+    this.setStorageVariable('id_token', 'Bearer ' + token);
   }
 
   private setAccessToken(token) {
     this.setStorageVariable('access_token', token);
-  }
-
-  private setAuthorization(token) {
-    this.setStorageVariable('authorization', token);
   }
 
   private setLogin(login) {
@@ -77,7 +75,7 @@ export class AuthServiceProvider {
     }
   }
 
-  public isAuthenticated() {
+  private isAuthenticated() {
     const expiresAt = Number(JSON.parse(this.getStorageVariable('expires_at')));
     return isNaN(expiresAt) ? false : Date.now() < expiresAt;
   }
@@ -97,10 +95,10 @@ export class AuthServiceProvider {
       this.setStorageVariable('expires_at', JSON.stringify((authResult.expiresIn * 999) + new Date().getTime()));
       this.setIdToken(authResult.idToken);
       this.setAccessToken(authResult.accessToken);
-      this.setAuthorization(authResult.authorization);
       this.setLogin(true);
 
       this.auth0.client.userInfo(this.getStorageVariable('access_token'), (err, profile) => {
+        // console.log(JSON.stringify(profile));
         if (err) {
           throw err;
         }
