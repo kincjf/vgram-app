@@ -106,7 +106,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.4",
     "@types/three": "^0.84.34",
-    "ionic": "3.19.0",
+    "ionic": "3.19.1",
     "typescript": "2.4.0"
   },
   "description": "ion2-FullApp: The Best Ionic 2 Starter app.",

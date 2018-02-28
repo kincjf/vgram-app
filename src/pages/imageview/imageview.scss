@@ -1,3 +1,27 @@
+.platform-android page-imageview {
+    .segment-buttons{
+        border: solid 1px #f4344f;
+        border-radius: 5px;
+        .selected{
+            background-color: #f4344f;
+            .selected-font{
+                color: white;
+                font-size: 150%;
+            }
+        }
+        .unselected{
+            background-color: white;
+            .unselected-font{
+                color: black;
+                font-size: 150%;
+            }
+        }
+    }
+    
+    ion-navbar .icon {
+        width:inherit !important;
+    }
+}
 page-imageview {
     // .segment-buttons{
     //     border: solid 1px #f4344f;
@@ -17,7 +41,7 @@ page-imageview {
     //         }
     //     }
     // }
-
+    
     ion-navbar .icon {
         width:100%;
         display:inline-block;
